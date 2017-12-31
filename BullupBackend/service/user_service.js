@@ -492,9 +492,13 @@ exports.handleUserInviteResult = function (io, socket) {
 }
 
 exports.changeUserStatus = function (userId, status) {
-    this.users[userId].status = status;
-
-    console.log("user: " + this.users[userId].name + " status: " + status);
+    if(this.users[userId] == undefined){
+        return false;
+    }else{
+        this.users[userId].status = status;
+        console.log("user: " + this.users[userId].name + " status: " + status);
+        return true;
+    }
 }
 
 exports.setEnvironment = function (userId, head, data) {
@@ -844,6 +848,10 @@ exports.handleDisconnect = function(socket){
         if(userId == undefined){
             //该用户没有登录，什么都不需要做
         }else{
+            if(exports.users[userId]==undefined){
+                console.log("这里出错了 exports.users[userId] 是 undefond");
+                return;
+            }
             var userStatus = exports.users[userId].status;
             var userEnvironment = exports.users[userId].environment;
             if(userStatus == "idle"){

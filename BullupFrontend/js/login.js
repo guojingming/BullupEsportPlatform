@@ -27,7 +27,11 @@ $().ready(function () {
 						password: $log_password
 					});
 				}
-            }
+			}
+		if($("#modalpopo").css("display")=="block"){
+				$('#modalpopo').modal('close');
+				$(".bullup_overlay").remove();				
+		}
     };
 
 

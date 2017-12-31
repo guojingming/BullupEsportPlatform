@@ -58,3 +58,15 @@ $('#admin_bullupWeb').on('click', function(e){
     bullup.loadTemplateIntoTarget('swig_admin_bullupWeb.html',{}, 'main-view');
     socket.emit('getBullupWeb');
 });
+
+//进入广播页
+$('#admin_turn_boradcast').on('click', function(e){
+    e.preventDefault();
+    bullup.loadTemplateIntoTarget('swig_admin_broadcast.html',{}, 'main-view');
+});
+
+//进入广播页
+$('#admin_turn_closeserver').on('click', function(e){
+    e.preventDefault();
+    bullup.loadTemplateIntoTarget('swig_admin_closeserver.html',{}, 'main-view');
+});

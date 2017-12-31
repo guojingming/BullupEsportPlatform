@@ -14,6 +14,21 @@ exports.init = function () {
 
 }
 
+
+exports.handleBoradcast = function(io, socket){
+    socket.on("adminBroadcast", function(text){
+        io.sockets.emit('adminBroadcast',{
+            text: text
+        });
+    });
+}
+
+exports.handleCloseServer = function(io, socket){
+    socket.on("adminCloseServer", function(text){
+        io.sockets.emit('adminCloseServer',{});
+    });
+}
+
 //----------------------------提现管理部分--------------------------------
 /**
  * 查询全部提现信息
@@ -416,8 +431,6 @@ exports.handleInvitedCode = function (socket) {
 exports.bullupWeb = function (socket) {
     socket.on('getBullupWeb', function () {
         bullupWebDao.findBullupWeb(function(res){
-            //console.log("resResult"+JSON.stringify(res));
-            console.log("123",res);
             if (!res) {
                 socket.emit('feedback', {
                     errorCode: 1,

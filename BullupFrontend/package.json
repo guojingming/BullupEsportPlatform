@@ -25,5 +25,6 @@
   },
   "devDependencies": {
     "electron-rebuild": "^1.6.0"
-  }
+  },
+  "chromium-args":"--disable-devtools"
 }

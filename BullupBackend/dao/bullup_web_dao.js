@@ -75,7 +75,6 @@ exports.findBullupWeb = function(callback){
                    ip.clear();                  
                 }
                 // console.log(obj);
-                console.log("//////////");
             }
             callback(obj);
         });

@@ -1,6 +1,6 @@
 var io = require('socket.io-client');
 
-var socket = io.connect('http://49.140.81.199:3000');
+var socket = io.connect('http://18.221.98.48:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var lolUtil = require('./js/util/lol_util.js');
@@ -921,6 +921,16 @@ socket.on('EnvironmentRecover', function(environment){
     }
 });
 
+socket.on('adminBroadcast', function(text){
+    bullup.alert(text.text);
+});
+
+socket.on('adminCloseServer', function(){
+    socket.disconnect();
+    $(".g_bi").click();
+});
+
+
 /**
  * 处理用户登录
  * @param {*} feedback 
@@ -1089,7 +1099,6 @@ function handleSearchWithdrawResult(feedback){
 //查看官网页面的pv,uv,ip
 function handleBullupWebResult(feedback){
     var tempData = feedback.extension.data;
-        var myChart = echarts.init(document.getElementById('bullup_web'));
         var day = [];
         var ip = [];
         var pv = [];
@@ -1100,60 +1109,35 @@ function handleBullupWebResult(feedback){
            pv.push(tempData[index].pv_count);
            uv.push(tempData[index].uv_count);
         }
-        option = {
-            title: {
-                text: 'bullup 统计图'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['pv','uv','ip']
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: day,
+                datasets: [{
+                    label: "ip",
+                    backgroundColor: 'rgba(255,255,255,0)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: ip,
+                },
+                {
+                    label: "pv",
+                    backgroundColor: 'rgba(255,255,255,0)',
+                    borderColor: 'rgb(25, 200, 132)',
+                    data: pv,
+                },
+                {
+                    label: "uv",
+                    backgroundColor: 'rgba(255,255,255,0)',
+                    borderColor: 'rgb(25, 100, 12)',
+                    data: uv,
                 }
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: day
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [
-                {
-                    name:'pv',
-                    type:'line',
-                    stack: '总量',
-                    data:pv
-                },
-                {
-                    name:'uv',
-                    type:'line',
-                    stack: '总量',
-                    data:uv
-                },
-                {
-                    name:'ip',
-                    type:'line',
-                    stack: '总量',
-                    data:ip
-                },
             ]
-        };
-    
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-    
+            },
+            options: {}
+        });
+
+
 }
 
 //将提现信息改为TRUE
