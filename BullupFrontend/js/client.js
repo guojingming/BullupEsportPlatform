@@ -551,7 +551,7 @@ socket.on('lolRoomEstablished', function (data) {
     lol_process.grabLOLData('result', socket);      
     $("#show_game_start").css("display","inline-block");
     bullup.alert('游戏已开始');     
-    clearTimeout(timeControl);      
+    clearTimeout(timeControl);
     if(userInfo.userId == battleInfo.blueSide.captain.userId){
         handleTimeout2(1000*60*90);
     }

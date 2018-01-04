@@ -2,7 +2,6 @@ $('.agree').on('click', function(e){
     e.preventDefault();
     var getRow = $(this).closest('.keyRow');
     var data = $(getRow).find('.keyColumn').text();
-    var $state = $(getRow).find('.state').text();
     if($state == '未处理'){
         socket.emit('agree',{
             payId:data
