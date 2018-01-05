@@ -31,6 +31,7 @@ $('.credit').click(function () {
 })
 //弹出popo
 $('.waves-light').click(function () {
+    $('#modalpopo').css("display","none");
     $('#modalpopo').modal('close');
     $(".bullup_overlay").remove();
 });
