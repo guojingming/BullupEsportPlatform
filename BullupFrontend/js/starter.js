@@ -55,18 +55,28 @@ $(document).ready(function(){
         win.close(); 
     });
 
-       //系统设置提示音是否为静音
-        audio_prompt = document.getElementsByClassName("bullup_background_music")[0];
-        play = document.getElementsByClassName("headle_music")[0];
-        play.onclick=function(event){          
-            if(audio_prompt.muted){
-            audio_prompt.muted = false;       
-            play.innerHTML="<i class='fa fa-volume-up' aria-hidden='true'></i>";
-            }else{          
-            audio_prompt.muted = true;
-            play.innerHTML='<i class="fa fa-volume-off" aria-hidden="true"></i>';
-        }      
-        }
+    //系统设置提示音是否为静音
+    audio_prompt = document.getElementsByClassName("bullup_background_music")[0];
+    play = document.getElementsByClassName("headle_music")[0];
+    play.onclick=function(event){          
+        if(audio_prompt.muted){
+        audio_prompt.muted = false;       
+        play.innerHTML="<i class='fa fa-volume-up' aria-hidden='true'></i>";
+        }else{          
+        audio_prompt.muted = true;
+        play.innerHTML='<i class="fa fa-volume-off" aria-hidden="true"></i>';
+    }      
+    }
+
+    //点击加载视屏页
+    $("#bullup_video").on("click",function(event){
+        console.log("pao");
+            var swig_video = bullup.loadSwigView('./swig_video.html',null);
+            $("#main-view").html(swig_video);
+            $('#waiting-modal').css('display', 'none');    
+            $('#team-detail-modal').css('display', 'none');    
+            $('.modal-overlay').remove();
+    });
 });
 
 
