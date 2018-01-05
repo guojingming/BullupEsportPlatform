@@ -355,7 +355,7 @@ exports.handleBattleResult = function (io, socket){
                     userService.deleteEnvironment(player.userId, 'team');
                     userService.deleteEnvironment(player.userId, 'battle');
                     //更新好友状态
-                    userService.friendStatus(userId,'idle','true');
+                    userService.friendStatus(player.userId,'true','true');
                 }
                 for(var index in loseTeam){
                     var player = loseTeam[index];
@@ -364,7 +364,7 @@ exports.handleBattleResult = function (io, socket){
                     userService.deleteEnvironment(player.userId, 'team');
                     userService.deleteEnvironment(player.userId, 'battle');
                     //更新好友状态
-                    userService.friendStatus(userId,'true','true');
+                    userService.friendStatus(player.userId,'true','true');
                 }
 
                 //广播结果数据包
@@ -466,6 +466,8 @@ exports.handleBattleResult = function (io, socket){
                     userService.deleteEnvironment(player.userId, 'room');
                     userService.deleteEnvironment(player.userId, 'team');
                     userService.deleteEnvironment(player.userId, 'battle');
+                    //更新好友状态
+                    userService.friendStatus(player.userId,'true','true');
                 }
                 for(var index in loseTeam){
                     var player = loseTeam[index];
@@ -473,6 +475,8 @@ exports.handleBattleResult = function (io, socket){
                     userService.deleteEnvironment(player.userId, 'room');
                     userService.deleteEnvironment(player.userId, 'team');
                     userService.deleteEnvironment(player.userId, 'battle');
+                    //更新好友状态
+                    userService.friendStatus(player.userId,'true','true');
                 }
 
                 //广播结果数据包

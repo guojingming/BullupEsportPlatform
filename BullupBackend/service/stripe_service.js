@@ -1,5 +1,5 @@
 var express = require('express');
-var stripe = require('stripe')('sk_live_zrQoZpyN0MvLXDep0ESAhzHE');
+var stripe = require('stripe')('sk_live_ab9ElRvzqrwSPDJV93LQky8E');
 var bodyParser = require('body-parser');
 var app = express();
 var fs = require("fs");
@@ -48,13 +48,22 @@ exports.recharge = function(){
             // asynchronously called
             if(err){
                 var socket = socketService.mapUserIdToSocket(userId);
+                var data = {};
+                data.userId = Number.parseInt(userId);
+                data.money = 0;
+                data.currency = 'dolla';
+                data.state=err.message;
+                wealthInfoDao.userRecharge(data, function(results){
+                var socket = socketService.mapUserIdToSocket(data.userId);
                 socketService.stableSocketEmit(socket, "rechargeErrResult", {'err': err});
+                });
                 res.sendFile(path + 'charge_failed.html');
             }else{
                 var data = {};
                 data.userId = Number.parseInt(userId);
                 data.money = Number.parseInt(chargeAmount) / 100;
                 data.currency = 'dolla';
+                data.state='充值成功';
                 wealthInfoDao.userRecharge(data, function(results){
                     var socket = socketService.mapUserIdToSocket(data.userId);
                     if(results != null){

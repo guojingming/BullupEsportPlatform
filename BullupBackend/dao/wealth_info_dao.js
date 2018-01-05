@@ -151,6 +151,12 @@ exports.userRecharge = function(data, callback) {
  * @param getBankInfo 收集信息
  */
 exports.insertBankInfo = function(bankInfo, callback) {
+    if(bankInfo.areacode == null || bankInfo.areacode == undefined){
+        bankInfo.areacode = 0; 
+    }
+    if(bankInfo.cardnumber == null || bankInfo.cardnumber == undefined || bankInfo.cardnumber.length == 0){
+        bankInfo.cardnumber = '未填写银行卡号'; 
+    }
     dbUtil.createConnection(function(connection){
         async.parallel([
             function(done){

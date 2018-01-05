@@ -176,7 +176,7 @@ exports.getInvitedInfo = function(callback){
                 var codeInfo = {};
                 async.eachSeries(res, function(baseInfo, errCb){
                     //console.log(baseInfo.user_nickname);
-                    dbUtil.query(connection, 'select sum(bullup_battle_bet)-sum(bullup_battle_bet)*2*0.1 as userGet,sum(bullup_battle_bet)*2*0.1 as companyGet from bullup_battle_record where bullup_battle_paticipants_red like ? and bullup_battle_result="红方赢" or bullup_battle_paticipants_blue like ? and bullup_battle_result="蓝方赢"',['%'+baseInfo.user_nickname+'%','%'+baseInfo.user_nickname+'%'],function(err, row) {
+                    dbUtil.query(connection, 'select sum(bullup_battle_bet)-sum(bullup_battle_bet)*2*0.1 as userGet,sum(bullup_battle_bet)*2*0.1 as companyGet from bullup_battle_record where bullup_battle_participants_red like ? and bullup_battle_result="红方赢" or bullup_battle_participants_blue like ? and bullup_battle_result="蓝方赢"',['%'+baseInfo.user_nickname+'%','%'+baseInfo.user_nickname+'%'],function(err, row) {
                         if (err) throw err;
                         (codeInfo[baseInfo.user_id]) = {};
                         (codeInfo[baseInfo.user_id]).user_id = baseInfo.user_id;
