@@ -1,6 +1,10 @@
 var io = require('socket.io-client');
 
+<<<<<<< HEAD
 var socket = io.connect('http://152.15.124.26:3000');
+=======
+var socket = io.connect('http://52.15.124.26:3000');
+>>>>>>> f9485c5715edf07a16beed5e8cd55589abb92b84
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var lolUtil = require('./js/util/lol_util.js');
