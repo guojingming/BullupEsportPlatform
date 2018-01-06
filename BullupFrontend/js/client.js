@@ -1,5 +1,4 @@
 var io = require('socket.io-client');
-
 var socket = io.connect('http://52.15.124.26:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
