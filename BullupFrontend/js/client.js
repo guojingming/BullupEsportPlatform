@@ -1,10 +1,5 @@
 var io = require('socket.io-client');
-
-<<<<<<< HEAD
-var socket = io.connect('http://152.15.124.26:3000');
-=======
 var socket = io.connect('http://52.15.124.26:3000');
->>>>>>> f9485c5715edf07a16beed5e8cd55589abb92b84
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var lolUtil = require('./js/util/lol_util.js');
@@ -1466,7 +1461,7 @@ function handleLOLKeyRequestResult(feedback){
     });
     $.getScript('./js/game_history_query.js');
 }
-
+var new_friend_arr = [];
 function handleAddFriendResult(feedback){
     if(feedback.errorCode == 0){
         //更新本地好友列表
@@ -1477,7 +1472,25 @@ function handleAddFriendResult(feedback){
         newFriend.online = 'true';
         newFriend.status = 'idle';
         newFriend.name = newFriendDetails.name;
-        userInfo.friendList.push(newFriend);       
+        if(new_friend_arr.length == 0){
+            new_friend_arr.push(newFriend);
+            userInfo.friendList.push(newFriend);
+        }else{
+            for(var i = 0;i<new_friend_arr.length;i++){
+                if(new_friend_arr[i] == newFriend){
+                    break;
+                }
+                if( i == new_friend_arr.length){
+                    new_friend_arr.push(newFriend);
+                    userInfo.friendList.push(newFriend);
+                } 
+            }
+        }
+        var newArr = userInfo.friendList;
+        newArr.sort(function(x,y){
+            return x.online < y.online ? 1 : -1;
+        });
+        userInfo.friendList =  newArr;        
         var friendCount = 0;
         for(var index in userInfo.friendList){
             friendCount++
