@@ -21,6 +21,8 @@ $().ready(function(){
         var inputUserNickName = $('#first_name2').val();
         console.log(inputUserNickName);
         if(inputUserNickName != ""){
+            if(inputUserNickName!=userInfo.name){
+                
             if(inputUserNickName.length<=15){
                 for(var index in userInfo.friendList){
                     if(userInfo.friendList[index].name == inputUserNickName){
@@ -37,6 +39,9 @@ $().ready(function(){
             }else{
                 bullup.alert('昵称过长');
             }
+        }else{
+            bullup.alert('您不能添加自己为好友');
+        }
         }else{
             bullup.alert('请输入对方昵称');            
         }

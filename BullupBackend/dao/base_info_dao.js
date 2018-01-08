@@ -207,6 +207,62 @@ exports.getInvitedInfo = function(callback){
     });
 }
 
+//------------------------------公司收入------------------------------
+exports.getCompanyIncome = function(callback){
+    dbUtil.createConnection(function(connection){
+        async.waterfall([
+            function(callback){
+                dbUtil.query(connection, 'select a.user_id,a.user_account,a.user_nickname,b.user_mail from user_base as a inner join user_info as b on a.user_id=b.user_id;', [], function(err,res){
+                    if (err) throw err;
+                    callback(null,res);
+                });
+            },
+            function(res,callback){
+                var codeInfo = {};
+                async.eachSeries(res, function(baseInfo, errCb){
+                    //console.log(baseInfo.user_nickname);
+                    dbUtil.query(connection, 'select sum(bullup_battle_bet)-sum(bullup_battle_bet)*2*0.1 as userGet,sum(bullup_battle_bet)*2*0.1 as companyGet from bullup_battle_record where bullup_battle_participants_red like ? and bullup_battle_result="红方赢" or bullup_battle_participants_blue like ? and bullup_battle_result="蓝方赢"',['%'+baseInfo.user_nickname+'%','%'+baseInfo.user_nickname+'%'],function(err, row) {
+                        if (err) throw err;
+                        (codeInfo[baseInfo.user_id]) = {};
+                        (codeInfo[baseInfo.user_id]).user_id = baseInfo.user_id;
+                        (codeInfo[baseInfo.user_id]).user_account = baseInfo.user_account;
+                        (codeInfo[baseInfo.user_id]).user_nickname = baseInfo.user_nickname;
+                        (codeInfo[baseInfo.user_id]).inviteCode = baseInfo.user_mail;
+                        (codeInfo[baseInfo.user_id]).userGet = row[0].userGet;
+                        (codeInfo[baseInfo.user_id]).companyGet = row[0].companyGet;
+                        //console.log("resResult"+JSON.stringify(row));
+                        errCb();
+                    });
+                },function(errCb){
+                    callback(null, codeInfo);
+                });
+            }
+        ],function(err,res){
+            if (err) throw err;
+            var codeArray = new Array();
+            for(obj in res){
+                codeArray.push(res[obj]);
+            }
+            codeArray.sort(function(x,y){
+                return x.inviteCode < y.inviteCode ? 1 : -1;
+            });
+            dbUtil.closeConnection(connection);
+            //console.log('this is my:',codeArray);
+            var companyIncome = 0;
+            var usersIncome = 0;
+            for(var key in codeArray){
+                if(codeArray[key].userGet != null){
+                    usersIncome += codeArray[key].userGet;
+                    companyIncome += codeArray[key].companyGet;
+                }
+            }
+            var pack = [companyIncome,usersIncome];
+            //console.log('this is my:',companyIncome,usersIncome);
+            callback(pack);
+        });
+    });
+}
+
 exports.findUserById = function(userId, callback) {
     dbUtil.createConnection(function(connection){
         async.waterfall([
