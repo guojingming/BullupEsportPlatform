@@ -264,3 +264,24 @@
 	background-color: #455a64!important;
 	color:#fff!important;
 }
+.modal11{
+	display: none;
+	position: absolute;
+	width: 70%;
+	left: 15%;
+	padding: 25px 30px 20px 30px;
+}
+.pubg_img{
+	position: absolute;
+    left: 520px;
+    width: 450px;
+    top: 80px;
+    height: 285px;
+}
+.pubg_img img{
+	width: 100%;
+	height: 100%;
+}
+.odds_click{
+	padding-right: 20px;
+}
