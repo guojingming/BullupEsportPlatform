@@ -823,7 +823,10 @@ exports.strengthScoreChangedCalculation = function(winnerScore, loserScore){
 exports.handleBattleTimeout = function(io,socket){
     socket.on('isTimeout',function(data){
         logUtil.listenerLog('battleIsTimeout');
-        //console.log('this is pointInfo:',JSON.stringify(data));
+        if(data.battleInfo.status == 'ready'){
+            return;
+        }
+        console.log('this is pointInfo:',JSON.stringify(data));
         delete exports.battles[data.battleName];
         delete teamService.formedTeams[data.blueRoomName];
         delete teamService.formedTeams[data.redRoomName];

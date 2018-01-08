@@ -371,25 +371,29 @@ exports.handleAnalysis = function (socket) {
         // console.log('bankInfo:'+bank.firstname);
         // logUtil.listenerLog('changeInfo');
         administratorDao.findAnalysisData(function(res){
-            console.log("resResult"+JSON.stringify(res));
+            //console.log("resResult"+JSON.stringify(res));
             //console.log(res);
-            if (!res) {
-                socket.emit('feedback', {
-                    errorCode: 1,
-                    text: '查询失败，请稍后重试',
-                    type: 'ANALYSISDATARESULT',
-                    extension: null
-                });
-            } else {
-                 socket.emit('feedback', {
-                    errorCode: 0,
-                    text: '查询成功,请刷新页面',
-                    type: 'ANALYSISDATARESULT',
-                    extension: {
-                        data:res
-                    }
-                });
-            }
+            baseInfoDao.getCompanyIncome(function(res2){
+                if(!res || !res2){
+                    socket.emit('feedback', {
+                        errorCode: 1,
+                        text: '查询失败，请稍后重试',
+                        type: 'ANALYSISDATARESULT',
+                        extension: null
+                    });
+                }else{
+                    res.companyIncome = res2[0];
+                    res.usersIncome = res2[1];
+                    socket.emit('feedback', {
+                        errorCode: 0,
+                        text: '查询成功,请刷新页面',
+                        type: 'ANALYSISDATARESULT',
+                        extension: {
+                            data:res
+                        }
+                    });
+                }
+            });
         });
     });
 }
@@ -401,7 +405,7 @@ exports.handleAnalysis = function (socket) {
 exports.handleInvitedCode = function (socket) {
     socket.on('getInvitedCodeData',function () {
         baseInfoDao.getInvitedInfo(function(res){
-            console.log("resResult"+JSON.stringify(res));
+            //console.log("resResult"+JSON.stringify(res));
             if (!res) {
                 socketService.stableSocketEmit(socket,'feedback', {
                     errorCode: 1,
