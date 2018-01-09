@@ -11,16 +11,34 @@ $().ready(function(){
    });
    $('#bind_pubg').on('click',function(event){
        event.preventDefault();
+       if(userInfo == null){
+         $('#create_pubg_modall').modal("close");
+          bullup.alert("请先登录");
+          return;  
+      }
        $('#create_pubg_modall').modal("close");
        $("#bind_pubg_modal").modal("open");
    });
-   $("#create_pubg_modall").on("click",function(event){
-       if(userInfo != null){
+   $("#starter-match-btn_no").on("click",function(event){
+    if(userInfo == null ){
+        $('.login_pubg_btn').show();
         $('.bind_pubg_btn').hide();
-        $('.create_pubg_btn').show();
-       }else{
-        $('.bind_pubg_btn').show();
         $('.create_pubg_btn').hide();
+       }else{
+         //userInfo.pubg = {a:"a"};
+         if(userInfo.pubg == undefined || userInfo.pubg == null){
+            $('.login_pubg_btn').hide();
+            $('.bind_pubg_btn').show();
+            $('.create_pubg_btn').hide();
+         }else{
+          $('.login_pubg_btn').hide();
+          $('.bind_pubg_btn').hide();
+          $('.create_pubg_btn').show();
+         }
        }
+   });
+   $('#login_pubg').on("click",(event)=>{
+    $('#create_pubg_modall').modal("close");
+    $('#log_modal').modal("open");
    });
 });
