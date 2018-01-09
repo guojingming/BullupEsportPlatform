@@ -9,6 +9,9 @@ $().ready(function(){
 	
 	/* modal initialize */
 	$("#create_room_modall").modal();
+	
+	/* modal initialize */
+	$("#create_pubg_modall").modal();
 
 	/* modal initialize */
 	$("#log_modal").modal();
@@ -18,6 +21,9 @@ $().ready(function(){
 	$("#message_sheet").modal();
 
 	//$("#link_modal").modal();
+
+	/* modal initialize */
+	$("#bind_pubg_modal").modal();
 
 	$(".user-collapse").sideNav();
 	
