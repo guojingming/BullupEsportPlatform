@@ -18,7 +18,7 @@ $("#invite_friend_btn").click(function(){
             var friendListSize = Number.parseInt($("#friend_list_size_hidden").val());
             for(var i = 0;i<friendListSize;i++){
                 if($("#friend_" + (i+1) + "_check_box").prop("checked")){//选中
-                    //alert($("#friend_" + (i+1) + "_check_box").val());//打印选中的值
+                   // alert($("#friend_" + (i+1) + "_check_box").val());//打印选中的值
                     //发送请求
                     //console.log("room : " + JSON.stringify(roomInfo));
                     var friend = userInfo.friendList[i];

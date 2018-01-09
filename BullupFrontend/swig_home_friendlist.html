@@ -9,7 +9,10 @@
        <!-- <a href="#!email"><span class="white-text email"></span></a> -->
        
     </div>
-    <a class="waves-effect waves-light btn" href="#coollap">添加好友</a>
+    <div style="padding: 2px 0px 3px 5px;">
+    <a class="waves-effect waves-light btn " style="width:48%;" href="#coollap">添加好友</a>
+    <a class="waves-effect waves-light btn " style="width:48.5%;" id="delete_friend">删除好友</a>
+    </div>
 </li>
 
 <ul class="collapsible" data-collapsible="accordion">
@@ -17,7 +20,11 @@
         
         <div class="collapsible-header active"><span class="new badge">{{friendListLength}}</span>好友</div>
 
+        <div class="btn right show_delete" style="display:none;margin: 5px 5px 0 0; " id="delete_friends">删除选中
+        </div>
+        {% set count = 0 %}
         {% for friend in userInfo.friendList%}
+        {% set count+=1 %}
         <div class="collapsible-body collap-style" style="background:none;">
             <div class="collap-rq" >
             <p class="collap-p" >
@@ -30,34 +37,61 @@
                 <label class="friend-status friend-status--offline">
                     在线
                 </label>
+                <p class="right show_delete" style="padding-right:10px;display:none;">
+                    <input type="checkbox" value="{{friend.name}}" id="friend_{{ loop.index }}_check_box"/>
+                    <label for="friend_{{ loop.index }}_check_box" style="padding-left: 25px;"></label>
+                </p> 
                 {% elseif friend.online=='inroom' %}
                 <div class="color-dot color-dot-yellow">
                 </div>
                 <label class="friend-status friend-status--offline">
                     建房中
                 </label>
+                <p class="right show_delete" style="padding-right:10px;display:none;">
+                    <input type="checkbox" value="{{friend.name}}" id="friend_{{ loop.index }}_check_box" />
+                    <label for="friend_{{ loop.index }}_check_box" style="padding-left: 25px;"></label>
+                </p> 
                 {% elseif friend.online=='inteam' %}
                 <div class="color-dot color-dot-yellow">
                 </div>
                 <label class="friend-status friend-status--offline">
                     组队中
                 </label>
+                <p class="right show_delete" style="padding-right:10px;display:none;">
+                    <input type="checkbox" value="{{friend.name}}" id="friend_{{ loop.index }}_check_box" />
+                    <label for="friend_{{ loop.index }}_check_box" style="padding-left: 25px;"></label>
+                </p> 
                 {% elseif friend.online=='inbattle' %}
                 <div class="color-dot color-dot-yellow">
                 </div>
                 <label class="friend-status friend-status--offline">
                     游戏中
                 </label>
+                <p class="right show_delete" style="padding-right:10px;display:none;">
+                    <input type="checkbox"  value="{{friend.name}}" id="friend_{{ loop.index }}_check_box" />
+                    <label for="friend_{{ loop.index }}_check_box" style="padding-left: 25px;"></label>
+                </p> 
                 {% elseif friend.online=='false' %}
                 <div class="color-dot color-dot-red">
                 </div>
                 <label class="friend-status friend-status--offline">
                     离线
                 </label>
+                <p class="right show_delete" style="padding-right:10px;display:none;">
+                    <input type="checkbox" value="{{friend.name}}" id="friend_{{ loop.index }}_check_box" />
+                    <label for="friend_{{ loop.index }}_check_box" style="padding-left: 25px;"></label>
+                </p>              
                 {% endif %}
+                
             </div>
+           
         </div>
+      
         {% endfor %}
+        <input type="hidden" id="friend_list_size_hidden" value="{{ count }}">
     </li>
 </ul>
-<script src="./js/zymly.js"></script> 
+<script src="./js/zymly.js"></script>
+<script src="./js/delete_friends.js"></script>
+
+

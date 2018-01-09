@@ -30,6 +30,11 @@ $().ready(function(){
                $("#modal1").css("z-index",1002);             
             },10);
         });
+        $("#delete_friend").on('click',function(event){
+            event.preventDefault();
+            $(".show_delete").toggle();
+        //    $.getScript("./js/delete_friends.js")
+        });
     });
        
     
