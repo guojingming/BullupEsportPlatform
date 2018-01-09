@@ -205,6 +205,10 @@ socket.on('feedback', function (feedback) {
         case'DELETEFRIENDS':
             deleteFriends(feedback)
             break;
+        //绝地求生账号绑定
+        case'PUBGBINDRESULT':
+            handlePUBGBindResult(feedback);
+            break;
         }
 });
 
@@ -1548,6 +1552,7 @@ process.on('uncaughtException', function(err) {
     //alert("召唤师不存在或设置的时间段过长！");
     console.log(String(err));
 });
+
 function deleteFriends(feedback){
     bullup.alert(feedback.text);
     var temp = feedback.extension.data;
@@ -1559,8 +1564,15 @@ function deleteFriends(feedback){
     bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
         'userInfo': userInfo,
         'friendListLength': friendCount
-    }, 'user-slide-out');
+    },'user-slide-out');
     $('.collapsible').collapsible();
-    // $('#friend_list_real_btn').click();
-    
+}
+
+function handlePUBGBindResult(feedback){
+    if(feedback.errorCode == 1){
+        bullup.alert(feedback.text);
+    }else{
+        userInfo.pubgAccount = feedback.extension.data;
+        bullup.alert(userInfo.pubgAccount);
+    }
 }

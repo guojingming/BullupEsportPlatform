@@ -17,6 +17,7 @@ exports.init = function(rootPath){
     this.global.dao.strengthInfoDao = require(pathUtil.paths.daoPaths.strengthInfoDaoPath);
     this.global.dao.administratorDao = require(pathUtil.paths.daoPaths.administratorDaoPath);
     this.global.dao.bullupWebDao = require(pathUtil.paths.daoPaths.bullupWebDaoPath);
+    this.global.dao.pubgDao = require(pathUtil.paths.daoPaths.pubgDaoPath);
 
     this.global.service.userService = require(pathUtil.paths.servicePaths.userServicePath);
     this.global.service.battleService = require(pathUtil.paths.servicePaths.battleServicePath);
@@ -32,6 +33,7 @@ exports.init = function(rootPath){
     this.global.service.teamService = require(pathUtil.paths.servicePaths.teamServicePath);
     this.global.service.testService = require(pathUtil.paths.servicePaths.testServicePath);
     this.global.service.bullupWebService = require(pathUtil.paths.servicePaths.bullupWebServicePath);
+    this.global.service.pubgService = require(pathUtil.paths.servicePaths.pubgServicePath);
     
 
     this.global.utils.databaseUtil = require(pathUtil.paths.utilPaths.databaseUtilPath);
