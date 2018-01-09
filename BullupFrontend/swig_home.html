@@ -30,15 +30,6 @@
 		<link rel="stylesheet" href="./css/chatroom.css" type="text/css" />
 		<link rel="stylesheet" href="./css/chosen.min.css" type="text/css" />
 		<link rel="stylesheet" href="./css/home_body.css" type="text/css" />
-		<style>
-			.modal11{
-				display: none;
-                position: absolute;
-				width: 70%;
-				left: 15%;
-				padding: 25px 30px 20px 30px;
-			}
-		</style>
 	</head>
    
 	<body>
@@ -61,7 +52,7 @@
 					<ul class="right hide-on-med-and-down wang_ul">
 						<!-- <li><a id="admin" style="display:none">提现管理</a></li> -->
 						<li><a class="nav-link" id="router_starter">主页</a></li>
-						<li><a id="router_test_page">测试</a></li>
+						<!-- <li><a id="router_test_page">测试</a></li> -->
 						<li><a id="router_tournament">吃鸡</a></li>
 						<li><a id="router_dataquery">数据查询</a></li>
 						<li><a id="router_rank">排行榜</a></li>
@@ -92,6 +83,7 @@
 				<i class="fa fa-plus" aria-hidden="true"></i>
 			</a>
 			<ul class="ulIcon">
+				<li ><span style="color:#fff;" class="icbefore">吃鸡</span><a class="btn-floating red" href="#create_pubg_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
 				<li ><span style="color:#fff;" class="icbefore">约战</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
 				<li ><span style="color:#fff;" class="icbefore">大厅</span><a id="turn_to_room_btn" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=" fa fa-hourglass-start" aria-hidden="true"></i></a><li>
 				<li ><span style="color:#fff;" class="icbefore">战力</span><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true" id='home'></i></a></li>
@@ -192,6 +184,103 @@
 		</div>
 
 		<!-- end of create room modal -->
+
+
+		<!-- modal structure -->
+		<div class="modal" id="create_pubg_modall">
+			<div class="modal-content">
+				<h4>创建房间</h4>
+				<div class="row">
+					<div class="pubg_img">
+					    <img src="./media/imgs/pubg.jpg">                       
+					</div>
+					<form class="col s12">
+						<div class="row">
+							<!-- first column -->
+							<div class="col s6">
+								<!-- Battle Declaration -->
+								<div class="input-field col s12">
+									<input id="battle_desc" type="text" class="validate" value="">
+									<label for="battle_desc" style="font-size: .8rem;">房间描述</label>
+								</div>
+								<!-- winning condition -->
+								<div class="row">
+									<div class="input-field col s12">
+										<!-- Winning Condition -->
+										<select id="map-selection">												
+											<option class = "map-selection-item" value="map-selection-1"  selected>单排</option>
+											<option class = "map-selection-item" value="map-selection-2" disabled>合作(敬请期待)</option>
+										</select>
+										<label>战斗类型</label>
+									</div>
+									<div class="input-field col s12">
+										<select id="reward_amount">
+											<option value="1">1</option>
+											<option value="5">5</option>
+											<option value="10">10</option>
+										</select>
+										<label>下注数额</label>
+									</div>
+									<div class="input-field col s12">
+											<select id="reward_amount">
+												<option value="server_1">NA   (北美服务器)</option>
+												<option value="server_2">EU   (欧洲服务器)</option>
+												<option value="server_3">AS   (亚洲服务器)</option>
+												<option value="server_4">SA   (南美服务器)</option>
+												<option value="server_5">KRJP (日韩服务器)</option>
+												<option value="server_6">OC   (大洋洲服务器)</option>												
+												<option value="server_7">SEA  (东南亚服务器)</option>
+											</select>
+											<label>请选择大区</label>
+										</div>
+								</div>
+							</div>
+							<div class="col s6">
+								    <div class="right">战斗力:1234</div>								
+								    <div class="right">吃鸡账号:</div>								
+							</div>
+							<div class="col s12">
+								<div class="row">
+									<div class="input-field col s6 odds_click">
+										<select id="reward_amount">
+											<option value="num_1">1</option>
+											<option value="num_2">2</option>
+											<option value="num_3">3</option>
+										</select>
+										<label>击杀数目</label>
+									</div>
+									
+									<div class="input-field col s6 odds">
+										<select id="reward_amount">
+											<option value="123" disabled>1:0.1</option>
+										</select>
+										<label>赔率</label>
+									</div>
+								</div>
+								<div class="row create_pubg_btn" style="padding-right: 10px;display:none;">
+									<!-- <a id="confirm_create_room_btn" class="waves-effect waves-light btn modal-trigger right">创建</a> -->
+									<a id="confirm_create_room_btn" class="waves-effect right btn">创建</a> 
+									<span class="right" style="padding-right:10px;height:35px;line-height:35px;font-size:16px;">未检测到进入游戏不可以创建房间,请先进入游戏</span>									
+								</div>
+								<div class="row bind_pubg_btn" style="padding-right: 10px;">
+									<!-- <a id="confirm_create_room_btn" class="waves-effect waves-light btn modal-trigger right">创建</a> -->
+									<a id="bind_pubg" class="waves-effect right btn">绑定</a> 
+									<span class="right" style="padding-right:10px;height:35px;line-height:35px;font-size:16px;">您未绑定吃鸡账号,请绑定</span>									
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- end of create room modal -->
+		
+		<!-- Modal Structure -->
+		<div id="bind_pubg_modal" class="modal" style="background:#455a64;padding:10px 20px;color:#fff;" >
+			<input type="text" placeholder="输入吃鸡昵称">
+			<div class="btn right waves-effect">绑定账号</div>
+	    </div>
+
 
 		<!-- Modal Structure -->
 		<div id="log_modal" class="modal" >
@@ -755,6 +844,7 @@
 		<script src="./js/turn_to_room.js"></script>
 		<script src="./js/add_friend.js"></script>
 		<script src="./js/bank_input.js"></script>
+		<script src="./js/pubg.js"></script>
 
 		<!-- Other files -->
 		<script src="./js/test_page.js"></script>
