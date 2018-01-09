@@ -2,12 +2,10 @@ var process = require("child_process");
 var log = require("./logutil.js")
 var fs = require("fs");
 
+var count = 0;
 exports.grabLOLData = function(type, socket){
     //杀掉所有BullupService进程
     process.execFile('killBS.bat',null,{cwd:'./js/auto_program/'},function(error, stdout, stderr){
-        if(error){
-            console.log(error);
-        }
         switch (type){
             case "login": {
                 syncLogin(function(jsonStr){
@@ -22,9 +20,12 @@ exports.grabLOLData = function(type, socket){
                 break;
             }
             case "result": {
-                syncResult(function(jsonStr){
-                    socket.emit('lolBattleResult', jsonStr);
-                });
+                if(count == 0){
+                    syncResult(function(jsonStr){
+                        socket.emit('lolBattleResult', jsonStr);
+                    });
+                    count = 2;
+                }
                 break;
             }
             case 'killProcess':{
