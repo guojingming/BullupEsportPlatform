@@ -63,6 +63,7 @@ exports.findFriendListByUserId = function(userId, callback) {
                 if (err) console.log(err);
                 dbUtil.closeConnection(connection);
                 callback(friendList);
+                
             });
         });
     });
@@ -497,4 +498,13 @@ exports.insertFeedback=function(result,callback){
         });
     });
 }
-
+//删除好友
+exports.deletefriendsByUserIdAndFriendsId=function(userId,friend_userId,callback){
+    dbUtil.createConnection(function(connection){
+         dbUtil.query(connection,'delete from bullup_friend where user_id=? and friend_user_id=?',[userId,friend_userId],function(err,results){
+            if (err) throw err;
+            dbUtil.closeConnection(connection);
+            callback(results);
+    });
+    });
+}
