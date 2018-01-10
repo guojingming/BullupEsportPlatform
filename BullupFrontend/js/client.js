@@ -573,7 +573,8 @@ socket.on('lolRoomEstablished', function (data) {
         handleTimeout2(1000*60*90);
     }
     isGameStart();
-    battleInfo.status = 'ready';       
+    battleInfo.status = 'ready';
+    roomCount = 0;       
     //userInfo.liseningResult = false;
     //}
     //userInfo.creatingRoom = false;
@@ -638,6 +639,8 @@ function handleTimeout2(num){
 socket.on('battleResult', function(resultPacket){
     socket.emit('tokenData', resultPacket.token);
     clearTimeout(timeControl2);
+    console.log('nmb',lol_process.gameStartCount);
+    lol_process.gameStartCount = 0;
     //读取数据
     var winTeam = resultPacket.winTeam;
     var battleResultData = {};
@@ -1573,6 +1576,6 @@ function handlePUBGBindResult(feedback){
         bullup.alert(feedback.text);
     }else{
         userInfo.pubgAccount = feedback.extension.data;
-        bullup.alert(userInfo.pubgAccount);
+        bullup.alert('绑定成功！祝您大吉大利，今晚吃鸡');
     }
 }

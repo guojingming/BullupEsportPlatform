@@ -26,7 +26,7 @@ $().ready(function(){
         $('.create_pubg_btn').hide();
        }else{
          //userInfo.pubg = {a:"a"};
-         if(userInfo.pubg == undefined || userInfo.pubg == null){
+         if(userInfo.pubgAccount == undefined || userInfo.pubgAccount == null){
             $('.login_pubg_btn').hide();
             $('.bind_pubg_btn').show();
             $('.create_pubg_btn').hide();
@@ -34,6 +34,7 @@ $().ready(function(){
           $('.login_pubg_btn').hide();
           $('.bind_pubg_btn').hide();
           $('.create_pubg_btn').show();
+          $('#pubgAccount').html(userInfo.pubgAccount);
          }
        }
    });

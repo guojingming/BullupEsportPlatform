@@ -45,3 +45,37 @@ exports.executePUBGBind = function(data,callback){
         });
     });
 }
+
+//根据userId查找用户
+exports.findAccountByUserId = function(userId, callback) {
+    dbUtil.createConnection(function(connection){
+        async.waterfall([
+            function(callback){
+                dbUtil.query(connection, 'select pubg_info_id from `pubg_bind` where user_id=?', [userId], function (err, results){
+                    if (err) throw err;
+                    if(results.length == 0){
+                        callback(null,null);
+                    }else{
+                        console.log(results); 
+                        callback(null,results[0]);
+                    }
+                });
+            },
+            function(data,callback){
+                if(data == null){
+                    callback(null,null);
+                }else{
+                    dbUtil.query(connection, 'select pubg_nickname from `pubg_info` where pubg_info_id=?', [data.pubg_info_id], function (err, results2){
+                        if (err) throw err;
+                        console.log(results2);
+                        callback(null,results2[0]);
+                    });
+                }
+            }
+        ],function(err,res){
+            if (err) throw err;
+            dbUtil.closeConnection(connection);
+            callback(res);
+        });
+    });
+}
