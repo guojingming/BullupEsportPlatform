@@ -205,6 +205,10 @@ socket.on('feedback', function (feedback) {
         case'DELETEFRIENDS':
             deleteFriends(feedback)
             break;
+        //绝地求生账号绑定
+        case'PUBGBINDRESULT':
+            handlePUBGBindResult(feedback);
+            break;
         }
 });
 
@@ -228,10 +232,10 @@ function handleUpdateFriendStatus(feedback){
     arr.sort(function(x,y){
         return x.online < y.online ? 1 : -1;
     });
-    console.log('this is arr:',arr);
+    //console.log('this is arr:',arr);
 
     userInfo.friendList = arr;
-    console.log(JSON.stringify(userInfo.friendList));
+    //console.log(JSON.stringify(userInfo.friendList));
 
     var friendCount = 0;
     for(var index in arr){
@@ -394,6 +398,7 @@ function swig_fight(lolRoom){
 }
 
 match_timer = null;
+var roomCount = 0;
 socket.on('lolRoomEstablish', function (lolRoom) {
     if(match_timer != null){
        //清除自由匹配中的计时函数
@@ -407,7 +412,11 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         lolRoom.team = "blue";
         swig_fight(lolRoom);
         //userInfo.creatingRoom = false;
-        lol_process.grabLOLData('room', socket);
+        //console.log('this is abcdf',roomCount);
+        if(roomCount == 0){
+            lol_process.grabLOLData('room', socket);
+            roomCount = 2; 
+        }
         // 如果用户是创建者，则创建房间
         bullup.alert('请 您 在规定时间内去 <b><span style="color:#0a0aa0;">创建</span></b> 房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password + '<br> 请在LOL加入 <b style="color:#0a0aa0"> 蓝方 </b> 战队');
         var bluePts = battleInfo.blueSide.participants;
@@ -455,7 +464,11 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         //bullup.alert('请等待');
         //if(userInfo.creatingRoom){
         //$("#router_test_page2").click();
-        lol_process.grabLOLData('room', socket);        
+        //console.log('this is abcdf',roomCount);
+        if(roomCount == 0){
+            lol_process.grabLOLData('room', socket);
+            roomCount = 2; 
+        }        
         
         var bluePts = battleInfo.blueSide.participants;
         var redPts = battleInfo.redSide.participants;
@@ -544,6 +557,7 @@ function handleBattleTimeoutResulr(feedback){
     roomInfo = null;
     teamInfo = null;
     battleInfo = null;
+    roomCount = 0;
 }
 
 socket.on('lolRoomEstablished', function (data) {
@@ -551,7 +565,7 @@ socket.on('lolRoomEstablished', function (data) {
     //游戏开始 刷新时钟 
     //if(userInfo.liseningResult == true ){
     //$("#router_test_page").click();
-    lol_process.grabLOLData('result', socket);      
+    lol_process.grabLOLData('result', socket);
     $("#show_game_start").css("display","inline-block");
     bullup.alert('游戏已开始');     
     clearTimeout(timeControl);
@@ -559,7 +573,8 @@ socket.on('lolRoomEstablished', function (data) {
         handleTimeout2(1000*60*90);
     }
     isGameStart();
-    battleInfo.status = 'ready';       
+    battleInfo.status = 'ready';
+    roomCount = 0;       
     //userInfo.liseningResult = false;
     //}
     //userInfo.creatingRoom = false;
@@ -623,7 +638,9 @@ function handleTimeout2(num){
 
 socket.on('battleResult', function(resultPacket){
     socket.emit('tokenData', resultPacket.token);
-    clearTimeout(timeControl2);  
+    clearTimeout(timeControl2);
+    console.log('nmb',lol_process.gameStartCount);
+    lol_process.gameStartCount = 0;
     //读取数据
     var winTeam = resultPacket.winTeam;
     var battleResultData = {};
@@ -1538,6 +1555,7 @@ process.on('uncaughtException', function(err) {
     //alert("召唤师不存在或设置的时间段过长！");
     console.log(String(err));
 });
+
 function deleteFriends(feedback){
     bullup.alert(feedback.text);
     var temp = feedback.extension.data;
@@ -1549,8 +1567,15 @@ function deleteFriends(feedback){
     bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
         'userInfo': userInfo,
         'friendListLength': friendCount
-    }, 'user-slide-out');
+    },'user-slide-out');
     $('.collapsible').collapsible();
-    // $('#friend_list_real_btn').click();
-    
+}
+
+function handlePUBGBindResult(feedback){
+    if(feedback.errorCode == 1){
+        bullup.alert(feedback.text);
+    }else{
+        userInfo.pubgAccount = feedback.extension.data;
+        bullup.alert('绑定成功！祝您大吉大利，今晚吃鸡');
+    }
 }
