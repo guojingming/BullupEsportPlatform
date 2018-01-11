@@ -204,6 +204,13 @@ socket.on('feedback', function (feedback) {
         }
 });
 
+
+//pubg页面
+function handlePubgResulr(feedback){
+   var PubgHtml = bullup.loadSwigView('swig_pubg.html',null);
+   $('#main-view').html(PubgHtml);
+}
+
 //刷新好友状态
 function handleUpdateFriendStatus(feedback){
     var friendInfo = feedback;

@@ -141,8 +141,16 @@ exports.handleBattleInviteResult = function (io, socket) {
 exports.handleLOLRoomEstablished = function (io, socket) {
     socket.on('lolRoomEstablished', function (roomPacketStr) {
         
-        
+        if(roomPacketStr == undefined || roomPacketStr == null){
+            console.log("客户将 BullupServiceNew 关闭了  导致 roomObj 为 undefind");
+            return;
+         } 
         var roomObj = JSON.parse(roomPacketStr);
+
+        if(roomObj.BattleInfo == undefined || roomObj.BattleInfo == null){
+            console.log("客户将 BullupServiceNew.exe 关闭了  导致 roomObj.BattleInfo 为 undefind");
+            return;
+         } 
         var gameMode = roomObj.BattleInfo.gameData.queue.gameMode;
        
         var roomPacket = {};

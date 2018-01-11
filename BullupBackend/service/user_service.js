@@ -502,6 +502,10 @@ exports.changeUserStatus = function (userId, status) {
 }
 
 exports.setEnvironment = function (userId, head, data) {
+    if(this.users[userId] == undefined || this.users[userId] == null){
+        console.log("这有错 this.users[userId].environment[head] = data; 为 undefind");
+        return;
+    }
     this.users[userId].environment[head] = data;
 
     console.log("user: " + this.users[userId].name + " env_head: " + head);

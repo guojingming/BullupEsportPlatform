@@ -19,6 +19,9 @@ $().ready(function(){
 	$("#sign_modal").modal();
 
 	$("#message_sheet").modal();
+	
+	/* #pubg_waiting_modal */ 
+	$("#pubg_waiting_modal").modal();
 
 	//$("#link_modal").modal();
 
