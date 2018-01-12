@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://52.15.124.26:3000');
+var socket = io.connect('http://127.0.0.1:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var lolUtil = require('./js/util/lol_util.js');
@@ -200,6 +200,10 @@ socket.on('feedback', function (feedback) {
         //游戏开始后的倒计时
         case 'GETAFTERFLIPCLOCKRESULT':
             handleGetAfterFlipClock(feedback);
+            break;
+        //删除好友
+        case'DELETEFRIENDS':
+            deleteFriends(feedback)
             break;
         }
 });
@@ -1541,3 +1545,19 @@ process.on('uncaughtException', function(err) {
     //alert("召唤师不存在或设置的时间段过长！");
     console.log(String(err));
 });
+function deleteFriends(feedback){
+    bullup.alert(feedback.text);
+    var temp = feedback.extension.data;
+    userInfo.friendList=temp;
+    var friendCount = 0; 
+    for(var index in  userInfo.friendList){
+        friendCount++
+    }
+    bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
+        'userInfo': userInfo,
+        'friendListLength': friendCount
+    }, 'user-slide-out');
+    $('.collapsible').collapsible();
+    // $('#friend_list_real_btn').click();
+    
+}

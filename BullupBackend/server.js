@@ -134,6 +134,8 @@ io.on('connection', function(socket) {
 
     //测试
     testService.handleTest(socket);
+    //删除好友
+    userService.deleteFriends(socket)
     
 });
 

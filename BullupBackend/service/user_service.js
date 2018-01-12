@@ -928,3 +928,41 @@ exports.friendStatus = function(userId,online,status){
         }
     });
 }
+//删除好友
+exports.deleteFriends=function(socket){
+socket.on('delete_friends',function(ID){
+     console.log(ID)
+    baseInfoDao.deletefriendsByUserIdAndFriendsId(ID.userId,ID.friend_userId,function(res){
+        if(!res){
+            socketService.stableSocketEmit(socket,'feedback',{
+                errorCode:1,
+                text:'删除好友失败,请稍后重试',
+                type:'DELETEFRIENDS',
+                extension:null
+            });
+        }else{
+            baseInfoDao.findFriendListByUserId(ID.userId,function(res){
+                if(res){
+                    var arr = [];
+                    var i = 0;
+                    for(var key in res){
+                        // console.log(i++,JSON.stringify(res[key]));
+                        arr.push(res[key]);
+                    }
+                    socketService.stableSocketEmit(socket,'feedback',{
+                         errorCode:0,
+                         text:'删除好友成功',
+                         type:'DELETEFRIENDS',
+                         extension:{
+                             data: arr
+                         }
+                     });
+                }
+            })
+           
+        }
+    })
+
+})
+
+}
