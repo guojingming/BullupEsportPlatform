@@ -31,6 +31,7 @@ exports.init = function(rootPath){
     exports.paths.daoPaths.strengthInfoDaoPath = exports.directories.daoDirectory + "strength_info_dao.js";
     exports.paths.daoPaths.administratorDaoPath = exports.directories.daoDirectory + "administrator_dao.js";
     exports.paths.daoPaths.bullupWebDaoPath = exports.directories.daoDirectory + "bullup_web_dao.js";
+    exports.paths.daoPaths.pubgDaoPath = exports.directories.daoDirectory + "pubg_dao.js";
     //Service路径
     exports.paths.servicePaths.userServicePath = exports.directories.serviceDirectory + "user_service.js";
     exports.paths.servicePaths.battleServicePath = exports.directories.serviceDirectory + "battle_service.js";
@@ -46,6 +47,7 @@ exports.init = function(rootPath){
     exports.paths.servicePaths.teamServicePath = exports.directories.serviceDirectory + "team_service.js";
     exports.paths.servicePaths.testServicePath = exports.directories.serviceDirectory + "test_service.js";
     exports.paths.servicePaths.bullupWebServicePath = exports.directories.serviceDirectory + "bullupWeb_service.js";    
+    exports.paths.servicePaths.pubgServicePath = exports.directories.serviceDirectory + "pubg_service.js";
     //Util路径
     exports.paths.utilPaths.databaseUtilPath = exports.directories.utilDirectory + "database_util.js";
     exports.paths.utilPaths.pathUtilPath = exports.directories.utilDirectory + "path_util.js";

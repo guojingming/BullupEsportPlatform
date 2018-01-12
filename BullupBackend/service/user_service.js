@@ -14,6 +14,7 @@ var wealthInfoDao = dependencyUtil.global.dao.wealthInfoDao;
 var lolInfoDao = dependencyUtil.global.dao.lolInfoDao;
 var battleRecordDao = dependencyUtil.global.dao.battleRecordDao;
 var rankInfoDao = dependencyUtil.global.dao.rankInfoDao;
+var pubgDao = dependencyUtil.global.dao.pubgDao;
 
 exports.init = function () {
     this.users = {};
@@ -165,6 +166,14 @@ exports.handleLogin = function (socket) {
                             //console.log(userInfo.battleCount);
                             callback(null,userInfo);
                         });
+                    },
+                    function(userInfo,callback){
+                        pubgDao.findAccountByUserId(userInfo.userId,function(res){
+                            if(res){
+                                userInfo.pubgAccount = res.pubg_nickname;   
+                            }
+                            callback(null,userInfo);
+                        });
                     }
 
                 ], function(err, userInfo){
@@ -181,6 +190,7 @@ exports.handleLogin = function (socket) {
                             userRole:user.user_role,
                             lastLoginTime:userInfo.lastLoginTime,
                             battleCount:userInfo.battleCount,
+                            pubgAccount: userInfo.pubgAccount,
                             //----------------------
                             avatarId: userInfo.userIconId,
                             wealth: userInfo.wealth,
