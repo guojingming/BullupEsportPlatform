@@ -29,7 +29,7 @@ $().ready(function(){
         $('.bind_pubg_btn').hide();
         $('.create_pubg_btn').hide();
        }else{
-         userInfo.pubg = {a:"a"};
+        //userInfo.pubg = {a:"a"};
          //判断用户是否绑定
          if(userInfo.pubg == undefined || userInfo.pubg == null){
             $('.login_pubg_btn').hide();
@@ -50,15 +50,27 @@ $().ready(function(){
 
    //点击进行游戏
    $('#confirm_create_pubg_room_btn').on('click',(event)=>{
-      console.log("点击进来了");
-      setTimeout(()=>{
-        console.log("估计是没进来");
-        handlePubgResulr();
-        $('.modal').modal('close');
-        $('.pubg_time_control').FlipClock(3600, {
-          clockFace: 'MinuteCounter',
-          countdown: true
-        });
-      },10000);
+      handlePubgResult();
+      $('.modal').modal('close');
+      $('.pubg_time_control').FlipClock(3600, {
+        clockFace: 'MinuteCounter',
+        countdown: true
+      });
    });
+  //  setTimeout(()=>{
+  //     $('.modal').modal('close');
+  //     $('.pubg_time_control').FlipClock(3600, {
+  //       clockFace: 'MinuteCounter',
+  //       countdown: true
+  //     });
+  //   },10000);
+      
+     $("#bind_pubg_account_btn").on("click",(event)=>{
+       $("#pubg_waiting_modal").modal("open");
+        setTimeout(()=>{
+          $('.modal').modal('close');
+          userInfo.pubg = {a:"a"};
+          bullup.alert("绑定成功");
+        },10000);
+     });
   });
