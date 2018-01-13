@@ -212,6 +212,20 @@ socket.on('feedback', function (feedback) {
         }
 });
 
+    //handlePubgResultHtml();
+
+
+function handlePubgResultHtml(feedback){
+    var pubgResultHtml = bullup.loadSwigView('swig_pubg_result.html',null);
+    $('#main-view').html(pubgResultHtml);
+}
+
+//pubg页面
+function handlePubgResult(feedback){
+   var PubgHtml = bullup.loadSwigView('swig_pubg.html',null);
+   $('#main-view').html(PubgHtml);
+}
+
 //刷新好友状态
 function handleUpdateFriendStatus(feedback){
     var friendInfo = feedback;
