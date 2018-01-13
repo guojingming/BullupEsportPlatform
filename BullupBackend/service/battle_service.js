@@ -85,7 +85,7 @@ exports.handleBattleInviteResult = function (io, socket) {
                 battleName:$battleName,
             });
             var lolRoom = {
-                roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
+                roomName: challengerTeam.participants[0].lolAccountInfo.user_lol_nickname+"的对局",
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId,
                 time: flipClocks[$battleName].time,
@@ -103,6 +103,8 @@ exports.handleBattleInviteResult = function (io, socket) {
                 },
                 lolRoom:lolRoom,
             };
+            //console.log("battle:::",JSON.stringify(battle));
+            //console.log(battle.battleInfo.blueSide.participants[0].lolAccountInfo.user_lol_nickname);
             exports.battles[battle.battleName] = battle;
             // 将挑战队伍的所有用户加入到新的socket room
             for (var i in challengerTeam.participants) {
@@ -142,7 +144,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
     socket.on('lolRoomEstablished', function (roomPacketStr) {
         
         if(roomPacketStr == undefined || roomPacketStr == null){
-            console.log("客户将 BullupServiceNew 关闭了  导致 roomObj 为 undefind");
+            console.log("客户将 BullupServiceNew.exe 关闭了  导致 roomObj 为 undefind");
             return;
          } 
         var roomObj = JSON.parse(roomPacketStr);
