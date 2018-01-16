@@ -1,3 +1,6 @@
+var superagent = require('superagent');
+var cheerio = require('cheerio');
+var process = require('child_process');
 $(document).ready(function(){
     $('#starter-fight-btn').on('click', function(){
 
@@ -70,12 +73,37 @@ $(document).ready(function(){
 
     //点击加载视屏页
     $("#bullup_video").on("click",function(event){
-        console.log("pao");
-            var swig_video = bullup.loadSwigView('./swig_video.html',null);
+        var myUrl = "http://ahuya.duowan.com/g/lol?tag=%E5%85%A8%E9%83%A8&order=hot&page=1";
+        var data = {};
+        superagent
+        .get(myUrl)
+        .end(function(err,res){
+            if (err) throw err;
+            var $1 = cheerio.load(res.text);
+            //获取数据
+            var two = $1('.vhy-video-list').html();
+            //console.log(two);
+            $1 = cheerio.load(two);
+            //console.log($("li").length);
+            for(var i = 0;i < 20;i++){
+                var a = "a"+i
+                data[a] = {};
+                data[a].href = "http://ahuya.duowan.com"+$1("li").eq(i).find("a").attr("href");
+                data[a].title = $1("li").eq(i).find("a").attr("title");
+                data[a].img = $1("li").eq(i).find(".video-s img").attr("data-original");
+            };
+            //console.log("var data =",data);
+            var swig_video = bullup.loadSwigView('./swig_video.html',{data:data});
             $("#main-view").html(swig_video);
+            $(".video_href").on("click",function(event){
+                var a = $(this).data();
+                //console.log(a.href);
+                process.exec("start "+a.href);                
+            });
             $('#waiting-modal').css('display', 'none');    
             $('#team-detail-modal').css('display', 'none');    
             $('.modal-overlay').remove();
+        });
     });
 });
 
