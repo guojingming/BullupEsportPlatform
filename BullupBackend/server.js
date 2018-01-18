@@ -17,6 +17,7 @@ var stripeService = dependencyUtil.global.service.stripeService;
 var lolKeyService = dependencyUtil.global.service.lolKeyService;
 var testService = dependencyUtil.global.service.testService;
 var bullupWebService = dependencyUtil.global.service.bullupWebService;
+var pubgService = dependencyUtil.global.service.pubgService;
 
 var rankInfoDao = dependencyUtil.global.dao.rankInfoDao;
 
@@ -134,6 +135,11 @@ io.on('connection', function(socket) {
 
     //测试
     testService.handleTest(socket);
+    //删除好友
+    userService.deleteFriends(socket)
+
+    //绝地求生绑定
+    pubgService.handlePUBGBind(socket);
     
 });
 

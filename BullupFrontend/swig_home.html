@@ -52,12 +52,12 @@
 					<ul class="right hide-on-med-and-down wang_ul">
 						<!-- <li><a id="admin" style="display:none">提现管理</a></li> -->
 						<li><a class="nav-link" id="router_starter">主页</a></li>
-						<li><a id="router_test_page">测试</a></li>
-						<li><a id="router_tournament">吃鸡</a></li>
+						<!-- <li><a id="router_test_page">测试</a></li> -->
+						<!-- <li><a id="router_tournament">吃鸡</a></li> -->
 						<li><a id="router_dataquery">数据查询</a></li>
 						<li><a id="router_rank">排行榜</a></li>
 						<li><a id="router_personal_center">个人中心</a></li>
-						<li><a id="router_chat">聊天室</a></li>
+						<li><a id="router_chat">组队中心</a></li>
 						<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
 						<!-- Dropdown Trigger -->
 						<li class="dro-index"><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
@@ -83,7 +83,8 @@
 				<i class="fa fa-plus" aria-hidden="true"></i>
 			</a>
 			<ul class="ulIcon">
-				<li ><span style="color:#fff;" class="icbefore">约战</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
+				<!-- <li ><span style="color:#fff;" class="icbefore">吃鸡</span><a class="btn-floating pink" href="#create_pubg_modall"><i class="fa fa-gg" aria-hidden="true"></i></a></li> -->
+				<li ><span style="color:#fff;" class="icbefore">LOL</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
 				<li ><span style="color:#fff;" class="icbefore">大厅</span><a id="turn_to_room_btn" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=" fa fa-hourglass-start" aria-hidden="true"></i></a><li>
 				<li ><span style="color:#fff;" class="icbefore">战力</span><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true" id='home'></i></a></li>
 				<li ><span style="color:#fff;" class="icbefore">好友</span><a id="friend_list_btn" class="btn-floating yellow darken-1"><i class="fa fa-user" aria-hidden="true"></i></a></li>
@@ -184,6 +185,109 @@
 
 		<!-- end of create room modal -->
 
+
+		<!-- modal structure -->
+		<div class="modal" id="create_pubg_modall">
+			<div class="modal-content">
+				<h4>创建房间</h4>
+				<div class="row">
+					<div class="pubg_img">
+					    <img src="./media/imgs/pubg.jpg">                       
+					</div>
+					<form class="col s12">
+						<div class="row">
+							<!-- first column -->
+							<div class="col s6">
+								<!-- Battle Declaration -->
+								<div class="input-field col s12">
+									<input id="battle_desc" type="text" class="validate" value="">
+									<label for="battle_desc" style="font-size: .8rem;">房间描述</label>
+								</div>
+								<!-- winning condition -->
+								<div class="row">
+									<div class="input-field col s12">
+										<!-- Winning Condition -->
+										<select id="map-selection">												
+											<option class = "map-selection-item" value="map-selection-1"  selected>单排</option>
+											<option class = "map-selection-item" value="map-selection-2" disabled>合作(敬请期待)</option>
+										</select>
+										<label>战斗类型</label>
+									</div>
+									<div class="input-field col s12">
+										<select id="reward_amount">
+											<option value="1">1</option>
+											<option value="5">5</option>
+											<option value="10">10</option>
+										</select>
+										<label>下注数额</label>
+									</div>
+									<div class="input-field col s12">
+											<select id="reward_amount">
+												<option value="server_1">NA   (北美服务器)</option>
+												<option value="server_2">EU   (欧洲服务器)</option>
+												<option value="server_3">AS   (亚洲服务器)</option>
+												<option value="server_4">SA   (南美服务器)</option>
+												<option value="server_5">KRJP (日韩服务器)</option>
+												<option value="server_6">OC   (大洋洲服务器)</option>												
+												<option value="server_7">SEA  (东南亚服务器)</option>
+											</select>
+											<label>请选择大区</label>
+										</div>
+								</div>
+							</div>
+							<div class="col s6">
+									<div class="right" id="pubgAccount"></div>
+									<span>  </span>
+								    <div class="right">您已绑定的账号:</div>							
+							</div>
+							<div class="col s12">
+								<div class="row">
+									<div class="input-field col s6 odds_click">
+										<select id="reward_amount">
+											<option value="num_1">1</option>
+											<option value="num_2">2</option>
+											<option value="num_3">3</option>
+										</select>
+										<label>击杀数目</label>
+									</div>
+									
+									<div class="input-field col s6 odds">
+										<select id="reward_amount">
+											<option value="123" disabled>1:0.1</option>
+										</select>
+										<label>赔率</label>
+									</div>
+								</div>
+								<div class="row create_pubg_btn" style="padding-right: 10px;display:none;">
+									<!-- <a id="confirm_create_room_btn" class="waves-effect waves-light btn modal-trigger right">创建</a> -->
+									<a id="confirm_create_room_btn" class="waves-effect right btn">创建</a> 
+									<span class="right" style="padding-right:10px;height:35px;line-height:35px;font-size:16px;">请在进入游戏之后点击创建房间,否则无效</span>									
+								</div>
+								<div class="row bind_pubg_btn" style="padding-right: 10px;display:none;">
+									<!-- <a id="" class="waves-effect waves-light btn modal-trigger right">创建</a> -->
+									<a id="bind_pubg" class="waves-effect right btn">绑定</a> 
+									<span class="right" style="padding-right:10px;height:35px;line-height:35px;font-size:16px;">您未绑定吃鸡账号,请绑定</span>									
+								</div>
+								<div class="row login_pubg_btn" style="padding-right: 10px;">
+									<!-- <a id="" class="waves-effect waves-light btn modal-trigger right">创建</a> -->
+									<a id="login_pubg"  class="waves-effect right btn">登陆</a> 
+									<span class="right" style="padding-right:10px;height:35px;line-height:35px;font-size:16px;">请先登录账号</span>									
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- end of create room modal -->
+		
+		<!-- Modal Structure -->
+		<div id="bind_pubg_modal" class="modal" style="background:#455a64;padding:10px 20px;color:#fff;" >
+			<input id="pubg_nickname" type="text" placeholder="输入吃鸡昵称">
+			<div id="bindBtn" class="btn right waves-effect">绑定账号</div>
+	    </div>
+
+
 		<!-- Modal Structure -->
 		<div id="log_modal" class="modal" >
 			<div class="modal-content" >
@@ -283,7 +387,60 @@
 				
 		</div>
 		
-
+        <!-- pubg waiting -->
+			<div id="pubg_waiting_modal" class="modal" style="background:#455a64">
+				<div class="modal-content">
+						<h4 style="color:#fff">检测是否进入游戏</h4>
+						<div class="row center">
+							<div class="preloader-wrapper big active">
+								<div class="spinner-layer spinner-blue">
+								  <div class="circle-clipper left">
+									<div class="circle"></div>
+								  </div>
+								  <div class="gap-patch">
+									<div class="circle"></div>
+								  </div>
+								  <div class="circle-clipper right">
+									<div class="circle"></div>
+								  </div>
+								</div>						
+								<div class="spinner-layer spinner-red">
+								  <div class="circle-clipper left">
+									<div class="circle"></div>
+								  </div>
+								  <div class="gap-patch">
+									<div class="circle"></div>
+								  </div>
+								  <div class="circle-clipper right">
+									<div class="circle"></div>
+								  </div>
+								</div>						
+								<div class="spinner-layer spinner-yellow">
+								  <div class="circle-clipper left">
+									<div class="circle"></div>
+								  </div>
+								  <div class="gap-patch">
+									<div class="circle"></div>
+								  </div>
+								  <div class="circle-clipper right">
+									<div class="circle"></div>
+								  </div>
+								</div>						
+								<div class="spinner-layer spinner-green">
+								  <div class="circle-clipper left">
+									<div class="circle"></div>
+								  </div>
+								  <div class="gap-patch">
+									<div class="circle"></div>
+								  </div>
+								  <div class="circle-clipper right">
+									<div class="circle"></div>
+								  </div>
+								</div>
+							  </div>
+					</div>
+				</div>
+			</div>
 
 
 		<!-- Modal 充值 -->
@@ -554,14 +711,14 @@
 		</div>
 		<!-- 弹出弹出 -->
 
-		<div id="modalpopo" class="modal bullup_modal" style="background: #455a64;">
+		<div id="modalpopo" class="modal11 bullup_modal" style="background: #455a64;">
 			<div class="modal-content">
 				<h4 style="color: #fff;font-size:20px">模态标题</h4>
 
-				<p class="ceneter_w" style="color: #fff;margin-top:20px;font-size:16px">一堆文本</p>
+				<p class="ceneter_w" style="color: #fff;margin-top:20px;font-size:16px;margin-bottom:10px;">一堆文本</p>
 			</div>
 			<div class="modal-footer" style="background: #455a64;">
-				<button style="background: #26a69a;" class="btn waves-effect waves-light" type="submit" name="action">确定		
+				<button style="background: #26a69a;float:right;" class="btn waves-effect waves-light" type="submit" name="action">确定		
 				</button>
 			</div>
 		</div>
@@ -617,7 +774,7 @@
 							<div class="row">
 								<div class="input-field col s8">
 									<textarea maxlength="200" style="color:#fff;" id="textarea1" class="materialize-textarea" length="80"></textarea>
-									<label for="textarea1" style="color:#fff;">输入反馈细节:</label>
+									<label for="textarea1" style="color:#fff;">输入反馈细节(QQ群:516029781):</label>
 									<span class="character-counter" style="color:#fff;float: right; font-size: 12px; height: 1px;"></span></div>
 							</div>
 
@@ -746,7 +903,9 @@
 		<script src="./js/turn_to_room.js"></script>
 		<script src="./js/add_friend.js"></script>
 		<script src="./js/bank_input.js"></script>
-
+		<!-- 绝地求生部分 -->
+		<script src="./js/pubg.js"></script>
+		<script src="./js/pubg_bind.js"></script>
 		<!-- Other files -->
 		<script src="./js/test_page.js"></script>
 		

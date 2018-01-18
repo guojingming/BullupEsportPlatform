@@ -14,6 +14,7 @@ var wealthInfoDao = dependencyUtil.global.dao.wealthInfoDao;
 var lolInfoDao = dependencyUtil.global.dao.lolInfoDao;
 var battleRecordDao = dependencyUtil.global.dao.battleRecordDao;
 var rankInfoDao = dependencyUtil.global.dao.rankInfoDao;
+var pubgDao = dependencyUtil.global.dao.pubgDao;
 
 exports.init = function () {
     this.users = {};
@@ -165,6 +166,14 @@ exports.handleLogin = function (socket) {
                             //console.log(userInfo.battleCount);
                             callback(null,userInfo);
                         });
+                    },
+                    function(userInfo,callback){
+                        pubgDao.findAccountByUserId(userInfo.userId,function(res){
+                            if(res){
+                                userInfo.pubgAccount = res.pubg_nickname;   
+                            }
+                            callback(null,userInfo);
+                        });
                     }
 
                 ], function(err, userInfo){
@@ -181,6 +190,7 @@ exports.handleLogin = function (socket) {
                             userRole:user.user_role,
                             lastLoginTime:userInfo.lastLoginTime,
                             battleCount:userInfo.battleCount,
+                            pubgAccount: userInfo.pubgAccount,
                             //----------------------
                             avatarId: userInfo.userIconId,
                             wealth: userInfo.wealth,
@@ -502,12 +512,20 @@ exports.changeUserStatus = function (userId, status) {
 }
 
 exports.setEnvironment = function (userId, head, data) {
+    if(this.users[userId] == undefined || this.users[userId] == null){
+        console.log("这有错 this.users[userId].environment[head] = data; 为 undefind");
+        return;
+    }
     this.users[userId].environment[head] = data;
 
     console.log("user: " + this.users[userId].name + " env_head: " + head);
 }
 
 exports.deleteEnvironment = function (userId, head) {
+    if(this.users[userId] == undefined || this.users[userId] == null){
+        console.log("这有错 this.users[userId].environment[head] = data; 为 undefind");
+        return;
+    }
     delete this.users[userId].environment[head];
 }
 
@@ -534,6 +552,9 @@ exports.handleRankRequest = function (socket){
 
 exports.handleLOLBind = function(socket){
     socket.on('lolLoginResult',function(loginPacketStr){
+        if(loginPacketStr == undefined || loginPacketStr==null){
+            return;
+        }
         var stdout = JSON.parse(loginPacketStr);
         var loginPacket = {};
         var rankTierInfo = String(stdout.UserInfo.rankedTierInfo);
@@ -600,9 +621,10 @@ exports.handleLOLBind = function(socket){
                             extension: {
                                 tips: '绑定成功',
                                 userId: userId,
-                                lolNickname: lolNickname,
-                                lolArea : lolArea,
-                                lolAccount: lolAccount
+                                lol_info_id:bindResult.lolInfoId,
+                                user_lol_nickname: lolNickname,
+                                user_lol_area: lolArea,
+                                user_lol_account: lolAccount
                             }
                         };
                         callback(null, feedback);
@@ -923,4 +945,42 @@ exports.friendStatus = function(userId,online,status){
             // console.log(JSON.stringify(arr));
         }
     });
+}
+//删除好友
+exports.deleteFriends=function(socket){
+socket.on('delete_friends',function(ID){
+     console.log(ID)
+    baseInfoDao.deletefriendsByUserIdAndFriendsId(ID.userId,ID.friend_userId,function(res){
+        if(!res){
+            socketService.stableSocketEmit(socket,'feedback',{
+                errorCode:1,
+                text:'删除好友失败,请稍后重试',
+                type:'DELETEFRIENDS',
+                extension:null
+            });
+        }else{
+            baseInfoDao.findFriendListByUserId(ID.userId,function(res){
+                if(res){
+                    var arr = [];
+                    var i = 0;
+                    for(var key in res){
+                        // console.log(i++,JSON.stringify(res[key]));
+                        arr.push(res[key]);
+                    }
+                    socketService.stableSocketEmit(socket,'feedback',{
+                         errorCode:0,
+                         text:'删除好友成功',
+                         type:'DELETEFRIENDS',
+                         extension:{
+                             data: arr
+                         }
+                     });
+                }
+            })
+           
+        }
+    })
+
+})
+
 }

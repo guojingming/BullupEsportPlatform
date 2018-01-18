@@ -29,6 +29,7 @@ function bullup_modal(options){
     }
     function open(){
         var bullup_modal = $('<div>');
+        $(".modal11").show();
         $('body').append(bullup_modal);
         bullup_modal.addClass("bullup_overlay");
         $('.bullup_overlay')

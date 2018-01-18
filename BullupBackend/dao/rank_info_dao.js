@@ -65,6 +65,8 @@ exports.getWealthRank = function(userId, callback) {
 
 //高危待测试
 exports.updateRankList = function(){
+    var index = 0;
+    var index1 = 0;
     dbUtil.createConnection(function(connection1){
         async.waterfall([
             function(callback){
@@ -116,7 +118,7 @@ exports.updateRankList = function(){
             });
 
             async.eachSeries(wealthArray, function(userRankInfo, errCb){
-                dbUtil.query(connection1, 'update bullup_rank set bullup_wealth_sum=?,bullup_wealth_rank=?,user_icon_id=?,user_nickname=? where user_id=?', [userRankInfo.user_wealth, index+1, userRankInfo.icon_id, userRankInfo.user_nickname, userRankInfo.user_id], function(err, res){
+                dbUtil.query(connection1, 'update bullup_rank set bullup_wealth_sum=?,bullup_wealth_rank=?,user_icon_id=?,user_nickname=? where user_id=?', [userRankInfo.user_wealth, index++, userRankInfo.icon_id, userRankInfo.user_nickname, userRankInfo.user_id], function(err, res){
                     if(err){
                         throw err;
                     }
@@ -125,6 +127,7 @@ exports.updateRankList = function(){
             },function(errCb){
                 dbUtil.closeConnection(connection1);
             });
+            index = 0;
         });
     });
         // for(var index = 0; index < wealthArray.length; index++){
@@ -187,8 +190,8 @@ exports.updateRankList = function(){
             });
 
 
-            async.eachSeries(strengthArray, function(userRankInfo, errCb){
-                dbUtil.query(connection2, 'update bullup_rank set bullup_strength_score=?,bullup_strength_rank=?,user_icon_id=?,user_nickname=? where user_id=?', [userRankInfo.user_strength, index+1, userRankInfo.icon_id, userRankInfo.user_nickname, userRankInfo.user_id], function(err, res){
+            async.eachSeries(strengthArray, function(userRankInfo, errCb){                
+                dbUtil.query(connection2, 'update bullup_rank set bullup_strength_score=?,bullup_strength_rank=?,user_icon_id=?,user_nickname=? where user_id=?', [userRankInfo.user_strength, index1++, userRankInfo.icon_id, userRankInfo.user_nickname, userRankInfo.user_id], function(err, res){
                     if(err){
                         throw err;
                     }
@@ -197,6 +200,7 @@ exports.updateRankList = function(){
             },function(errCb){
                 dbUtil.closeConnection(connection2);
             });
+            index1 = 0;
         });
     });
     // for(var index = 0; index < strengthArray.length; index++){

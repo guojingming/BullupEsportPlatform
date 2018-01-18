@@ -5,7 +5,7 @@
   "window": {
     "title": "Bull Fight",
     "toolbar": true,
-	  "icon":"logo.png",
+    "icon":"logo.png",
     "frame": false,
     "width": 1280,
     "height": 800,
@@ -16,10 +16,12 @@
   },
   "dependencies": {
     "chart.js": "^2.6.0",
+    "cheerio": "^1.0.0-rc.2",
     "html-form-validation": "^0.2.2",
     "mime": "~1.2.7",
     "request": "^2.81.0",
     "socket.io": "~2.0.3",
+    "superagent": "^3.8.2",
     "swig": "^1.4.2",
     "vue-router": "^2.3.0"
   },
