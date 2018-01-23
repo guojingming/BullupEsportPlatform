@@ -162,6 +162,9 @@ exports.handleTeamEstablish = function (io, socket) {
                 sumScore += score;
             }
             var level = String(parseInt(sumScore / teamInfo.participants.length / 50) * 50);
+            if(parseInt(level) >= 4500){
+                level = String(4450);
+            }
             exports.matchPools[String(teamInfo.participants.length - 1)][level].queue.push(teamInfo);
             //console.log('this is matchPools',JSON.stringify(exports.matchPools));
             //测试调度算法
@@ -255,6 +258,9 @@ exports.cancelMatch = function(io,socket){
             sumScore += score;
         }
         var level = String(parseInt(sumScore / roomInfo.participants.length / 50) * 50);
+        if(parseInt(level) >= 4500){
+            level = String(4450);
+        }
         var tempQueue = exports.matchPools[String(roomInfo.teamParticipantsNum - 1)][level].queue;
         //console.log('this is tempQueue:',JSON.stringify(tempQueue));
         for(var key in tempQueue){

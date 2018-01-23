@@ -116,12 +116,14 @@ exports.insertBindInfo = function(userId, lolAccount, lolNickname, lolArea, call
                 });
             }
         ], function(err,result){
-            dbUtil.query(connection, 'insert into lol_bind (user_id, lol_info_id) values (?, ?)', [result.userId, result.lolInfoId], function(err, res){
+            var lolInfoId = result.lolInfoId;
+            dbUtil.query(connection, 'insert into lol_bind (user_id, lol_info_id) values (?, ?)', [result.userId, result.lolInfoId], function(err, res){                
                 var result = {};
                 if(res.affectedRows > 0){
                     result.errorCode = 0;
+                    result.lolInfoId = lolInfoId;
                 }else{
-                    result.errorCode = 1;
+                    result.errorCode = 1;                    
                 }
                 dbUtil.closeConnection(connection);
                 callback(result);

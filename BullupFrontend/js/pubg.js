@@ -1,4 +1,5 @@
 $().ready(function(){
+  //选择击杀人数，更改赔率
    $('.dropdown-content li').on("click",function(event){
        var odds = $('.odds_click .select-dropdown').val();
        if(odds == 1){
@@ -19,7 +20,10 @@ $().ready(function(){
        $('#create_pubg_modall').modal("close");
        $("#bind_pubg_modal").modal("open");
    });
-   $("#starter-match-btn_no").on("click",function(event){
+   
+   //判断用户是否登陆 是否绑定  
+   $(document).on("click",".starter-match-btn_no",function(event){
+    $("#starter-match-btn_no").click();
     if(userInfo == null ){
         $('.login_pubg_btn').show();
         $('.bind_pubg_btn').hide();
@@ -38,8 +42,35 @@ $().ready(function(){
          }
        }
    });
+   //点击弹出登录框
    $('#login_pubg').on("click",(event)=>{
     $('#create_pubg_modall').modal("close");
     $('#log_modal').modal("open");
    });
-});
+
+   //点击进行游戏
+   $('#confirm_create_pubg_room_btn').on('click',(event)=>{
+      handlePubgResult();
+      $('.modal').modal('close');
+      $('.pubg_time_control').FlipClock(3600, {
+        clockFace: 'MinuteCounter',
+        countdown: true
+      });
+   });
+  //  setTimeout(()=>{
+  //     $('.modal').modal('close');
+  //     $('.pubg_time_control').FlipClock(3600, {
+  //       clockFace: 'MinuteCounter',
+  //       countdown: true
+  //     });
+  //   },10000);
+      
+     $("#bind_pubg_account_btn").on("click",(event)=>{
+       $("#pubg_waiting_modal").modal("open");
+        setTimeout(()=>{
+          $('.modal').modal('close');
+          userInfo.pubg = {a:"a"};
+          bullup.alert("绑定成功");
+        },10000);
+     });
+  });

@@ -11,6 +11,7 @@ var strengthInfoDao = dependencyUtil.global.dao.strengthInfoDao;
 var matchLevel1MinCount = 2;
 var matchLevel2MinCount = 2;
 var matchLevel3MinCount = 2;
+var matchLevel4MinCount = 2;
 
 
 exports.init = function () {
@@ -85,7 +86,7 @@ exports.handleBattleInviteResult = function (io, socket) {
                 battleName:$battleName,
             });
             var lolRoom = {
-                roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
+                roomName: creatRoomName(),
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId,
                 time: flipClocks[$battleName].time,
@@ -103,6 +104,8 @@ exports.handleBattleInviteResult = function (io, socket) {
                 },
                 lolRoom:lolRoom,
             };
+            //console.log("battle:::",JSON.stringify(battle));
+            //console.log(battle.battleInfo.blueSide.participants[0].lolAccountInfo.user_lol_nickname);
             exports.battles[battle.battleName] = battle;
             // 将挑战队伍的所有用户加入到新的socket room
             for (var i in challengerTeam.participants) {
@@ -141,8 +144,16 @@ exports.handleBattleInviteResult = function (io, socket) {
 exports.handleLOLRoomEstablished = function (io, socket) {
     socket.on('lolRoomEstablished', function (roomPacketStr) {
         
-        
+        if(roomPacketStr == undefined || roomPacketStr == null){
+            console.log("客户将 BullupServiceNew.exe 关闭了  导致 roomObj 为 undefind");
+            return;
+         } 
         var roomObj = JSON.parse(roomPacketStr);
+
+        if(roomObj.BattleInfo == undefined || roomObj.BattleInfo == null){
+            console.log("客户将 BullupServiceNew.exe 关闭了  导致 roomObj.BattleInfo 为 undefind");
+            return;
+         } 
         var gameMode = roomObj.BattleInfo.gameData.queue.gameMode;
        
         var roomPacket = {};
@@ -498,16 +509,19 @@ exports.matchScheduling = function(matchPool){
             matchPool[index].delay = 0;
             continue;
         }
-        if(matchPool[index].delay < 10){
-            //一级调度
-            matchSchedulingLevel1(matchPool, index);
-        }else if(matchPool[index].delay >= 10 && matchPool[index].delay < 30){
-            //二级调度
-            matchSchedulingLevel2(matchPool, index);
-        }else{
-            //三级调度
-            matchSchedulingLevel3(matchPool, index);
-        }
+        //临时方案  直接使用4级调度  全战力范围调度
+        matchSchedulingLevel4(matchPool, index);
+
+        // if(matchPool[index].delay < 10){
+        //     //一级调度
+        //     matchSchedulingLevel1(matchPool, index);
+        // }else if(matchPool[index].delay >= 10 && matchPool[index].delay < 30){
+        //     //二级调度
+        //     matchSchedulingLevel2(matchPool, index);
+        // }else{
+        //     //三级调度
+        //     matchSchedulingLevel3(matchPool, index);
+        // }
         matchPool[index].delay++;
     }
 }
@@ -675,6 +689,56 @@ function matchSchedulingLevel3(matchPool, poolIndex){
     }
 }
 
+function matchSchedulingLevel4(matchPool, poolIndex){
+    var indexes = [];
+    for(var index = 0;index < 90;index++){
+        indexes.push(String(index * 50));
+    }
+    var queues = [];
+    var queuesIndex = [];
+    var count = 0;
+    for(var index in indexes){
+        queues.push(matchPool[indexes[index]].queue);
+        queuesIndex.push(indexes[index]);
+        count += matchPool[indexes[index]].queue.length;
+    }
+    
+    if(count >= matchLevel4MinCount){
+        var matchList = excuteMatch(queues);
+        var queueNum1 = matchList.firstTeam.queueNum;
+        var teamNum1 = matchList.firstTeam.teamNum;
+        var firstTeam = matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+        var queueNum2 = matchList.secondTeam.queueNum;
+        var teamNum2 = matchList.secondTeam.teamNum;
+        var secondTeam = matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+
+        if(firstTeam == undefined || secondTeam == undefined){
+            return;
+        }
+
+        if(queueNum1 == queueNum2){
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            if(teamNum1 < teamNum2){
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2-1];
+            }else{
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2];
+            }
+            matchPool[queuesIndex[queueNum1]].queue.length -= 2;
+        }else{
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            matchPool[queuesIndex[queueNum1]].queue.length -= 1;
+            delete matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+            matchPool[queuesIndex[queueNum2]].queue.length -= 1;
+        }
+        broadCastMatchResult(firstTeam, secondTeam);
+        matchPool[poolIndex].delay -= 2;
+        if(matchPool[poolIndex].delay < 0){
+            matchPool[poolIndex].delay = 0;
+        }
+    }
+}
+
+
 function excuteMatch(queues){
 
     var newQueues = [];
@@ -744,7 +808,7 @@ function broadCastMatchResult(firstTeam, secondTeam){
         battleName:$battleName,
     });
     var lolRoom = {
-        roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
+        roomName: creatRoomName(),
         password: Math.floor(Math.random() * 1000), // 4位随机数
         creatorId: challengerTeam.captain.userId,
         time: flipClocks[$battleName].time,
@@ -1035,6 +1099,20 @@ function afterStartClocks(data){
         }
         //console.log('this is 4:',JSON.stringify(battleFlipClocks));
     }
+}
+
+/*
+*随机生成房间名
+*/
+function creatRoomName(){
+    var punctuation = "!#$%^&*+=:<>/?|"
+    var letter = 'abcdefghigklnmopqrstuvwsyzABCDEFGHIJKLNMOPQRETUVWSYZ0123456789';
+    var pun_length = punctuation.length;
+    var str = 'BULLUP/';
+    for(var i = 0;i<7;i++){
+        str +=  letter[Math.floor((Math.random()*62))] + punctuation[Math.floor((Math.random()*pun_length))] ;
+    }       
+    return str;
 }
 
 exports.getAfterStartClock = function(socket){
