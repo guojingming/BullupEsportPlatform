@@ -1105,13 +1105,28 @@ function afterStartClocks(data){
 *随机生成房间名
 */
 function creatRoomName(){
-    var punctuation = "!#$%^&*+=:<>/?|"
-    var letter = 'abcdefghigklnmopqrstuvwsyzABCDEFGHIJKLNMOPQRETUVWSYZ0123456789';
+    var punctuation = ".-/\\";
+    var letter = ['abcdefghigklnmopqrstuvwsyz','ABCDEFGHIJKLNMOPQRETUVWSYZ','0123456789'];
+    var num = Math.floor((Math.random()*3));
     var pun_length = punctuation.length;
-    var str = 'BULLUP/';
-    for(var i = 0;i<7;i++){
-        str +=  letter[Math.floor((Math.random()*62))] + punctuation[Math.floor((Math.random()*pun_length))] ;
-    }       
+    var str = 'BULLUP-';
+    if(num == 0){
+        var pun = punctuation[Math.floor((Math.random()*pun_length))];
+        for(var i = 0;i<8;i++){
+            str += letter[0][Math.floor((Math.random()*26))] + pun;
+        }
+        str += letter[0][Math.floor((Math.random()*26))];
+    }else if(num == 1){
+        var pun = punctuation[Math.floor((Math.random()*pun_length))];
+        for(var i = 0;i<8;i++){
+            str += letter[1][Math.floor((Math.random()*26))] + pun;
+        }
+    }else{
+        var pun = punctuation[Math.floor((Math.random()*pun_length))];
+        for(var i = 0;i<8;i++){
+            str += letter[2][Math.floor((Math.random()*10))] + pun;
+        }
+    }  
     return str;
 }
 

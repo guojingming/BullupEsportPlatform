@@ -47,6 +47,10 @@ socket.on('feedback', function (feedback) {
         case 'ESTABLISHROOMRESULT':
             handleRoomEstablishmentResult(feedback);
             break;
+        
+        case 'ESTABLISHTEAMMATCHRESULT':
+            handleRoomEstablishmentMatchResult(feedback);
+            break;
 
         case 'INVITERESULT':
             handleFeedback(feedback);
@@ -1085,8 +1089,9 @@ function handleLOLBindResult(feedback){
     //
     if(feedback.errorCode == 0){
         userInfo.lolAccountInfo = feedback.extension;
+        var score =feedback.extension.oriStrengthScore;
+        userInfo.strength.score=score;
     }
-    console.log("123456789");
     bullup.alert(feedback.extension.tips);
     $('.modal').modal('close');
 }
@@ -1327,6 +1332,20 @@ function handleRegistResult(feedback){
     return feedback.extension;
 }
 
+function handleRoomEstablishmentMatchResult(feedback){
+            //bullup.alert("匹配中，请等待！");
+        roomInfo.status = "MATCHING";
+        teamInfo = roomInfo;
+        bullup.loadTemplateIntoTarget('swig_fightfor.html', {
+            'participants': roomInfo.participants
+        }, 'main-view');
+        console.log(roomInfo);
+        var data = getRadarData(roomInfo.participants);
+        console.log(data);
+        var labelArray = ['击杀', '死亡', '助攻','治疗', '造成伤害', '承受伤害'];
+        var dataArray1 = data;
+        bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
+}
 function handleRoomEstablishmentResult(feedback){
     if(feedback.errorCode == 0){
         bullup.alert(feedback.text);
