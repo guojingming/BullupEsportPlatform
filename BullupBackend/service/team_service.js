@@ -162,6 +162,9 @@ exports.handleTeamEstablish = function (io, socket) {
                 sumScore += score;
             }
             var level = String(parseInt(sumScore / teamInfo.participants.length / 50) * 50);
+            if(parseInt(level) >= 4500){
+                level = String(4450);
+            }
             exports.matchPools[String(teamInfo.participants.length - 1)][level].queue.push(teamInfo);
             //console.log('this is matchPools',JSON.stringify(exports.matchPools));
             //测试调度算法
