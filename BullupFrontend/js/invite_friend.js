@@ -55,6 +55,22 @@ $("#invite_friend_btn").click(function(){
                 return;
             }
         });
+        $("#invite_all_friend_btn").click(function(){
+            if($("#invite_all_friend_btn").text()=="全选"){
+            for(var i = 0;i<$('.friend-li').length;i++){
+                if($('.friend-li').eq(i).find('.color-dot').hasClass('color-dot-green')||$('.friend-li').eq(i).find('.color-dot').hasClass('color-dot-blue'))
+                $('.friend-li').eq(i).find('input').attr('checked',"checked");                
+            }
+            $("#invite_all_friend_btn").text("取消");            
+            }else{
+                $("#invite_all_friend_btn").text("全选");
+                for(var i = 0;i<$('.friend-li').length;i++){
+                if($('.friend-li').eq(i).find('.color-dot').hasClass('color-dot-green')||$('.friend-li').eq(i).find('.color-dot').hasClass('color-dot-blue')){
+                    $('.friend-li').eq(i).find('input')[0].removeAttribute('checked');
+                    }  
+                }
+            } 
+        });
     }
    
 });

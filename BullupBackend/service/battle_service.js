@@ -86,7 +86,7 @@ exports.handleBattleInviteResult = function (io, socket) {
                 battleName:$battleName,
             });
             var lolRoom = {
-                roomName: challengerTeam.participants[0].lolAccountInfo.user_lol_nickname+"的对局",
+                roomName: creatRoomName(),
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId,
                 time: flipClocks[$battleName].time,
@@ -807,7 +807,7 @@ function broadCastMatchResult(firstTeam, secondTeam){
         battleName:$battleName,
     });
     var lolRoom = {
-        roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
+        roomName: creatRoomName(),
         password: Math.floor(Math.random() * 1000), // 4位随机数
         creatorId: challengerTeam.captain.userId,
         time: flipClocks[$battleName].time,
@@ -1098,6 +1098,20 @@ function afterStartClocks(data){
         }
         //console.log('this is 4:',JSON.stringify(battleFlipClocks));
     }
+}
+
+/*
+*随机生成房间名
+*/
+function creatRoomName(){
+    var punctuation = "!#$%^&*+=:<>/?|"
+    var letter = 'abcdefghigklnmopqrstuvwsyzABCDEFGHIJKLNMOPQRETUVWSYZ0123456789';
+    var pun_length = punctuation.length;
+    var str = 'BULLUP/';
+    for(var i = 0;i<7;i++){
+        str +=  letter[Math.floor((Math.random()*62))] + punctuation[Math.floor((Math.random()*pun_length))] ;
+    }       
+    return str;
 }
 
 exports.getAfterStartClock = function(socket){
