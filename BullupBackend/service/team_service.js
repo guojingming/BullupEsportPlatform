@@ -258,6 +258,9 @@ exports.cancelMatch = function(io,socket){
             sumScore += score;
         }
         var level = String(parseInt(sumScore / roomInfo.participants.length / 50) * 50);
+        if(parseInt(level) >= 4500){
+            level = String(4450);
+        }
         var tempQueue = exports.matchPools[String(roomInfo.teamParticipantsNum - 1)][level].queue;
         //console.log('this is tempQueue:',JSON.stringify(tempQueue));
         for(var key in tempQueue){
