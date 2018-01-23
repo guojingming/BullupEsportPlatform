@@ -702,6 +702,7 @@ function matchSchedulingLevel4(matchPool, poolIndex){
         queuesIndex.push(indexes[index]);
         count += matchPool[indexes[index]].queue.length;
     }
+    
     if(count >= matchLevel4MinCount){
         var matchList = excuteMatch(queues);
         var queueNum1 = matchList.firstTeam.queueNum;
