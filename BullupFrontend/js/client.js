@@ -321,6 +321,7 @@ socket.on('teamInfoUpdate', function (data) {
     var roomInfoHtml = bullup.loadSwigView('swig_myroom_info.html', {
         room: roomInfo
     });
+    $('.modal').modal('close');
     var teamates = roomInfo.participants;
     var teamatesHtml = bullup.loadSwigView('swig_myroom_teamate.html', {
         teamates : teamates
@@ -798,6 +799,7 @@ socket.on('updateRoomMember', function(updatedParticipants){
     var roomInfoHtml = bullup.loadSwigView('swig_myroom_info.html', {
         room: roomInfo
     });
+    $('.modal').modal('close');
     var teamates = roomInfo.participants;
     var teamatesHtml = bullup.loadSwigView('swig_myroom_teamate.html', {
         teamates : teamates
@@ -867,6 +869,7 @@ socket.on('updateTeamMember', function(updatedParticipants){
     var roomInfoHtml = bullup.loadSwigView('swig_myroom_info.html', {
         room: roomInfo
     });
+    $('.modal').modal('close');
     var teamates = roomInfo.participants;
     var teamatesHtml = bullup.loadSwigView('swig_myroom_teamate.html', {
         teamates : teamates
@@ -1044,6 +1047,7 @@ function handleFeedback(feedback) {
             console.log(feedback.text);
         return feedback.extension;
     } else {
+        $('.modal').modal('close');
         bullup.alert(feedback.text);
     }
 }
@@ -1081,8 +1085,10 @@ function handleLOLBindResult(feedback){
     //
     if(feedback.errorCode == 0){
         userInfo.lolAccountInfo = feedback.extension;
-    }   
+    }
+    console.log("123456789");
     bullup.alert(feedback.extension.tips);
+    $('.modal').modal('close');
 }
 
 //用户修改信息
@@ -1343,6 +1349,7 @@ function handleRoomEstablishmentResult(feedback){
     var roomInfoHtml = bullup.loadSwigView('swig_myroom_info.html', {
         room: roomInfo
     });
+    $('.modal').modal('close');
     var teamates = [];
     var captain = roomInfo.captain;
     teamates.push(captain);

@@ -2,13 +2,14 @@ $('.agree').on('click', function(e){
     e.preventDefault();
     var getRow = $(this).closest('.keyRow');
     var data = $(getRow).find('.keyColumn').text();
+    var $state = $(getRow).find('.state').text();
     if($state == '未处理'){
         socket.emit('agree',{
             payId:data
         });
         var $state = $(getRow).find('.state').text('已完成');
     }else{
-        alert('已处理，请不要重复操作');
+        bullup.alert('已处理，请不要重复操作');
     }
     
 });
@@ -30,7 +31,7 @@ $('.disagree').on('click', function(e){
         });
         var $state = $(getRow).find('.state').text('已驳回');
     }else{
-        alert('已处理，请不要重复操作');
+        bullup.alert('已处理，请不要重复操作');
     }
    
     
