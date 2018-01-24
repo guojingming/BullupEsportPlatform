@@ -39,4 +39,7 @@ $().ready(function () {
               alert('请填写正确的邮箱');
           }
       });
+      $('#feedback').on('click', function () {
+        $("#fankui").css("display", "none");
+      });
     });
