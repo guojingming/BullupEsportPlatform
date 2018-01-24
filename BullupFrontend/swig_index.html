@@ -3,7 +3,7 @@
         <head></head>
         
         <body>
-            <section id="container">
+            <section id="container" style="display:none">
                 <!--header start-->
                 <!--header end-->
                 <!--sidebar start-->
@@ -30,8 +30,8 @@
                         <!-- //market-->
                         <div style="width:100%;height:150px;">
                             <a href="#recharge"></a>
-                            <div id="personal_recharge_btn" class="col-md-3 market-update-gd " style="cursor: pointer;width:22%;float:left;margin-left:50px;position: relative;">
-                                <a href="#recharge">
+                            <div id="" class="col-md-3 market-update-gd " style="cursor: pointer;width:22%;float:left;margin-left:50px;position: relative;">
+                                <a href="#">
                                     <div class="market-update-block clr-block-6">
                                         <div class="col-md-4 market-update-right">
                                             <i class="fa fa-users"></i>
@@ -46,7 +46,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="col-md-3 market-update-gd tix" style="cursor: pointer;width:22%;float:left;margin-left:30px;">
+                            <div class="col-md-3 market-update-gd" style="cursor: pointer;width:22%;float:left;margin-left:30px;">
                                 <div class="market-update-block clr-block-1">
                                     <div class="col-md-4 market-update-right">
                                         <i class="fa fa-users"></i>
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 market-update-gd funding" style="cursor: pointer;width:22%;float:left;margin-left:50px;">
+                        <div class="col-md-3 market-update-gd" style="cursor: pointer;width:22%;float:left;margin-left:50px;">
                             <div class="market-update-block clr-block-4">
                                 <div class="col-md-4 market-update-right">
                                     <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -89,6 +89,53 @@
                 </section>
                         <!--main content end-->
             </section>
+            <div class="row" style="height:350px;padding-top:30px;">
+                    <div class="col m10 offset-m1" style="height:100%;" >
+                        <div class="" style="width:100%;height:50px;background:#646464;border-radius: 0 30px 0 0;">
+                        <div style="width:40px;display:inline-block;height:40px;border-radius:50%;background:#2e2e2e;margin:5px 0 0 20px;text-align:center;border: 5px solid rgba(0,0,0,0);">
+                            <div style="width:30px;height:30px;border:2px solid gray;border-radius:50%;line-height:22px;">
+                            <div class="" style="font-size:22px;color:#ddd;">$</div>
+                            </div>
+                        </div>
+                        <div style="height:50px;display: inline-block;">
+                        <span style="color:#ddd;font-size:22px;">
+                        个人账号
+                        </span>
+                        </div>
+                        </div>
+                        <div class="" style="width:100%;height:185px;background:#2e2e2e;border-radius: 0 0 30px 30px;">
+                            <div class="row">
+                                <div class="col m8" style="height:185px;">
+                                    <div style="height:50px;width:100%;padding:10px 0 10px 40px;font-size:22px;color:#ddd;">
+                                        余额
+                                    </div>
+                                    <div style="height:60px;width:100%;padding:0px 0 10px 40px;font-size:50px;color:#ddd;line-height:60px;position:relative;">
+                                        $  {{ player.balance }} <div style="font-size:30px;position:absolute;top:6px;left:144px;"></div>
+                                    </div>
+                                    <div style="height:70px;width:100%;padding:0px 0 0px 40px;font-size:50px;color:#ddd;line-height:30px;position:relative;">
+                                        <div style="display:inline-block">
+                                            <div class="btn" style="width:130px; height:45px;line-height:45px;border-radius:7px;font-size:25px;"><a href="#recharge" style="width:100%;height:100%;color:#fff;display:inline-block">充值</a></div>
+                                        </div>
+                                        <div style="display:inline-block">
+                                            <div class="btn tix" style="width:130px; height:45px;line-height:45px;border-radius:7px;font-size:25px;margin-left:30px;" class="">提现</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col m4" style="height:185px;position:relative;">
+                                    <div class="funding" style="width:170px;margin-top:40px;height:120px;background:#646464;border-radius: 20px;">
+                                        <div style="height:40px;width:100%;border-bottom:2px solid gray;">
+                                        </div>
+                                        <div style="width:100%;height:80px;line-height:80px;text-align:center;color:#fff;font-size:25px;">
+                                            资金流动
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <img src="./media/imgs/123321.png" height="100" width="150"> -->
             <script>
                 //将余额的值传到提现界面
                 var balance = '{{ player.balance }}';
