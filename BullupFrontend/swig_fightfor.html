@@ -125,10 +125,14 @@ if (match_timer == null) {
 $('#cancelMatch').on('click',function(){
   //alert(JSON.stringify(roomInfo));
   //清除倒计时函数
-  window.clearInterval(match_timer);
-  match_timer = null;
-  socket.emit('cancelMatch',{
+  if(userInfo.userId == roomInfo.captain.userId){
+    window.clearInterval(match_timer);
+    match_timer = null;
+    socket.emit('cancelMatch',{
     $roomInfo:roomInfo
   });
+  }else{
+    bullup.alert("不是队长,不能取消比赛");
+  }
 });
 </script>

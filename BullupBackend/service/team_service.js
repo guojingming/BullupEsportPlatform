@@ -153,6 +153,15 @@ exports.handleTeamEstablish = function (io, socket) {
             // 告诉该队伍中的所有用户队伍已经形成
             socketService.stableSocketsEmit(teamInfo.roomName, 'feedback', feedback);
         }else if(teamInfo.gameMode == 'match'){
+            var feedback = {
+                errorCode: 0,
+                type: 'ESTABLISHTEAMMATCHRESULT',
+                text: '队伍创建成功',
+                extension: {
+                    teamInfo: teamInfo,
+                }
+            };
+            socketService.stableSocketsEmit(teamInfo.roomName, 'feedback', feedback);            
             //匹配
             //把队伍加入调度池
             //计算队伍平均战力
