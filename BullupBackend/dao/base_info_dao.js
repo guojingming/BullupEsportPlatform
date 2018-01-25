@@ -124,9 +124,9 @@ exports.addFriendRelationship = function(userId1, userId2){
 
 exports.findUserByNickname = function(nickname, callback) {
     dbUtil.createConnection(function(connection){
-        dbUtil.query(connection, 'select * from `user_base` where binary user_nickname like ?', [nickname], function (err, results){
+        dbUtil.query(connection, 'select * from `user_base` where binary user_nickname = ?', [nickname], function (err, results){
             if (err) throw err;
-            console.log(results[0]);
+            //console.log(results[0]);
             dbUtil.closeConnection(connection);
             callback(results[0]);
         });

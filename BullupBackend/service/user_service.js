@@ -984,3 +984,47 @@ socket.on('delete_friends',function(ID){
 })
 
 }
+
+//退出房间按钮
+exports.handleQuitRoom = function(socket){
+    socket.on('quitRoom',function(data){
+        var userId = data.userId;
+        var roomName = data.roomName;
+        teamService.handleUserQuitRoom(userId, roomName);
+        console.log(userId,roomName);
+    });
+}
+
+//点赞
+exports.handleFavorOrHate = function(socket){
+    socket.on('dianzan',function(data){
+        var userId = data.userId;
+        var myName = data.myName;
+        var theyName = data.theyName;
+        console.log('111',userId,myName,theyName);
+        var theyId;
+        baseInfoDao.findUserByNickname(theyName,function(res){
+            theyId = res.user_id;
+            console.log('222',res);
+            var theySocket = socketService.mapUserIdToSocket(theyId);
+            console.log('333',theyId,theySocket);
+            if(theySocket){
+                if(data.type == 'favor'){
+                    socketService.stableSocketEmit(theySocket,'feedback',{
+                        errorCode:0,
+                        text: myName+'觉得你很赞.',
+                        type:'DIANZANRESULT',
+                        extension: null
+                    });
+                }else{
+                    socketService.stableSocketEmit(theySocket,'feedback',{
+                        errorCode:0,
+                        text: myName+'认为你很菜.',
+                        type:'DIANZANRESULT',
+                        extension: null
+                    });
+                }
+            }
+        });
+    });
+}
