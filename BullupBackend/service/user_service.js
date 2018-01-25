@@ -871,7 +871,7 @@ exports.handleDisconnect = function(socket){
             //该用户没有登录，什么都不需要做
         }else{
             if(exports.users[userId]==undefined){
-                //console.log("这里出错了 exports.users[userId] 是 undefond");
+                // console.log("这里出错了 exports.users[userId] 是 undefond");
                 return;
             }
             var userStatus = exports.users[userId].status;
