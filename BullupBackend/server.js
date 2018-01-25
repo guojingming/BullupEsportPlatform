@@ -162,10 +162,10 @@ teamService.match();
 stripeService.recharge();
 
 //一天更新一次排行榜
-// setInterval(function(){
-//     console.log('update rank');
-//     rankInfoDao.updateRankList();
-// },24 * 3600 * 1000);
+setInterval(function(){
+    console.log('update rank');
+    rankInfoDao.updateRankList();
+},24 * 3600 * 1000);
 
 io.listen(3000);
 

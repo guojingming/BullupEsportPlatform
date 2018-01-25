@@ -371,6 +371,7 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 dbUtil.query(connection, 'select * from `user_base` where user_id=?', [userId], function (err, results, fields) {
                     if (err) throw err;
                     userPersonalInfo.userInfo=results;
+                    userPersonalInfo.nickname=results[0].user_nickname;
                     callback(null, userPersonalInfo);
                 });
                 //消费记录
@@ -401,16 +402,16 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                     userPersonalInfo.lolInfo_strength_heal=results[0].bullup_strength_heal;
                     callback(null,userPersonalInfo); 
                 });
-            },function(userPersonalInfo,callback){
-                dbUtil.query(connection, 'select count(bullup_competition_id) as num ,bullup_competition_wins from bullup_competition_paticipant where user_id=?',[userId],function(err, results, fields){
+            }, function(userPersonalInfo,callback){
+                dbUtil.query(connection, 'select count(*) as num  from bullup_battle_record where bullup_battle_participants_red like ?',["%"+userPersonalInfo.nickname+"%"],function(err, results, fields){
                     if(err) throw err;
                     userPersonalInfo.bullup_competitionResult=results[0].num;
                     userPersonalInfo.bullup_competition_wins=results[0].bullup_competition_wins;
-                    userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))*100+'%';
+                    userPersonalInfo.competition_wins=((userPersonalInfo.lolInfo_wins)/(userPersonalInfo.bullup_competitionResult))*100+'%';
                     callback(null,userPersonalInfo);
                 });
-            },function(userPersonalInfo,callback){
-                //var lolInfoId={};
+            }, function(userPersonalInfo,callback){
+                var lolInfoId={};
                 dbUtil.query(connection, 'select lol_info_id from lol_bind where user_id=?',[userId],function(err, results, fields){
                     if(err) throw err;
                     console.log('id:'+userId);

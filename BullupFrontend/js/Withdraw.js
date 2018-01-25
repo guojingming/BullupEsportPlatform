@@ -73,9 +73,19 @@
 						return false;  
 					} 
 				}
+				//匹配Email邮
+				function verifyEmail(){
+					var reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+					if(reg.test(str)){
+						return true;
+					}else{
+						return false;
+					}
+				}
 				
 				if($battleCount>=10){
 					if($bank_money!=null&&$bank_money!=0){
+						if(verifyemail($bank_cardnumber)){
 							if(verifyName($name)==true){
 								if(telephoneCheck($bank_phone)==true||verifyHandset($bank_phone)==true){
 									if(verifyemail($bank_email)){
@@ -100,22 +110,26 @@
 											$.getScript('/js/zymly.js');
 											$.getScript('/js/Withdraw.js');	
 										}else{
-											alert('您的余额不足');
+											bullup.alert('您的余额不足');
 										}	
 									}else{
-										alert('请填写正确的邮箱格式');
+										bullup.alert('请填写正确的邮箱格式');
 									}
 								}else{
-									alert('请填写正确的手机号码');
+									bullup.alert('请填写正确的手机号码');
 								}
 							}else{
-								alert('请填写真实姓名');
+								bullup.alert('请填写真实姓名');
+								}
 							}
+						else{
+							bullup.alert("请输入正确的邮箱号");
+						}
 					}else{
-						alert('请填写提现金额');
+						bullup.alert('请填写提现金额');
 					}
 				}else{
-					alert('您的对战次数不足10次,不能提现(′⌒`)');
+					bullup.alert('您的对战次数不足10次,不能提现(′⌒`)');
 				}		
 			});
 	});

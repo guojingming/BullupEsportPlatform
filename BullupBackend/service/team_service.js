@@ -154,6 +154,15 @@ exports.handleTeamEstablish = function (io, socket) {
             // 告诉该队伍中的所有用户队伍已经形成
             socketService.stableSocketsEmit(teamInfo.roomName, 'feedback', feedback);
         }else if(teamInfo.gameMode == 'match'){
+            var feedback = {
+                errorCode: 0,
+                type: 'ESTABLISHTEAMMATCHRESULT',
+                text: '队伍创建成功',
+                extension: {
+                    teamInfo: teamInfo,
+                }
+            };
+            socketService.stableSocketsEmit(teamInfo.roomName, 'feedback', feedback);            
             //匹配
             //把队伍加入调度池
             //计算队伍平均战力
@@ -163,6 +172,9 @@ exports.handleTeamEstablish = function (io, socket) {
                 sumScore += score;
             }
             var level = String(parseInt(sumScore / teamInfo.participants.length / 50) * 50);
+            if(parseInt(level) >= 4500){
+                level = String(4450);
+            }
             exports.matchPools[String(teamInfo.participants.length - 1)][level].queue.push(teamInfo);
             //console.log('this is matchPools',JSON.stringify(exports.matchPools));
             //测试调度算法
@@ -256,6 +268,9 @@ exports.cancelMatch = function(io,socket){
             sumScore += score;
         }
         var level = String(parseInt(sumScore / roomInfo.participants.length / 50) * 50);
+        if(parseInt(level) >= 4500){
+            level = String(4450);
+        }
         var tempQueue = exports.matchPools[String(roomInfo.teamParticipantsNum - 1)][level].queue;
         //console.log('this is tempQueue:',JSON.stringify(tempQueue));
         for(var key in tempQueue){

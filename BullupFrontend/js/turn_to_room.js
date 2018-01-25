@@ -116,6 +116,7 @@ $(document).ready(function(){
                 var roomInfoHtml = bullup.loadSwigView('swig_myroom_info.html', {
                     room: roomInfo
                 });
+                $('.modal').modal('close');
                 var teamates = [];
                 for(var participantIndex in roomInfo.participants){
                     teamates.push(roomInfo.participants[participantIndex]);

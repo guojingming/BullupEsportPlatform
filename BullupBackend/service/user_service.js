@@ -522,6 +522,10 @@ exports.setEnvironment = function (userId, head, data) {
 }
 
 exports.deleteEnvironment = function (userId, head) {
+    if(this.users[userId] == undefined || this.users[userId] == null){
+        console.log("这有错 this.users[userId].environment[head] = data; 为 undefind");
+        return;
+    }
     delete this.users[userId].environment[head];
 }
 
@@ -548,6 +552,9 @@ exports.handleRankRequest = function (socket){
 
 exports.handleLOLBind = function(socket){
     socket.on('lolLoginResult',function(loginPacketStr){
+        if(loginPacketStr == undefined || loginPacketStr==null){
+            return;
+        }
         var stdout = JSON.parse(loginPacketStr);
         var loginPacket = {};
         var rankTierInfo = String(stdout.UserInfo.rankedTierInfo);
@@ -614,9 +621,10 @@ exports.handleLOLBind = function(socket){
                             extension: {
                                 tips: '绑定成功',
                                 userId: userId,
-                                lolNickname: lolNickname,
-                                lolArea : lolArea,
-                                lolAccount: lolAccount
+                                lol_info_id:bindResult.lolInfoId,
+                                user_lol_nickname: lolNickname,
+                                user_lol_area: lolArea,
+                                user_lol_account: lolAccount
                             }
                         };
                         callback(null, feedback);
