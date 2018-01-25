@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://127.0.0.1:3000');
+var socket = io.connect('http://bullesport.com:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var lolUtil = require('./js/util/lol_util.js');
@@ -548,6 +548,16 @@ function handleGetFlipClock(feedback){
     battleInfo.flipClock = $time; 
 }
 
+window.name = "我--";
+function thumb_up(){
+    var index = '<iframe style="background:rgba(0,0,0,0)" frameborder="0" width="1280px" height="800px" src="./mo/index.html" allowtransparency="true"></iframe>';
+    $("#mo-view").show();
+    $("#mo-view").html(index);
+    $("#mo-view").css('background',"rgba(0,0,0,0)");
+    setTimeout(function(){
+        $("#mo-view").hide();
+    },2000)
+}
 function handleGetAfterFlipClock(feedback){
     var $time = feedback.extension.time;
     battleInfo.afterFlipClock = $time;
