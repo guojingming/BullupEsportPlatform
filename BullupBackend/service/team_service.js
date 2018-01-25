@@ -65,7 +65,7 @@ exports.handleRefreshFormedBattleRoom = function(socket){
             type: 'REFRESHFORMEDBATTLEROOMRESULT',
             text: '刷新成功',
             extension: {
-                formedTeams: exports.formedTeams
+                formedTeams: exports.broadcastTeamInfos
             }
         }
         socketService.stableSocketEmit(socket, 'feedback', feedback);
@@ -126,6 +126,7 @@ exports.handleTeamEstablish = function (io, socket) {
         if(teamInfo.gameMode == 'battle'){
             //约战
             exports.formedTeams[teamInfo.roomName] = teamInfo;
+            exports.broadcastTeamInfos[teamInfo.roomName] = teamInfo;
             // 将该队伍可以用来广播的内容加入到广播列表中
             //
             // exports.broadcastTeamInfos[teamInfo.roomName] = {
@@ -147,7 +148,7 @@ exports.handleTeamEstablish = function (io, socket) {
                 text: '队伍创建成功',
                 extension: {
                     teamInfo: teamInfo,
-                    formedTeams: exports.formedTeams
+                    formedTeams: exports.broadcastTeamInfos
                 }
             };
             // 告诉该队伍中的所有用户队伍已经形成
@@ -289,6 +290,8 @@ exports.exitRoom = function(userId, roomName){
         var participants = room.participants;
         for(var participantIndex in participants){
             if(participants[participantIndex].userId == userId){
+                //更新好友状态
+                userService.friendStatus(participants[participantIndex].userId,'false','false');
                 delete participants[participantIndex];
                 delete exports.unformedTeams[roomName].participants[participantIndex];
                 exports.unformedTeams[roomName].participants.length -= 1;
@@ -301,6 +304,8 @@ exports.exitRoom = function(userId, roomName){
             socketService.stableSocketEmit(socket, "updateRoomMember", room);
             //更新所有人的状态
             userService.setEnvironment(participantUserId, "room", room);
+            //更新好友状态
+            userService.friendStatus(participantUserId,'inroom','true');
             //更新socket room
         }
     }else{
@@ -308,6 +313,8 @@ exports.exitRoom = function(userId, roomName){
         var participants = room.participants;
         for(var participantIndex in participants){
             if(participants[participantIndex].userId == userId){
+                //更新好友状态
+                userService.friendStatus(participants[participantIndex].userId,'false','false');
                 delete participants[participantIndex];
                 break;
             }
@@ -318,6 +325,8 @@ exports.exitRoom = function(userId, roomName){
             socketService.stableSocketEmit(socket, "roomCanceled", {});
             //更新所有人状态
             userService.changeUserStatus(participantUserId, "idle");
+            //更新好友状态
+            userService.friendStatus(participantUserId,'true','true');
             delete userService.users[participantUserId].environment.room;
             //更新socket room
         }
@@ -334,6 +343,8 @@ exports.exitTeam = function(userId, roomName){
         var participants = room.participants;
         for(var participantIndex in participants){
             if(participants[participantIndex].userId == userId){
+                //更新好友状态
+                userService.friendStatus(participants[participantIndex].userId,'false','false');
                 delete participants[participantIndex];
                 room.participants.length -= 1;
                 room.status = 'ESTABLISHING';
@@ -346,6 +357,8 @@ exports.exitTeam = function(userId, roomName){
             socketService.stableSocketEmit(socket, "updateTeamMember", room);
             //更新每个人的状态
             userService.changeUserStatus(participantUserId, "inroom");
+            //更新好友状态
+            userService.friendStatus(participantUserId,'inroom','true');
             delete userService.users[participantUserId].environment.team;
             //更新socket room
         }
@@ -356,6 +369,8 @@ exports.exitTeam = function(userId, roomName){
         var participants = room.participants;
         for(var participantIndex in participants){
             if(participants[participantIndex].userId == userId){
+                //更新好友状态
+                userService.friendStatus(participants[participantIndex].userId,'false','false');
                 delete participants[participantIndex];
                 break;
             }
@@ -366,6 +381,8 @@ exports.exitTeam = function(userId, roomName){
             socketService.stableSocketEmit(socket, "teamCanceled", {});
             //更新每个人的状态
             userService.changeUserStatus(participantUserId, "idle");
+            //更新好友状态
+            userService.friendStatus(participantUserId,'true','true');
             delete userService.users[participantUserId].environment.room;
             delete userService.users[participantUserId].environment.team;
             //更新socket room
@@ -443,4 +460,58 @@ exports.exitTeamAndMatch = function(userId, room){
         }
     }
 
+}
+
+exports.handleUserQuitRoom = function(userId, roomName){
+    var room = exports.unformedTeams[roomName];
+    if(room.captain.userId != userId){
+        //不是队长 从队员列表删除 并且通知房间中其他人
+        var participants = room.participants;
+        for(var participantIndex in participants){
+            if(participants[participantIndex].userId == userId){
+                //更新好友状态
+                userService.friendStatus(participants[participantIndex].userId,'true','true');
+                userService.changeUserStatus(participants[participantIndex].userId, "idle");
+                delete participants[participantIndex];
+                delete exports.unformedTeams[roomName].participants[participantIndex];
+                exports.unformedTeams[roomName].participants.length -= 1;
+                break;
+            }
+        }
+        for(var participantIndex in participants){
+            var participantUserId = participants[participantIndex].userId;
+            var socket = socketService.mapUserIdToSocket(participantUserId);
+            socketService.stableSocketEmit(socket, "updateRoomMember", room);
+            //更新所有人的状态
+            userService.setEnvironment(participantUserId, "room", room);
+            //更新好友状态
+            userService.friendStatus(participantUserId,'inroom','true');
+            //更新socket room
+        }
+    }else{
+        //是队长 房间删除  通知所有成员
+        var participants = room.participants;
+        for(var participantIndex in participants){
+            if(participants[participantIndex].userId == userId){
+                //更新好友状态
+                userService.friendStatus(participants[participantIndex].userId,'true','true');
+                userService.changeUserStatus(participants[participantIndex].userId, "idle");
+                delete participants[participantIndex];
+                break;
+            }
+        }
+        for(var participantIndex in participants){
+            var participantUserId = participants[participantIndex].userId;
+            var socket = socketService.mapUserIdToSocket(participantUserId);
+            socketService.stableSocketEmit(socket, "roomCanceled", {});
+            //更新所有人状态
+            userService.changeUserStatus(participantUserId, "idle");
+            //更新好友状态
+            userService.friendStatus(participantUserId,'true','true');
+            delete userService.users[participantUserId].environment.room;
+            //更新socket room
+        }
+        //删除房间
+        delete exports.unformedTeams[roomName];
+    }
 }

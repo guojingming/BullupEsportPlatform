@@ -171,6 +171,13 @@ $(document).ready(function(){
                             }
                     
             });
+            $("#quit_room_btn").click(function(){
+                console.log('wocaoda:',JSON.stringify(roomInfo));
+                // socket.emit('quitRoom',{
+                //     userId: userInfo.userId,
+                //     roomName: roomInfo.r
+                // })
+            });
     
             }
         },1000);
