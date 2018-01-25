@@ -167,6 +167,67 @@
 </section>
 </section>
 
+
+<!-- pubg table-->
+<section id="main-content">
+	<section class="wrapper">
+		<div class="table-agile-info">
+ <div class="panel panel-default">
+
+  <div class="panel-heading panel-heading-pubg">
+    <span style="display:inline-block;margin-left:-85px;">pubg记录</span>
+    </div>
+    <div class="panel-heading-pubg-list">
+      <table class="table centered" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr>
+            <th data-breakpoints="xs">序号</th>
+            <th>吃鸡账号</th>
+            <th>区服</th>
+            <th>目标击杀</th>
+            <th>实际击杀</th>
+            <th>游戏模式</th>
+            <th>奖励方式</th>
+            <th data-breakpoints="xs sm md" data-title="DOB">日期</th>
+            <th>游戏结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if dataSource %}
+          {% for key in dataSource %}
+          {% for i in key.pubgBattleInfo %}
+          <tr data-expanded="true">
+            <td>{{ loop.index }}</td>
+            <td>{{ i.pubg_nickname }}</td>
+            <td>{{ i.pubg_server }}</td>
+            <td>{{ i.pubg_target }}</td>
+            <td>{{ i.pubg_kill}}</td>
+            <td>{{ i.pubg_bet }}</td>
+            <td>{{ i.pubg_rate }}</td>
+            <td>{{ i.pubg_game_start|date('Y-m-d')}}</td>
+            <td>{{ i.pubg_result}}</td>
+          </tr>
+          {% endfor %}
+          {% endfor %}
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
+</section>
+</section>
+
+
 <!--main content end-->
 </section>
 
@@ -176,6 +237,7 @@
     $(".panel-heading-charge-list").hide();
     $(".panel-heading-withdrawals-list").hide();
     $(".panel-heading-battle-list").hide();
+    $(".panel-heading-pubg-list").hide();
     $(".panel-heading-charge").click(function(event){
       $(".panel-heading-charge-list").toggle();
     });
@@ -184,6 +246,9 @@
     });
     $(".panel-heading-battles").click(function(event){
       $(".panel-heading-battle-list").toggle();
+    });
+    $(".panel-heading-pubg").click(function(event){
+      $(".panel-heading-pubg-list").toggle();
     });
     
     $.getScript('./js/back.js');

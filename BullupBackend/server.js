@@ -50,6 +50,10 @@ io.on('connection', function(socket) {
     userService.handleAddFriendRequest(socket);
     userService.handleAddFriendResult(socket);
     userService.handleDisconnect(socket);
+    //退出房间按钮
+    userService.handleQuitRoom(socket);
+    //点赞按钮
+    userService.handleFavorOrHate(socket);
     //余额
     userService.handleGetBalance(socket);
     //登录时间
@@ -140,6 +144,7 @@ io.on('connection', function(socket) {
 
     //绝地求生绑定
     pubgService.handlePUBGBind(socket);
+    pubgService.handlePUBGResult(socket);
     
 });
 
