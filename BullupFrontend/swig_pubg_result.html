@@ -10,15 +10,20 @@
     <div class="row" style="width:100%;height:1000px;">
         <div class="col m5" style="height:100%;position:relative;font-size:0px">
             <div style="position:absolute;width:70px;height:70px;top:100px;left:450px;">
-              <img src="./media/imgs/1.jpg" style="width:100%;height:100%;border-radius:50%;">
+              <img src="./media/user_icon/{{ data.avatarId }}.png" style="width:100%;height:100%;border-radius:50%;">
            </div>
         </div>
         <div class="col m7" style="height:100%;position:relative;padding-top:85px;color:white;">
-            <div style="padding:10px;font-size:16px">我的名字我的名字我的名字十五字</div>
-            <div style="padding:10px;font-size:16px">$+1</div>
-            <div style="padding:10px;font-size:16px;padding-right:300px">计划击杀人数：10<div class="right" style="font-size:16px;">胜利</div></div>
-            <div style="padding:10px;font-size:16px">实际击杀人数：10</div>                                    
-            <div style="padding:10px;font-size:16px">再接再励,继续吃鸡</div>                                    
+            <div style="padding:10px;font-size:16px">账号： {{ data.account }}</div>
+            <div style="padding:10px;font-size:16px;padding-right:300px">计划击杀人数：{{ data.target }}</div>
+            <div style="padding:10px;font-size:16px">实际击杀人数：{{ data.kill }}</div>                                    
+            {% if data.target == data.kill %}
+            <div style="padding:10px;font-size:16px">$+{{ data.bonus }}</div>
+            <div style="padding:10px;font-size:16px">大吉大利,继续吃鸡</div>
+            {% else %}
+            <div style="padding:10px;font-size:16px">${{ data.bonus }}</div>
+            <div style="padding:10px;font-size:16px">再接再励,继续吃鸡</div>
+            {% endif %}                                    
         </div>
     </div>
 </body>

@@ -3,6 +3,7 @@ var bindCheck = require('./js/pubg_crawler.js');
 $().ready(function(){
     $('#bindBtn').on('click',function(e){
         var $nickname = $('#pubg_nickname').val();
+        $("#pubg_waiting_modal").modal("open");
         bindCheck.pubgBindCheck($nickname,function(res){
             console.log(res);
             if(res == false){

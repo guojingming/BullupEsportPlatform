@@ -33,3 +33,48 @@ exports.handlePUBGBind = function(socket){
         });
     });
 }
+
+exports.handlePUBGResult = function(socket){
+    socket.on('pubgResult',function(data){
+        console.log('data',JSON.stringify(data));
+        var realRate;
+        if(data.target == '1' || data.target == '2'){
+            realRate = data.rate.substring(3,5);
+        }else if(data.target == '3'){
+            realRate = data.rate.substring(3);
+        }
+        console.log(realRate);
+        if(data.kill == data.target){
+            data.bonus = Number(realRate);
+            data.result = 'win';
+            pubgDao.handleResult(data,function(res){
+                if(res){
+                    socketService.stableSocketEmit(socket,'feedback',{
+                        errorCode: 0,
+                        text: '恭喜完成击杀目标.',
+                        type: 'PUBGBATTLERESULT',
+                        extension: {
+                            info: data
+                        }
+                    });
+                }
+            });
+        }else{
+            data.bonus = -(1+Number(realRate));
+            console.log('data.bonus',data.bonus);
+            data.result = 'lose';
+            pubgDao.handleResult(data,function(res){
+                if(res){
+                    socketService.stableSocketEmit(socket,'feedback',{
+                        errorCode: 0,
+                        text: '您未完成击杀目标.',
+                        type: 'PUBGBATTLERESULT',
+                        extension: {
+                            info: data
+                        }
+                    });
+                }
+            });
+        }
+    });
+}

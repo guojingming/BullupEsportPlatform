@@ -56,7 +56,7 @@ exports.findAccountByUserId = function(userId, callback) {
                     if(results.length == 0){
                         callback(null,null);
                     }else{
-                        console.log(results); 
+                        //console.log(results); 
                         callback(null,results[0]);
                     }
                 });
@@ -67,13 +67,46 @@ exports.findAccountByUserId = function(userId, callback) {
                 }else{
                     dbUtil.query(connection, 'select pubg_nickname from `pubg_info` where pubg_info_id=?', [data.pubg_info_id], function (err, results2){
                         if (err) throw err;
-                        console.log(results2);
+                        //console.log(results2);
                         callback(null,results2[0]);
                     });
                 }
             }
         ],function(err,res){
             if (err) throw err;
+            dbUtil.closeConnection(connection);
+            callback(res);
+        });
+    });
+}
+//处理结果
+exports.handleResult = function(data,callback){
+    dbUtil.createConnection(function(connection){
+        async.waterfall([
+            function(callback){
+                console.log('bonus:',data.bonus);
+                dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount=bullup_currency_amount+? where user_id=?',[data.bonus,data.userId],function(err,res){
+                    if (err) console.log(err);
+                    callback(null,res);
+                });
+            },function(empty,callback){
+                dbUtil.query(connection, 'insert into pubg_battle_record (user_id,pubg_nickname,pubg_server,pubg_target,pubg_kill,pubg_bet,pubg_rate,pubg_game_start,pubg_result) values (?,?,?,?,?,?,?,?,?)',[
+                    data.userId,
+                    data.account,
+                    data.server,
+                    data.target,
+                    data.kill,
+                    data.bet,
+                    data.rate,
+                    data.start,
+                    data.result
+                ],function(err,res){
+                    if (err) throw err;
+                    callback(null,res);
+                });
+            }
+        ],function(err,res){
+            if (err) console.log(err);
             dbUtil.closeConnection(connection);
             callback(res);
         });
