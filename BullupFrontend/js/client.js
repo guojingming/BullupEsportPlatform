@@ -239,11 +239,11 @@ socket.on('feedback', function (feedback) {
 function handleDianZanResult(feedback){
     if(feedback.extension.mode == 'favor'){
         thumb_up('rotate(0deg)');
-        $('#mo_fover').text(feedback.test);
+        $('#mo_fover').text(feedback.text);
         $('#mo_fover_box').css({"transform":"rotate(0deg)","top":"423px"});
     }else{
         thumb_up('rotate(180deg)');
-        $('#mo_fover').text(feedback.test);
+        $('#mo_fover').text(feedback.text);
         $('#mo_fover_box').css({"transform":"rotate(180deg)","top":"350px"});
     }
 }
@@ -807,7 +807,7 @@ socket.on('battleResult', function(resultPacket){
 
 socket.on('rechargeResult', function(text){
     socket.emit('tokenData', text.token);  
-    alert(text.text);//阻塞 弹出充值成功页面
+    bullup.alert(text.text);//阻塞 弹出充值成功页面
     $('#router_starter').click();
 });
 
