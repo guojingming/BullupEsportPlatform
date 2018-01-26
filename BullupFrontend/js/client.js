@@ -237,8 +237,18 @@ socket.on('feedback', function (feedback) {
 
 //用户点赞
 function handleDianZanResult(feedback){
-    alert(feedback.text);
+    if(feedback.extension.mode == 'favor'){
+        thumb_up('rotate(0deg)');
+        $('#mo_fover').text(feedback.test);
+        $('#mo_fover_box').css({"transform":"rotate(0deg)","top":"423px"});
+    }else{
+        thumb_up('rotate(180deg)');
+        $('#mo_fover').text(feedback.test);
+        $('#mo_fover_box').css({"transform":"rotate(180deg)","top":"350px"});
+    }
 }
+
+
 
 //pubg结果
 function handlePUBGBattleResult(feedback){
@@ -592,16 +602,17 @@ function handleGetFlipClock(feedback){
     battleInfo.flipClock = $time; 
 }
 
-window.name = "我--";
-function thumb_up(){
+function thumb_up(deg){
     var index = '<iframe style="background:rgba(0,0,0,0)" frameborder="0" width="1280px" height="800px" src="./mo/index.html" allowtransparency="true"></iframe>';
     $("#mo-view").show();
-    $("#mo-view").html(index);
-    $("#mo-view").css('background',"rgba(0,0,0,0)");
+    $("#mo-view").append(index);
+    $("#mo-view").css({'background':"rgba(0,0,0,0)",'transform':deg});
     setTimeout(function(){
-        $("#mo-view").hide();
+       // $("#mo-view").hide();
     },2000)
 }
+
+
 function handleGetAfterFlipClock(feedback){
     var $time = feedback.extension.time;
     battleInfo.afterFlipClock = $time;

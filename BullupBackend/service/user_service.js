@@ -1014,14 +1014,18 @@ exports.handleFavorOrHate = function(socket){
                         errorCode:0,
                         text: myName+'觉得你很赞.',
                         type:'DIANZANRESULT',
-                        extension: null
+                        extension: {
+                            mode:"favor"
+                        }
                     });
                 }else{
                     socketService.stableSocketEmit(theySocket,'feedback',{
                         errorCode:0,
                         text: myName+'认为你很菜.',
                         type:'DIANZANRESULT',
-                        extension: null
+                        extension: {
+                            mode:'hate'
+                        }
                     });
                 }
             }
