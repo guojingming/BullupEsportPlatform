@@ -603,13 +603,13 @@ function handleGetFlipClock(feedback){
 }
 
 function thumb_up(deg){
-    var index = '<iframe style="background:rgba(0,0,0,0)" frameborder="0" width="1280px" height="800px" src="./mo/index.html" allowtransparency="true"></iframe>';
+    var index = '<iframe style="background:rgba(0,0,0,0)" frameborder="0" width="1280px" height="800px" src="./swig_mo_index.html" allowtransparency="true"></iframe>';
     $("#mo-view").show();
     $("#mo-view").append(index);
     $("#mo-view").css({'background':"rgba(0,0,0,0)",'transform':deg});
     setTimeout(function(){
-       // $("#mo-view").hide();
-    },2000)
+       $("#mo-view").hide();
+    },3000)
 }
 
 
@@ -1645,15 +1645,15 @@ function handleAddFriendResult(feedback){
         newFriend.status = 'idle';
         newFriend.name = newFriendDetails.name;
         if(new_friend_arr.length == 0){
-            new_friend_arr.push(newFriend);
+            new_friend_arr.push(newFriend.name);
             userInfo.friendList.push(newFriend);
         }else{
             for(var i = 0;i<new_friend_arr.length;i++){
-                if(new_friend_arr[i] == newFriend){
+                if(new_friend_arr[i] == newFriend.name){
                     break;
                 }
-                if( i == new_friend_arr.length){
-                    new_friend_arr.push(newFriend);
+                if( i == new_friend_arr.length-1){
+                    new_friend_arr.push(newFriend.name);
                     userInfo.friendList.push(newFriend);
                 } 
             }
@@ -1674,6 +1674,7 @@ function handleAddFriendResult(feedback){
         $('.collapsible').collapsible();
     }
     bullup.alert(feedback.text);
+    $('#message_sheet').modal('close');
 }
 
 //反馈结果
