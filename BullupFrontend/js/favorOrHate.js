@@ -10,7 +10,6 @@ $('#dianzan').on('click',function(e){
 $('.favor').on('click',function(e){
     var getRow = $(this).closest('li');
     var data = $(getRow).find('span').text();
-    alert(data);
     socket.emit('dianzan',{
         type: 'favor',
         userId: userInfo.userId,
@@ -22,7 +21,6 @@ $('.favor').on('click',function(e){
 $('.hate').on('click',function(e){
     var getRow = $(this).closest('li');
     var data = $(getRow).find('span').text();
-    alert(data);
     socket.emit('dianzan',{
         type: 'hate',
         userId: userInfo.userId,
