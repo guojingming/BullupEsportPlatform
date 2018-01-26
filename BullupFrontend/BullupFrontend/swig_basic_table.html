@@ -1,0 +1,190 @@
+
+<body>
+<section id="container">
+<!--header start-->
+
+<!--header end-->
+<!--sidebar start-->
+
+<!--sidebar end-->
+<!--main content start-->
+<section id="main-content">
+	<section class="wrapper">
+		<div class="table-agile-info">
+ <div class="panel panel-default">
+    <a style="float:right;margin-right: 10px;margin-top: 10px;" class="waves-effect waves-light btn" id="back">返回</a>
+    <div class="panel-heading panel-heading-charge">
+     充值记录
+    </div>
+    <div class="panel-heading-charge-list">
+      <table class="table centered" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr>
+            <th data-breakpoints="xs">ID</th>
+            <th>金额</th>
+            <th>货币类型</th>
+            <th data-breakpoints="xs">订单号</th>
+            <th>充值状态</th>
+            <th data-breakpoints="xs sm md" data-title="DOB">日期</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if dataSource %}
+          {% for key in dataSource %}
+          {% for i in key.rechargeInfo %}
+          <tr data-expanded="true">
+            <td>{{ loop.index }}</td>
+            <td>{{ i.bullup_bill_value }}</td>
+            <td>{{ i.bullup_bill_type }}</td>
+            <td>{{ i.bullup_bill_id }}</td>
+            <td>{{ i.bullup_bill_state}}</td>
+            <td>{{ i.bullup_bill_time|date('Y-m-d')}}</td>
+          </tr>
+          {% endfor %}
+          {% endfor %}
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section id="main-content">
+	<section class="wrapper">
+		<div class="table-agile-info">
+ <div class="panel panel-default">
+
+  <div class="panel-heading panel-heading-withdrawals">
+    <span style="display:inline-block;margin-left:-85px;">提现记录</span>
+    </div>
+    <div class="panel-heading-withdrawals-list">
+      <table class="table centered" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr>
+            <th data-breakpoints="xs">ID</th>
+            <th>金额</th>
+            <th>目标账户</th>
+            <!-- <th>货币类型</th> -->
+            <th data-breakpoints="xs">订单号</th>
+            <th data-breakpoints="xs sm md" data-title="DOB">日期</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key in dataSource %}
+          {% for i in key.withdrawInfo %}
+          <tr data-expanded="true">
+            <td>{{ loop.index }}</td>
+            <td>{{ i.bullup_bank_money }}</td>
+            <td>{{ i.bullup_bank_cardnumber }}</td>
+            <td>{{ i.bullup_withdraw_id }}</td>
+            <td>{{ i.bullup_bank_wdtime|date('Y-m-d')}}</td>
+            <td>{{ i.bullup_bank_state }}</td>
+          </tr>
+          {% endfor %}
+          {% endfor %}
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
+</section>
+</section>
+
+
+<section id="main-content">
+	<section class="wrapper">
+		<div class="table-agile-info">
+ <div class="panel panel-default">
+
+  <div class="panel-heading panel-heading-battles">
+    <span style="display:inline-block;margin-left:-85px;">约战记录</span>
+    </div>
+    <div class="panel-heading-battle-list">
+      <table class="table centered" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr>
+            <th data-breakpoints="xs">ID</th>
+            <th>队伍名称</th>
+            <th>赌金</th>
+            <th>红方</th>
+            <th>蓝方</th>
+            <th data-breakpoints="xs sm md" data-title="DOB">日期</th>
+            <th>对战结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key in dataSource %}
+          {% for i in key.battleInfo %}
+          <tr data-expanded="true">
+            <td>{{ loop.index }}</td>
+            <td>{{ i.bullup_battle_name }}</td>
+            <td>{{ i.bullup_battle_bet }}</td>
+            <td>{{ i.bullup_battle_participants_red}}</td>
+            <td>{{ i.bullup_battle_participants_blue}}</td>
+            <td>{{ i.bullup_battle_time|date('Y-m-d')}}</td>
+            <td>{{ i.bullup_battle_result }}</td>
+          </tr>
+          {% endfor %}
+          {% endfor %}
+        {% endif %}
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
+</section>
+</section>
+
+<!--main content end-->
+</section>
+
+</body>
+<!-- 返回按钮 -->
+<script>
+    $(".panel-heading-charge-list").hide();
+    $(".panel-heading-withdrawals-list").hide();
+    $(".panel-heading-battle-list").hide();
+    $(".panel-heading-charge").click(function(event){
+      $(".panel-heading-charge-list").toggle();
+    });
+    $(".panel-heading-withdrawals").click(function(event){
+      $(".panel-heading-withdrawals-list").toggle();
+    });
+    $(".panel-heading-battles").click(function(event){
+      $(".panel-heading-battle-list").toggle();
+    });
+    
+    $.getScript('./js/back.js');
+  </script>

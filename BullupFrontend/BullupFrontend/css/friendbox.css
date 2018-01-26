@@ -1,0 +1,180 @@
+.chat-page {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+}
+
+.friend-box {
+	width: 500px;
+	min-width: 390px;
+	height: 650px;
+	background: #dae3e0;
+	padding: 15px;
+	margin: 20px;
+	box-shadow: 0 3px #ccc;
+	border-radius: 15px;
+}
+
+.friend-list {
+	padding: 8px;
+	width: 100%;
+	height: 580px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.friend-list::-webkit-scrollbar {
+	width: 10px;
+}
+
+.friend-list::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
+}
+
+
+.friend-item {
+	display: flex;
+	/* flex-flow: row wrap; */
+	/* align-items: flex-start; */
+	/* justify-content: space-between; */
+	height:55px;
+	border: 2px solid #fff;
+	margin-bottom: 5px;
+	background: #34352c;
+	border-radius: 30px;
+	padding: 5px;
+	-webkit-transition: border 0.35s, border-radius 0.35s;
+}
+
+.friend-item:hover {
+	border-radius: 15px;
+	border: 2px solid #e8cd56;
+}
+
+.friend-item .friend-photo {
+	width:40px;
+	height: 40px;
+	background: #ccc;
+	border-radius: 50%;
+	overflow: hidden;
+	border: 1px solid #fff;
+}
+
+.friend-item .friend-photo img{
+	width: 100%;
+}
+
+.friend-name {
+	padding: 5px;
+	color: #fff;
+	font-size:20px;
+}
+
+.friend-server {
+	color: #eff0dc;
+	background: #8F74AD;
+	border-radius: 30px;
+	font-size: 16px;
+	/* padding: 5px; */
+	padding-left: 8px;
+	padding-right: 8px;
+	margin-top: 4px;
+	cursor: pointer;
+	-webkit-transition: background 0.35s, border 0.35s, border-radius 0.35s;
+}
+
+.friend-server:hover {
+	background: #9966CC;
+}
+
+.server-name {
+	padding-top: 6px;
+	padding-left: 5px;
+	padding-right: 5px;
+
+}
+
+.friend-buttons {
+	display: flex;
+	margin-left: auto;
+}
+
+.friend-btn {
+	width: 30px;
+	height: 30px;
+	border: 1px solid #fff;
+	background: transparent;
+	border-radius: 50%;
+	margin-top: 6px;
+	margin-right: 5px;
+	-webkit-transition: background 0.35s;
+	cursor: pointer;
+}
+
+.friend-btn .fa {
+	color: #fff;
+	padding-top: 7px;
+	padding-left: 5px;
+	-webkit-transition: color 0.35s;
+}
+
+.friend-btn:hover {
+	background: #fff;
+}
+.friend-btn:hover .fa {
+	color: #333;
+}
+
+.friend-btn:active {
+	background: #333;
+}
+.friend-btn:active .fa {
+	color: #fff;
+}
+
+
+
+
+.friend-form {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: flex-start;
+}
+
+.form-btn {
+	width: 35px;
+	height: 35px;
+	border: 2px solid #333;
+	background: transparent;
+	border-radius: 50%;
+	margin-top: 2px;
+	margin-left: 5px;
+	cursor: pointer;
+	-webkit-transition: background 0.35s;
+}
+
+/* form btn transition */
+.form-btn:hover {
+	background:#333;
+}
+.form-btn:hover .fa {
+	color: #fff;
+}
+
+.form-btn:active {
+	background:#fff;
+}
+.form-btn:active .fa {
+	color: #333;
+}
+
+
+.form-btn .fa {
+	color: #333;
+	padding-top: 9px;
+	padding-left: 10px;
+	-webkit-transition: color 0.35s;
+}
+
+

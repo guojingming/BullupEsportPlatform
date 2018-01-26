@@ -1,0 +1,21 @@
+<!-- This file should be rendered into
+	 div#team_info
+	 of swig_myroom_frame.html
+   -->
+
+{% if room %}
+  <!-- if team exists -->
+  <div class="col s2 center-align" style="margin-top:10px;">
+    <img src="./media/user_icon/{{ room.captain.avatarId }}.png" alt="" class="team-leader-img">
+  </div>
+  <div class="col s6 m2">
+    <label class="team-title">房主</label>
+    <div class="team-value">{{ room.captain.name }}</div>
+  </div>
+
+  <div class="col s6 m2">
+    <label class="team-title">押金</label>
+    <div class="team-value">{{ room.rewardAmount }}</div>
+  </div>
+ 
+{% endif %}

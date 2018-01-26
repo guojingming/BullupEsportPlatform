@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>spa_rank</title>
+  <link href="./css/play.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <table class="bordered centered style">
+    <thead>
+      <tr>
+        <th data-field="id">比赛名</th>
+        <th data-field="name">发起人</th>
+        <th data-field="price">创建时间</th>
+        <th data-field="zhuangtai">状态</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- <tbody id="tab" > -->
+      {% if dataResult %} {% for key in dataResult%} {% for i in key%} {% if i.bullup_competition_status == 2 %}
+      <tr id="getsign-up">
+        <td> {{i.bullup_competition_name}}</td>
+        <td> {{i.bullup_competition_createname}}</td>
+        <td>{{i.bullup_competition_date}}</td>
+        <td id="sign-up" style="display:none;">{{i.bullup_competition_id}}</td>
+        <td>
+          <a class="waves-effect waves-light btn registration">已报名</a>
+        </td>
+      </tr>
+      <!-- <div id="t" style="display:none;">
+          {{i.bullup_competition_name}}
+      </div>  -->
+      {%endif%} {% endfor%} {%endfor%} {% endif %}
+    </tbody>
+
+
+    <tbody>
+      {% if dataResult %} {% for key in dataResult%} {% for i in key%} {% if i.bullup_competition_status == 1 %}
+      <tr id="getunderway">
+        <td> {{i.bullup_competition_name}}</td>
+        <td> {{i.bullup_competition_createname}}</td>
+        <td>{{i.bullup_competition_date}}</td>
+        <td id="underway" style="display:none;">{{i.bullup_competition_id}}</td>
+        <td>
+          <a class="waves-effect waves-light btn underway">比赛进行中</a>
+        </td>
+      </tr>
+      {%endif%} {% endfor%} {%endfor%} {% endif %}
+    </tbody>
+
+    <tbody>
+      {% if dataResult %} {% for key in dataResult%} {% for i in key%} {% if i.bullup_competition_status == 3%}
+      <tr id="getawaygame">
+        <td> {{i.bullup_competition_name}}</td>
+        <td> {{i.bullup_competition_createname}}</td>
+        <td>{{i.bullup_competition_date}}</td>
+        <td id="awaygame" style="display:none;">{{i.bullup_competition_id}}</td>
+        <td>
+          <a class="waves-effect waves-light btn awaygame">等待比赛中</a>
+        </td>
+      </tr>
+      {%endif%} {% endfor%} {%endfor%} {% endif %}
+    </tbody>
+
+
+    <tbody>
+      {% if dataResult %} {% for key in dataResult%} {% for i in key%} {% if i.bullup_competition_status== 4 %}
+      <tr id="getfinish">
+        <td> {{i.bullup_competition_name}}</td>
+        <td> {{i.bullup_competition_createname}}</td>
+        <td>{{i.bullup_competition_date}}</td>
+        <td id="finish" style="display:none;">{{i.bullup_competition_id}}</td>
+        <td>
+          <a class="waves-effect waves-light btn finish">比赛已结束</a>
+        </td>
+      </tr>
+      {%endif%} {% endfor%} {%endfor%} {% endif %}
+
+
+    </tbody>
+  </table>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,287 @@
+.starter-btn {
+	width: 100%;
+}
+
+#mySidenav a {
+    position: absolute; /* Position them relative to the browser window */
+    left: -90px; /* Position them outside of the screen */
+    transition: 0.3s; /* Add transition on hover */
+    padding: 15px; /* 15px padding */
+    width: 120px; /* Set a specific width */
+    text-decoration: none; /* Remove underline */
+    font-size: 20px; /* Increase font size */
+    color: white; /* White text color */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+
+#mySidenav a:hover {
+    left: 0; /* On mouse-over, make the elements appear as they should */
+	border-top: 1px solid #f4f7f8;
+	border-bottom: 1px solid #f4f7f8;
+	border-right: 1px solid #f4f7f8;
+}
+
+/* The about link: 20px from the top with a green background */
+#btn-fight {
+    top: 70px;
+    background-color: #4CAF50;
+	z-index: 2;
+}
+
+#btn-match {
+    top: 140px;
+    background-color: #2196F3; /* Blue */
+	z-index: 2;
+}
+
+#btn-personal {
+    top: 210px;
+    background-color: #f44336; /* Red */
+	z-index: 2;
+}
+
+#btn-chatroom {
+    top: 280px;
+    background-color: #555; /* Light Black */
+	z-index: 2;
+}
+
+
+/* #starter-carousel { */
+/* 	margin-left: -40px; */
+/* } */
+
+.starter-btns-holder {
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
+}
+
+.starter-btn {
+	line-height: 83px;
+	position: relative;
+	font-size: 25px;
+	display: flex;
+	flex-direction: row;
+	color: #f4f7f8;
+	background:url(../media/imgs/bar.png) 0 0 no-repeat;
+	width: 17.5%;
+	height: 83px;
+	border-radius: 3px;
+	margin: auto;
+
+	
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
+}
+.starter-btn:hover{
+	font-size: 35px;
+	color:#fff;
+	box-shadow: 0px 0px 20px 6px #EE7600;
+	background: url(../media/imgs/timg.gif) 0 0 no-repeat;
+	background-size:100%;
+
+	
+	
+}
+.biu{
+	width: 224px;
+	height: 82px;
+	position: absolute;
+	top:1px;
+	left:1px;
+	overflow: hidden;
+
+
+}
+#starter_competition_div{
+	overflow: hidden;
+	position: absolute;
+	top:1px;height: 496px;
+	width: 100%;
+	opacity: 0.9;
+	position: absolute;
+	top:1px;
+
+	
+}
+#starter_battle_div{
+	overflow: hidden;
+	position: absolute;
+	top:1px;height: 496px;
+	width: 100%;
+	opacity: 0.9;
+	position: absolute;
+	top:1px;
+	
+	
+	
+}
+#starter_rank_div{
+	overflow: hidden;
+	position: absolute;
+	top:1px;height: 496px;
+	width: 100%;
+	opacity: 0.9;
+	position: absolute;
+	top:1px;
+	
+	
+}
+#starter_chatroom_div{
+	overflow: hidden;
+	position: absolute;
+	top:1px;height: 496px;
+	width: 100%;
+	opacity: 0.9;
+	position: absolute;
+	top:1px;
+	
+	
+}
+
+#yzhou img{
+	width: 325px;
+}
+.wang_sty{
+	position: absolute;
+	top:320px;
+	left:230px!important;
+	
+}
+.btn_wang{
+	background: url(../media/imgs/bar.png) 0 0 no-repeat;
+	color: #fff!important;
+	cursor: pointer!important;
+	box-shadow: 0px 0px 6px 3px #EE7600;
+	}
+.biu:hover{
+	
+}
+
+.video-carousel  {
+	height: 50px;
+}
+
+
+.starter-collection-holder {
+	float: right;
+	padding-top: 0px;
+	height: 400px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.starter-collection-holder::-webkit-scrollbar {
+	width:10px;
+}
+
+.starter-collection-holder::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
+}
+
+.news-collection {
+	margin: auto;
+}
+
+.news-collection .collection-item {
+	width: 100%;
+	cursor: pointer;
+}
+
+
+
+.starter-tournament-holder {
+	padding: 0;
+	margin: auto;
+	height: 400px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.starter-tournament-holder::-webkit-scrollbar {
+	width: 10px;
+}
+.starter-tournament-holder::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
+}
+
+.starter-tournament-card {
+	margin-top: 0;
+	margin-bottom: 10px;
+	background-color: #455a64;
+	color: #f5f5f5;
+}
+
+.starter-tournament-image {
+	width: 120px !important;
+	height: 100%;
+}
+
+.more {
+	float: right;
+	
+	
+}
+
+/* .main-carousel-img { */
+
+/* } */
+
+#test_carousel_1 {
+	background-image: url(/media/imgs/arcade.jpeg);
+	background-size: 100% auto;
+	background-position: 50% 5%;
+}
+
+
+#test_carousel_2 {
+	background-image: url(/media/imgs/tacos.jpg);
+	background-size: 100% auto;
+	background-position: 50% 5%;
+}
+
+#test_carousel_3 {
+	background-image: url(/media/imgs/ornn.jpg);
+	background-size: 100% auto;
+	background-position: 50% 5%;
+	
+}
+
+#test_carousel_4 {
+	background-image: url(/media/imgs/arcade_veigar.jpg);
+	background-size: 100% auto;
+	background-position: 50% 5%;
+}
+.an_n{
+	float: right;
+	margin-right: 20px;
+}
+.theme-color{
+	background-color: #455a64!important;
+	color:#fff!important;
+}
+.modal11{
+	display: none;
+	position: absolute;
+	width: 60%;
+	left: 20%;
+	padding: 25px 30px 20px 30px;
+}
+.pubg_img{
+	position: absolute;
+    left: 520px;
+    width: 450px;
+    top: 80px;
+    height: 285px;
+}
+.pubg_img img{
+	width: 100%;
+	height: 100%;
+}
+.odds_click{
+	padding-right: 20px;
+}

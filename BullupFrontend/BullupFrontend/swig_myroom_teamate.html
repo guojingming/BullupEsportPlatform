@@ -1,0 +1,20 @@
+<!-- This file should be rendered into
+	 div#friend-invited
+	 of swig_myroom_frame.html
+-->
+
+{% if teamates %}
+  <div class="col s12 m4 offset-m2">
+ 
+    <ul class="collection">
+	  {% for teamate in teamates %}
+		<a href="#!" class="collection-item" style="float:left;width:100%;">
+						<label style="float:left;">
+						<img  src="./media/user_icon/{{ teamate.avatarId }}.png" alt="" class="circle" style="width:48px;height:48px;">
+						</label>
+						<font size="5" style="margin-left: 18px;margin-top: 15px;float: left;"> {{ teamate.name }}</font>
+		</a>
+	  {% endfor %}
+    </ul>
+  </div>
+{% endif %}

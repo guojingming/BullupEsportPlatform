@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>spa_rank</title>
+    <link href="./css/play.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Rank List -->
+
+<div class="container play_center" >
+    <div class="col s12">
+        <ul class="tabs tabs-fixed-width play_ul">
+            <li class="tab col s3"><a class="active" href="#wealth_list">队伍状态</a></li>
+            <li class="tab col s3"><a href="#cap_list">排行榜</a></li>
+            <li class="tab col s3"><a href="#olay_pa">已完成挑战</a></li>
+        </ul>
+    </div>
+    <div id="wealth_list" class="col s12">
+        <!-- Rank List 1 -->
+        <table class="centered play_tab">
+                <thead>
+                  <tr>
+                      <th data-field="id">队伍规模</th>
+                      <th data-field="name">发起人</th>
+                      <th data-field="price">比赛规模</th>
+                      <th data-field="">美金</th>
+                      <th data-field="">状态</th>
+
+                  </tr>
+                </thead>
+        
+                <tbody>
+                  <tr>
+                    <td>张三</td>
+                    <td>17</td>
+                    <td>汉</td>
+                    <td>汉</td>
+                    <td>汉</td>
+                  </tr>
+                  <tr>
+                    <td>李四</td>
+                    <td>12</td>
+                    <td>苗</td>
+                    <td>汉</td>
+                    <td>汉</td>
+                  </tr>
+                  <tr>
+                    <td>李明</td>
+                    <td>25</td>
+                    <td>汉</td>
+                    <td>汉</td>
+                    <td>汉</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="play_cj">
+                    <a class="waves-effect waves-light btn play_href">创建队伍</a>
+                    </div>
+    </div>
+
+    <div id="cap_list" class="col s12">
+        <!-- Rank List2 -->
+        <table class="centered play_tab">
+                <thead>
+                  <tr>
+                      <th data-field="id">名次</th>
+                      <th data-field="name">用户昵称</th>
+                      <th data-field="price">胜场数（胜利/总场）</th>
+                      
+
+                  </tr>
+                </thead>
+        
+                <tbody>
+                  <tr>
+                    <td>张三</td>
+                    <td>17</td>
+                    <td>汉</td>
+                  
+                  </tr>
+                  <tr>
+                    <td>李四</td>
+                    <td>12</td>
+                    <td>苗</td>
+                
+                  </tr>
+                  <tr>
+                    <td>李明</td>
+                    <td>25</td>
+                    <td>汉</td>
+             
+                  </tr>
+                </tbody>
+              </table>
+     
+
+    </div>
+    <div id="olay_pa" class="col s12">
+            <!-- Rank List 1 -->
+            <table class=" play_tab">
+                    <thead>
+                      <tr>
+                          <th data-field="id">名次</th>
+                          <th data-field="name">用户昵称</th>
+                          <th data-field="price">胜场数（胜利/总场）</th>
+                          
+    
+                      </tr>
+                    </thead>
+            
+                    <tbody >
+                      <tr>
+                        <td>张三</td>
+                        <td>17</td>
+                        <td>汉</td>
+                      
+                      </tr>
+                      <tr>
+                        <td>李四</td>
+                        <td>12</td>
+                        <td>苗</td>
+                    
+                      </tr>
+                      <tr>
+                        <td>李明</td>
+                        <td>25</td>
+                        <td>汉</td>
+                 
+                      </tr>
+                    </tbody>
+                  </table>
+    
+        </div>
+
+</div>
+</div>
+
+<!-- Rank List -->
+
+<script>
+    $(document).ready(function() {
+        $('ul.tabs').tabs();
+    });
+
+</script>
+
+</body>
+</html>

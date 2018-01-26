@@ -1,0 +1,73 @@
+.selected {
+    background-color: #26a69a;
+    color: #fff;
+}
+
+.qies {
+    float: left;
+    margin-left: 10px;
+}
+.qies .credit{
+    cursor: pointer;
+}
+.main{ width: 1440px; height: 738px; margin-left: auto; margin-right: auto; position: relative; }
+.w1,.w2,.w3,.w4{position:absolute; width:300px; height:80px;  top:120px; left:220px}
+.w2{top:310px; left:220px; width:600px; height:40px; background: #26a69a}
+.w3{top:550px; left:220px; width:380px; height:40px; }
+.w4{top:700px; left:1240px; width:100px; height:40px;  }
+div#jpWalkthrough #jpwTooltip #tooltipInner{font-size: 19px !important;}
+.overlay-hole{margin-left: 20px!important; margin-top: 20px!important;}
+.moda{padding-left: 10px;padding-top: 10px;}
+.moda li{width:54px;height: 54px;border-radius: 36px;margin-left: 13px;margin-top:10px;cursor:pointer;float: left;overflow: hidden;border:2px solid #26a69a;}
+.moda-img{cursor:pointer;width:100%;height:100%;}
+.remove-a{
+    width: 90px;
+    height: 30px;
+    text-align: center;
+    float: left;;
+    color: #fff;
+    background: #26a69a;
+    cursor: pointer;
+    line-height: 30px;
+    margin-top: 30px;
+    font-size:14px;
+    border-radius: 2px;
+}
+.collap-buff{
+    float:right;
+    margin-right:10px;
+    margin-top:-5px;
+}
+
+.friend-messages p{
+    white-space:normal;
+    background: #b3ade9;
+    color: #fff;
+    font-size: 18px;
+    padding: 15px; 
+    margin: 5px 10px 0;
+    border-radius: 10px;  
+    float:left;
+    max-width: 23em;
+    word-break:break-all;
+    /* word-wrap:break-word; */
+
+}
+.chosen-single{
+    width:220px; 
+    float: left;
+    
+}
+.chosen-drop{
+    width:200px!important;
+    background-color: #455a64!important;
+}
+
+
+#three-level .select-wrapper{
+        display: none;
+}
+.chosen-container{
+    width: auto!important;
+    margin: 10px 0;
+}

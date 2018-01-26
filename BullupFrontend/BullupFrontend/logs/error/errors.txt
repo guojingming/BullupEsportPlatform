@@ -1,0 +1,42 @@
+[2017-10-24 08:58:48] TypeError: Converting circular structure to JSON
+[2017-10-24 08:58:51] TypeError: Converting circular structure to JSON
+[2017-10-24 08:58:53] TypeError: Converting circular structure to JSON
+[2017-10-24 08:58:55] TypeError: Cannot set property 'teamStrengthScore' of undefined
+[2017-10-24 08:58:56] TypeError: Cannot set property 'teamStrengthScore' of undefined
+[2017-10-24 08:58:58] TypeError: Cannot set property 'teamStrengthScore' of undefined
+[2017-10-24 08:59:00] TypeError: Cannot set property 'teamStrengthScore' of undefined
+[2017-10-24 08:59:01] TypeError: Cannot set property 'teamStrengthScore' of undefined
+[2017-10-24 08:59:02] TypeError: Cannot set property 'teamStrengthScore' of undefined
+[2017-10-28 08:44:05] TypeError: Cannot read property 'typeCast' of undefined
+[2017-10-28 08:54:27] TypeError: callback is not a function
+[2017-10-31 10:08:58] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:13:39] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:13:48] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:13:49] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:16:41] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:17:10] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:20:44] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:21:01] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:22:45] TypeError: logUtil.listenerLog is not a function
+[2017-10-31 10:22:54] TypeError: logUtil.listenerLog is not a function
+[2017-10-31 10:23:02] TypeError: logUtil.listenerLog is not a function
+[2017-10-31 10:23:02] TypeError: logUtil.listenerLog is not a function
+[2017-10-31 10:25:46] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:43:34] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:59:16] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 10:59:20] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 11:00:34] TypeError: logUtil.listenerLogLog is not a function
+[2017-10-31 19:17:24] Error: Connection lost: The server closed the connection.
+[2017-11-01 04:33:03] Error: listen EADDRINUSE :::3001
+[2017-11-01 04:34:16] Error: listen EADDRINUSE :::3001
+[2017-11-01 04:34:18] Error: listen EADDRINUSE :::3000
+[2017-11-01 09:44:33] TypeError: Cannot set property 'teamStrengthScore' of undefined
+[2017-11-01 09:44:38] TypeError: Cannot set property 'teamStrengthScore' of undefined
+[2017-11-01 09:44:58] TypeError: Cannot set property 'teamStrengthScore' of undefined
+[2017-11-01 18:04:45] Error: Connection lost: The server closed the connection.
+[2017-11-02 03:22:37] Error: listen EADDRINUSE :::3001
+[2017-11-02 03:22:39] Error: listen EADDRINUSE :::3000
+[2017-11-02 09:52:23] Error: listen EADDRINUSE :::3001
+[2017-11-02 09:52:23] Error: listen EADDRINUSE :::3000
+[2017-11-07 00:56:30] TypeError: Cannot read property 'length' of undefined
+[2017-11-07 01:14:23] Error: ER_DATA_TOO_LONG: Data too long for column 'bullup_battle_map_type' at row 1

@@ -1,0 +1,21 @@
+function change_page(pageNumber, dataAmount, dataInterface, pageRef, targetId){
+	/*
+	 * Parameters
+	 *  pageNumber: current page number
+	 *  dataAmount: number of datas per page
+	 *  dataInterface: function name for get data
+	 *  pageRef: swig template file name
+	 *  targetId: target id where template will be loaded
+	 */
+
+	//get data from dataInterface
+	var resData = dataInterface(pageNumber, dataAmount);
+
+	//render template with result data
+	var template = bullup.loadSwigView(pageRef, resData);
+
+	//load template into webpage
+	$('#'+targetId).html(template);
+
+	
+}

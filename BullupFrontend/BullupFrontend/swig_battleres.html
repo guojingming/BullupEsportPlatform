@@ -1,0 +1,140 @@
+<!--
+	 This file is coded for displaying battle results. It accepts data [battle_res] and render the page accroding to its contents. Note that if the data structure is void, this page will displaynothing.
+	 
+	 Related Files:
+	 CSS: materialize.min.css \ font-awesome.min.css \ battleres.css
+	 JS: jquery-2.2.4.js \ materialize.min.js
+   -->
+{% if battle_res %}
+		<div class="row">
+		<h3 class="res-title center-align">
+		<!-- battle result text -->
+		<h3 class="res-title center-align">
+			{% if battle_res.win == 1 %}
+			胜利
+			{% else %}
+			失败
+			{% endif %}
+		</h3>
+		</h3>
+	</div>
+
+	<!-- row for result details -->
+	<div class="row">
+	<!-- own team -->	
+	{% if battle_res.own_team %}
+	  <div class="col s4">
+		<ul class="collection team-won">
+		  {% for member in battle_res.own_team %}
+			<!-- loop for creating members' list -->
+			<li class="collection-item avatar">
+			  <img class="circle res-champ-img" alt="" src=""/>
+
+			  <div class="right">
+				<a class="waves-effect waves-light btn">
+				  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+				</a>
+
+				<a class="waves-effect waves-light btn">
+				  <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+				</a>
+			  </div>
+
+				<span class="title">{{ member.name }}</span>
+				<div>{{ member.stats.kill }}/{{ member.stats.death}}/{{ member.stats.assists}}</div>
+			</li>
+		  {% endfor %}
+		</ul>
+	  </div>
+	{% endif %}
+
+
+	<!-- block for wealth change -->
+	<div class="col s4 center-align">
+	  <div class="row">
+			<div class="col s6">
+				{% if battle_res.win == 1 %}
+				<div class="wealth-title">
+					胜利资产变化
+				</div>
+				<label class="dollar-change">
+					<i class="fa fa-arrow-up fa-4x" aria-hidden="true"></i>
+					<i class="fa fa-usd fa-4x" aria-hidden="true"></i>
+					<span class="dollar-amount">+{{ battle_res.wealth_change }}</span>
+				</label>
+				{% else %}
+				<div class="wealth-title">
+					失败资产变化
+				</div>
+				<label class="dollar-change">
+					<i class="fa fa-arrow-down fa-4x" aria-hidden="true"></i>
+					<i class="fa fa-usd fa-4x" aria-hidden="true"></i>
+					<span class="dollar-amount">-{{ battle_res.wealth_change }}</span>
+				</label>
+				{% endif %}
+			</div>
+
+		
+		<!-- <div class="col s6">
+				{% if battle_res.win == 0 %}
+				<div class="wealth-title">
+					胜方资产变化
+				</div>
+				<label class="dollar-change">
+					<i class="fa fa-arrow-up fa-4x" aria-hidden="true"></i>
+					<i class="fa fa-usd fa-4x" aria-hidden="true"></i>
+					<span class="dollar-amount">{{ battle_res.wealth_change }}</span>
+				</label>
+				{% else %}
+				<div class="wealth-title">
+					负方资产变化
+				</div>
+				<label class="dollar-change">
+					<i class="fa fa-arrow-down fa-4x" aria-hidden="true"></i>
+					<i class="fa fa-usd fa-4x" aria-hidden="true"></i>
+					<span class="dollar-amount">{{ battle_res.wealth_change }}</span>
+				</label>
+				{% endif %}
+			</div>-->
+	  </div> 
+	</div>
+
+
+	
+	<!-- rival team -->
+	{% if battle_res.rival_team %}
+		<div class="col s4">
+		<ul class="collection team-won">
+			{% for member in battle_res.rival_team %}
+			<!-- loop for creating members' list -->
+			<li class="collection-item avatar">
+				<img class="circle res-champ-img" alt="" src=""/>
+
+				<div class="right">
+				<a class="waves-effect waves-light btn">
+					<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+				</a>
+
+				<a class="waves-effect waves-light btn">
+					<i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+				</a>
+				</div>
+
+				<span class="title">{{ member.name }}</span>
+		
+				<div>{{ member.stats.kill }}/{{ member.stats.death}}/{{ member.stats.assists}}</div>
+		
+			</li>
+			
+			{% endfor %}
+		</ul>
+		</div>
+	{% endif %}
+{% endif %}
+
+</div>
+
+<!-- button for confirm and return to home -->
+<div class="row center-align">
+  <a class="waves-effect waves-light btn battleres-btn" id="confirm_battle_result">确认</a>
+</div>

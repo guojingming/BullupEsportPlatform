@@ -1,0 +1,185 @@
+body{
+	/* background: #000000; */
+	background-image: url(../media/imgs/body-bg.jpg);
+	background-size: cover;
+	background-repeat: repeat-x;
+	background-position: center center;
+	padding-top: 70px;
+	padding-left: 15px;
+	padding-right: 15px;
+	
+}
+.navbar{
+	-webkit-user-select:none;
+	-webkit-app-region:drag;
+}
+.navbar-fixed{
+	-webkit-app-region:drag;
+}
+
+.battle-panel {
+	background-color: #333;
+	border-color: #333;
+	/* 	   width: 48%; */
+	margin: 10px 0% 1em;
+	padding: 15px;
+}
+.battle-info {
+	text-align: left;
+}
+
+.battle-teaser {
+	width: 80px;
+	height:80px;
+	/* 	   margin: 2px 1% 2px; */
+}
+
+.server-badge {
+	text-align: right;
+}
+#box-pad {
+	height: 70px;
+}
+
+.battle-name {
+	color: #00b0f0;
+}
+
+.battle-details {
+	margin-top:20px;
+	/* 	   margin-bottom: 10px; */
+}
+
+.align-right {
+	text-align: right;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-center {
+	text-align: center;
+}
+
+#myKanban{overflow-x: auto; padding:10px 0;}
+
+.success{background: #00B961; color:#fff}
+.info{background: #2A92BF; color:#fff}
+.warning{background: #F4CE46; color:#fff}
+.error{background: #FB7D44; color:#fff}
+
+.white-color {
+	color: #ffffff;
+}
+
+.gray-color {
+	color: #a2b4ba;
+}
+
+.user-info-img {
+	width: 178px;
+	height: 178px;
+}
+
+.row {
+	margin-top:10px;
+}
+
+.value-number {
+	font-size:28px;
+	color: #00b38c;
+}
+
+.nick-name {
+	color: #00b0f0;
+	font-size: 20px;
+}
+
+.fight-force {
+	color: #eff0dc;
+	font-size: 15px;
+}
+
+.user-detail-img {
+	width: 148px;
+	height: 148px;
+}
+
+.nav a {
+	font-size: 24px;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 60%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+label.error {
+	background: #f4f7f8;
+	color: #ff4124;
+}

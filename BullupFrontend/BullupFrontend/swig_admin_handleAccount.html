@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>swig test</title>
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="css/font.css" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+	<link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="./css/materialize.min.css" rel="stylesheet">
+	<link href="./css/mhome.css" rel="stylesheet">
+	<link href="./css/battle.css" rel="stylesheet">
+	<link href="./css/searchusr.css" rel="stylesheet">
+	<link href="./css/personalInfo.css" rel="stylesheet">
+	<link href="./css/rank.css" rel="stylesheet">
+	<link href="./css/personalInfo.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="./css/boxstyle.css">
+	<link rel="stylesheet" type="text/css" href="./css/friendbox.css">
+	<link rel="stylesheet" type="text/css" href="./css/searchbox.css">
+	<link href="/css/starter.css" rel="stylesheet" />
+	<link href="/css/tournament.css" rel="stylesheet" />
+	<link href="/css/myroom.css" rel="stylesheet" />
+	<link href="/css/spa_fight.css" rel="stylesheet" />
+	<link rel="stylesheet" href="./flipclock/flipclock.css">
+	<link href="./css/materialize.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="./css/spa_fight.css">
+    <link rel="stylesheet" href="./css/date.css">
+
+    <!-- 表头固定插件 -->
+    <script src="./js/jquery.freezeheader.js"></script>
+    <!-- 内容过滤插件 -->
+    <!-- <script src="./js/jquery.filtertable.min.js"></script>  -->
+    <script src="./js/jquery.filtertable.js"></script> 
+
+    <style>
+        .filter-table .quick { margin-left: 0.5em; font-size: 0.8em; text-decoration: none; }
+        .fitler-table .quick:hover { text-decoration: underline; }
+        td.alt { background-color: #ffc; background-color: rgba(254, 255, 254, 0.34); }
+    </style>
+</head> 
+
+<body>
+<!-- 约战管理 -->
+<script src="./js/admin_handleAccount.js"></script>
+<a class="waves-effect waves-light btn" style="position: absolute;margin-top: 10px;right: 50px;" id="back-accountNumber">返回</a>
+<script>$.getScript('./js/back.js');</script>
+<div>
+<table id="tab" class="responsive-table centered">
+    <thead>
+        <tr style="background:#26a69a">
+            <th>序号</th>
+            <th>用户ID</th>
+            <th>用户账号</th>
+            <th>LOL账号</th>
+            <th>当前状态</th>
+            <th>禁赛</th>
+            <th>解封</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if dataSource %}
+          {% for key in dataSource.data %}
+        <tr class="keyRow">
+            <td>{{ loop.index }}</td>
+            <td class="userId">{{ key.user_id }}</td>
+            <td>{{ key.account }}</td>
+            <td>{{ key.user_lol_account }}</td>
+            {% if key.user_suspension_state=='TRUE' %}
+            <td style="color:#CF1F1F">禁赛中</td>
+            {% else %}
+            <td style="color:#50B347">正常</td>
+            {% endif %}
+            <td>
+                <a class="waves-effect waves-light btn-small suspend ">点击禁赛</a>
+            </td>
+            <td>
+                <a class="waves-effect waves-light btn-small unblock">点击解封</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    
+    </tbody>
+</table>
+</div>
+<script>
+    //表头固定
+    $(document).ready(function () {
+        $("#tab").freezeHeader({ 'height': '720px' });
+    });
+    //表格过滤
+    $('table').filterTable();
+</script>
+</body>
+
+</html>

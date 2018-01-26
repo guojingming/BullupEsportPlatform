@@ -1,0 +1,101 @@
+<div class="container" style="margin-top: 40px;">
+  <div class="user_rank row rank_gr">
+	<div class="col s4">
+	  <label class="rank-title">
+		用户昵称
+		</label>
+		<p class="ranl_nameme" >
+			{% if wealthUserInfo %}
+			{{wealthUserInfo.user_nickname}}
+		{% else %}
+		---请先登录---
+		{%endif %}
+		</p>
+	</div>
+	
+	<div class="col s4">
+	  <label class="rank-title ">财富排名</label>
+	  <div class="rank-value">
+		<!-- 财富排名 -->
+		{% if wealthUserInfo %}
+			{{wealthUserInfo.bullup_wealth_rank}}
+		{% else %}
+		---请先登录---
+		{%endif %}
+	  </div>
+	</div>
+
+	<div class="col s4">
+	  <label class="rank-title">战斗力排名</label>
+	  <div class="rank-value">
+		<!-- 战斗力排名 -->
+		{% if strengthUserInfo %}
+		{{strengthUserInfo.bullup_strength_rank}}
+		{% else %}
+		---请先登录---
+		{%endif %}
+	  </div>6
+	</div>
+  </div>	
+  
+  <div class="col s12">
+    <ul class="tabs tabs-fixed-width ul_li" style="background: none;">
+      <li class="tab col s3 pattern"><a  class="" href="#wealth_list">财富排行</a></li>
+      <li class="tab col s3 "><a  href="#cap_list">战斗力排行</a></li>
+    </ul>
+  </div>
+  <div id="wealth_list" class="col s12">
+    {% if wealthRankList %}
+	  <ul class="collection" style="margin-top: 30px;;border-right: none;border-left:none;">
+		{% for player in wealthRankList %}
+		{% if player.user_nickname!='管理员' %}
+		  <li class="collection-item avatar dw_crown" style="background: none;">
+			<p class="crown"></p>
+			<div class="t_name">
+			<img src="./media/user_icon/{{ player.user_icon_id }}.png" alt="" class="circle">
+			<span class="title" style="color: #fff;">{{player.user_nickname }}</span>
+			<p style="color: #fff;">{{ player.user_wealth }}
+			</div>
+
+		 
+			</p>
+			<div  class="secondary-content rank-number right">
+				{{loop.index}}
+				
+			</div>
+			</li>
+			{% endif %}
+		{% endfor %}
+	  </ul>
+	{% else %}
+	  <h5>排行榜加载错误，请稍后重试</h5>
+	{% endif %}
+
+  </div>
+
+  <div id="cap_list" class="col s12">
+	{% if strengthRankList %}
+	  <ul class="collection" style="margin-top: 30px;;border-right: none;border-left:none;">
+		{% for player in strengthRankList %}
+		{% if player.user_nickname!='管理员' %}
+		  <li class="collection-item avatar dw_crown"  style="background: none;">
+			<p class="crown"></p>
+			<div class="t_name">
+			<img src="./media/user_icon/{{ player.user_icon_id }}.png" alt="" class="circle">
+			<span style="color: #fff;" class="title">{{ player.user_nickname }}</span>
+			<p style="color: #fff;" >{{ player.user_strength }}
+			</div>
+			</p>
+			<div class="secondary-content rank-number right">{{loop.index}}</div>
+			</li>
+		{% endif %}
+		{% endfor %}
+	  </ul>
+	{% else %}
+	  <h5>排行榜加载错误，请稍后重试</h5>
+	{% endif %}
+
+  </div>
+</div>
+
+<script src="./js/pattern.js"></script>

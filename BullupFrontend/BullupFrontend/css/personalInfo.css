@@ -1,0 +1,38 @@
+.personalInfo-teaser {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+
+.personal-title {
+	color: #4db6ac;
+	font-size: 30px;
+}
+.personal-value {
+	color: #f4f7f8;
+	font-size: 24px;
+}
+
+canvas {
+	background-color: #222;
+
+	-webkit-transition: background-color 0.4s;
+}
+
+canvas:hover {
+	background-color: #f4f7f8;
+}
+
+th, td {
+	color: #f4f7f8;
+}
+
+.recent-pl {
+	overflow: scroll;
+}
+
+.table-name {
+	color: #4db6ac;
+	font-size: 18px;
+}

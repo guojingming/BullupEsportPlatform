@@ -1,0 +1,29 @@
+.tabs {
+	background-color: #111;
+}
+
+.tab a {
+	color: #f4f7f8 !important;
+}
+
+.rank-number {
+	border-radius: 50%;
+	
+	width: 20px;
+	height: 20px;
+	color: white;
+	text-align: center;
+}
+
+
+.rank-title {
+	color: #4db6ac;
+	font-size: 30px;
+}
+
+.rank-value {
+	color: #f4f7f8;
+	font-size: 24px;
+}
+
+

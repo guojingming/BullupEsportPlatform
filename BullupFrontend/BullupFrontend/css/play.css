@@ -1,0 +1,21 @@
+.play_ul{
+    background: none;
+    }
+ .play_tab td, th{
+    padding: 15px 5px;
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 2px;
+}
+.play_tab{
+    margin-top: 30px;
+}
+.play_cj{
+    margin:45px auto;
+    width: 200px;
+
+   
+  
+    
+}

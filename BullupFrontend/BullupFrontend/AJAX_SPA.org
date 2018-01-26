@@ -1,0 +1,8 @@
+* Ajax
+#+BEGIN_SRC javascript
+$().ready({
+	$.ajax({
+		
+	});
+});
+#+END_SRC

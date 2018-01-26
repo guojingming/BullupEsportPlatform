@@ -1,0 +1,47 @@
+
+
+
+.center-info {
+    text-align: center;
+}
+
+.countdown-clock {
+    display: inline-block;
+    width: auto;
+}
+
+.center-clock {
+    text-align: center;
+}
+
+.candi-img {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.collapsible .collapsible-body {
+    background-color: #455a64;
+    color: #f4f7f8;
+}
+
+.countdown-name {
+    color: white;
+    font-size: 36px;
+}
+
+.show_game_start{
+    margin-top: 5px;
+    background: #212121;
+    width: 405px;
+    height: 110px;
+    text-align: center;
+    line-height: 110px;
+    font-size: 35px;
+    display:none;
+    position: fixed;
+    top: 185px;
+    left: 438px;
+    color: #ccc;
+}

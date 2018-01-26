@@ -1,0 +1,206 @@
+
+<div class="row">
+  <!-- button will fade away -->
+	<a class="nav-link waves-effect waves-light btn right" id="refresh_formed_battle_room">刷新房间</a>
+		
+	  <!--
+		<select class="browser-default right" id ="bullup_seek_map" style="width:105px;height:36px;background-color:#2bbbad;color:#fff;margin-right: 2px;">
+			<option value="所有地图">所有地图</option>
+			<option value="召唤师峡谷">召唤师峡谷</option>
+			<option value="嚎哭深渊">嚎哭深渊</option>
+		</select>
+	  -->
+
+
+		
+		<select class="browser-default right battle-select" data-participant= {{ participant }} id ="search_participants_num">
+			<option value="team_participants_num">参战人数</option>
+			<option value="1V1">1V1</option>
+			<option value="2V2">2V2</option>
+			<option value="3V3">3V3</option>
+			<option value="4V4">4V4</option>
+			<option value="5V5">5V5</option>
+		</select>
+
+
+
+		<!--
+			<select class="browser-default right" id ="bullup_seek_game_type" style="width:90px;height:36px;background-color:#2bbbad;color:#fff;margin-right: 2px;">
+				<option value="获胜方式">获胜方式</option>
+				<option value="推掉水晶">推掉水晶</option>
+				<option value="其他">其他</option>
+			</select>
+		-->
+		
+			
+
+	
+			<select class="browser-default right battle-select" id ="search_reward_amount" data-amount= {{ amount }}>
+				<option value="reward_amount">比赛金额</option>
+				<option value="#1">$1</option>
+				<option value="$5">$5</option>
+				<option value="$10">$10</option>
+			</select>
+
+			
+			<select class="browser-default right battle-select" id ="search_time" data-sort = {{ sort }}>
+				<option value="ascend_time">时间升序</option>
+				<option value="descend_time">时间降序</option>
+			</select>
+
+
+</div>
+
+{% if teams %}
+	<!-- cycle through two teams, put  -->
+  {% for team in teams %}
+	<!-- For the first team -->
+
+	{% if loop.index % 3 == 1 %}
+	  <div class="row">
+		{% endif %}
+
+    <div class="col s12 m6 l4" >
+		
+      <div class="card battle-card grey darken-2" >
+        <div class="card-content white-text" style="padding:15px;">
+          <div class="row"  style="margin-bottom:10px;">
+            <!-- teaser -->
+            <div class="col s2">
+              <img class="battle-teaser" src="./media/user_icon/{{ team.captain.avatarId }}.png">
+            </div>
+            <div class="col s10">
+              <div class="row">
+                <span class="card-title r0ight" style="min-width: 290px;min-height: 64px;word-wrap: break-word;">
+									{{team.roomName}}
+								</span>
+                <div class="chip right" style="position:absolute;margin-top: -5px;top:53px;left:327px;">
+                  {{ team.teamParticipantsNum }}V{{ team.teamParticipantsNum }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- first row -->
+        </div>
+
+        <div class="card-action" style="padding: 16px 15px;">
+					<a class="team_detail_btn" href="#team-detail-modal" id="{{ team.roomName }}_team_detail_btn" >发起挑战</a>
+					<!-- <a id="battle_team_details_btn">详情</a> -->
+          <!-- <a href="#">收藏</a> -->
+					
+					<div class="chip right"  style="margin-top:-5px;">
+            <i class="fa fa-picture-o" aria-hidden="true"></i>{% if team.mapSelection=='map-selection-2' %}嚎哭深渊{% else %}召唤师峡谷{% endif %}
+					</div>
+
+          <div class="chip right"  style="margin-top: -5px;">
+            <i class="fa fa-gamepad" aria-hidden="true"></i>{% if team.winningCondition=='push-crystal' %}推掉水晶{% endif %}
+					</div>
+          <div class="chip right" style="margin-top: -5px;">
+            <i class="fa fa-money" aria-hidden="true"></i> {{ team.rewardAmount }}
+          </div>
+        </div>
+			</div>
+		
+		</div>
+
+    {% if loop.index % 3 == 0 %}
+	  </div>
+	{% endif %}
+	{% if loop.index % 3 != 0 and loop.revindex == 1 %}
+</div>
+	{% endif %}
+  {% endfor %}
+{% endif %}
+
+
+<div class="row center-align" id="pagination-holder">
+  
+</div>
+
+<!-- {% if teams %} -->
+<!-- cycle through two teams, put  -->
+<!-- {% for team in teams %} -->
+<!-- team detail modal Structure -->
+<!-- <div id="{{ team.roomName }}_team-detail-modal" name="{{ team.roomName }}_team-detail-modal-name" class="modal"> -->
+<div id="team-detail-modal" class="modal">
+		<!-- <div id="team-detail-modal" class="modal"> -->
+	<div class="modal-content">
+	<div class="row">
+	  <!-- Where Details go -->
+	  <!-- <div class="col s12 m2" id ="{{ team.roomName }}_team_detail_container"> -->
+		<div class="col s12 m2" id ="team_detail_container">
+			<!-- team details -->
+
+	  </div>
+	  <!-- End of Details -->
+	  <div class="col s12 m9">
+		<!--  Radar Chart of two teams                  -->
+		<canvas id="team-detail-chart" style="margin-left:56px;"></canvas>
+	  </div>
+	</div>
+  </div>
+  <div class="modal-footer">
+	<a style="background-color: #26a69a;color:#fff;" href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-battle-btn">邀请战斗</a>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="waiting-modal" class="modal">
+  <div class="modal-content">
+	<h4>等待对方队长应答</h4>
+	<!--            preloader-->
+	<div class="row center">
+	  <div class="preloader-wrapper big active">
+		<div class="spinner-layer spinner-blue">
+		  <div class="circle-clipper left">
+			<div class="circle"></div>
+		  </div>
+		  <div class="gap-patch">
+			<div class="circle"></div>
+		  </div>
+		  <div class="circle-clipper right">
+			<div class="circle"></div>
+		  </div>
+		</div>
+
+		<div class="spinner-layer spinner-red">
+		  <div class="circle-clipper left">
+			<div class="circle"></div>
+		  </div>
+		  <div class="gap-patch">
+			<div class="circle"></div>
+		  </div>
+		  <div class="circle-clipper right">
+			<div class="circle"></div>
+		  </div>
+		</div>
+
+		<div class="spinner-layer spinner-yellow">
+		  <div class="circle-clipper left">
+			<div class="circle"></div>
+		  </div>
+		  <div class="gap-patch">
+			<div class="circle"></div>
+		  </div>
+		  <div class="circle-clipper right">
+			<div class="circle"></div>
+		  </div>
+		</div>
+
+		<div class="spinner-layer spinner-green">
+		  <div class="circle-clipper left">
+			<div class="circle"></div>
+		  </div>
+		  <div class="gap-patch">
+			<div class="circle"></div>
+		  </div>
+		  <div class="circle-clipper right">
+			<div class="circle"></div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+<!-- {% endfor %}
+{% endif %}-->

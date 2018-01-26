@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>spa_rank</title>
+  <link href="./css/play.css" rel="stylesheet">
+  <script src="./js/check.js"></script>
+</head>
+
+<body>
+  <!-- Rank List -->
+
+  <div class="row sign_row" style="">
+    <div class="col s12 m6 sign_col" style="width:100%;">
+      <div class="card blue-grey darken-1">
+        {% if dataResult %} {% for key in dataResult%} {% for i in key%}
+        <div class="card-content white-text await_p " style="line-height: 50px">
+
+          <p>比赛名称：{{i.bullup_competition_name}}</p>
+          <p style="display:none;" id="start_date">{{i.bullup_competition_sign_start}}</p>
+          <p style="display:none;" id="matchId">{{i.bullup_competition_id}}</p>
+          <p>报名时间：{{i.bullup_competition_sign_start}}-{{i.bullup_competition_sign_end}}</p>
+          <p>比赛时间：{{i.bullup_competition_start}}-{{i.bullup_competition_end}}</p>
+          <p>战斗力上下线：{{i.bullup_competition_lowest_score}}-{{i.bullup_competition_highest_score}}</p>
+          <div style="position: relative;">
+            <p>报名成员：{{i.bullup_competition_max_paticipant}}</p>
+          </div>
+          <p>赛事说明：{{i.bullup_competition_comment}}</p>
+          {% endfor%} {% endfor%} {%endif%}
+
+        </div>
+        <div class="card-action">
+          <p style="font-size:24px;color:#26a69a;">距离报名时间还有</p>
+          <div class="time-item time-item1">
+            <span class="day_show" id="t_d">00天</span>
+            <strong class="hour_show" id="t_h">00时</strong>
+            <strong class="minute_show" id="t_m">00分</strong>
+            <strong class="second_show" id="t_s">00秒</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Rank List -->
+  <!-- Rank List -->
+
+
+
+
+</body>
+<script type="text/javascript">
+  // var $bank_exptredata=$('#bank_exptredata').val();
+  // // var date = new Date($bank_exptredata);
+
+  function GetRTime() {
+    var $start_date = $('#start_date').text();
+    // var date = new Date($bank_exptredata);
+     var $matchId = $('#matchId').text();
+    var EndTime = new Date($start_date);
+
+    var NowTime = new Date();
+if(EndTime !=null){
+var t = EndTime.getTime() - NowTime.getTime();
+    var d = 0;
+    var h = 0;
+    var m = 0;
+    var s = 0;
+    if (t >= 0) {
+      d = Math.floor(t / 1000 / 60 / 60 / 24);
+      h = Math.floor(t / 1000 / 60 / 60 % 24);
+      m = Math.floor(t / 1000 / 60 % 60);
+      s = Math.floor(t / 1000 % 60);
+    }
+    document.getElementById("t_d").innerHTML = d + "天";
+    document.getElementById("t_h").innerHTML = h + "时";
+    document.getElementById("t_m").innerHTML = m + "分";
+    document.getElementById("t_s").innerHTML = s + "秒";
+  }else{
+    socket.emit(timer,{
+        matchId:$matchId
+    })
+  }
+    }
+
+
+ setTimeout(GetRTime, 1000);
+
+
+    
+
+
+</script>
+
+</html>

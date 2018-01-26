@@ -1,0 +1,19 @@
+<!-- This file should be rendered into
+	 div.user-view
+	 of swig_myroom_frame.html
+   -->
+{% if user %}
+  <div class="background">
+    <img src="./media/imgs/usr_bg.jpg">
+  </div>
+  <a href="#!user"><img class="circle" src="./media/user_icon/{{ user.avatarId }}.png"></a> 
+  <a href="#!name"><span class="white-text name">{{ user.name }}</span></a>
+  <a href="#!"><span class="white-text">我的好友</span></a>
+{% else %}
+  <div class="background">
+    <img src="./media/imgs/timg.jpeg">
+  </div>
+  <a href="#!user"><img class="circle" src="./media/imgs/timg.jpeg"></a>
+  <a href="#!name"><span class="white-text name">--请先登录--</span></a>
+  <a href="#!"><span class="white-text">我的好友</span></a>
+{% endif %}

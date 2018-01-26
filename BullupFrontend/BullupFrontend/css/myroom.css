@@ -1,0 +1,85 @@
+.team-value {
+    color: #f4f7f8;
+    font-size: 24px;
+}
+
+.team-title {
+    color: #4db6ac;
+    font-size: 30px;
+}
+
+.team-leader-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.friend-avatar {
+    vertical-align: middle;
+	width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+
+
+.friend-info {
+    padding: 10px;
+}
+
+.friend-nickname {
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 24px;
+    font-weight: 200;
+}
+
+.avatar-container {
+    display: inline-block;
+}
+
+.invitebox {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.friend-status {
+    display: inline-block;
+    vertical-align: middle;
+
+    font-size: 16px;
+}
+
+.color-dot-red {
+    background-color: crimson;
+}
+
+.color-dot-green {
+    background-color: forestgreen;
+    margin-left: 5px;
+}
+
+.color-dot-blue{
+    background-color: rgb(38, 0, 255);
+    margin-left: 5px;
+}
+.friend-status--offline {
+    color: darkgrey;
+}
+
+.friend-status--online {
+    color:currentColor;
+}
+
+.color-dot-yellow {
+    background-color: rgb(180, 180, 39);
+    margin-left: 5px;
+}

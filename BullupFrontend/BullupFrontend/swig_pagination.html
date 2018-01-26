@@ -1,0 +1,63 @@
+{% if totalPage > 0 %}
+  <ul class="pagination">
+	
+	{% if currentPage == 1 %}
+	  <!-- if current page number is 1, disable previous page button -->
+	  <li class="disabled">
+			<a id="prev_{{ currentPage }}" class="change_page_btn">
+				<i class="fa fa-chevron-left" aria-hidden="true"></i>
+			</a>
+		</li>
+	{% else %}
+	  <!-- if current page number is not 1, enable previous page button -->
+	  <li class="waves-effect">
+			<a  id="prev_{{ currentPage - 1 }}"  class="change_page_btn">
+				<i class="fa fa-chevron-left" aria-hidden="true"></i>
+			</a>
+		</li>
+	{% endif %}
+
+	
+	{% for page in pageNumbers %}
+	  <!-- set class to active if this number is currentPage -->
+	  {% if page != currentPage %}
+		<li class="waves-effect">
+			<a id="page_{{ page }}"  class="change_page_btn">{{ page }}</a>
+		</li>
+	  {% else %}
+		<li class="active">
+			<a id="page_{{ page }}"  class="change_page_btn">{{ page }}</a>
+		</li>
+	  {% endif %}
+	{% endfor %}
+
+	{% if currentPage ==  totalPage %}
+	  <!-- if current page number equals to max page number disable next page button -->
+	  <li class="disabled">
+			<a id="next_{{ currentPage }}"  class="change_page_btn">
+				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+			</a>
+		</li>
+	{% else %}
+	  <!-- else enable it. -->
+	  <li class="waves-effect">
+			<a id="next_{{ currentPage + 1 }}"  class="change_page_btn">
+				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+			</a>
+		</li>
+	{% endif %}
+  </ul>
+{% endif %}
+
+
+
+	 <!-- {
+	 	totalPage: 10,
+	 	pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+	 	currentPage: 1
+	 } -->
+
+
+  
+
+

@@ -1,0 +1,27 @@
+
+
+{% if logged_user %}
+  <li><a href="#">系统菜单</a></li>
+  <li><a href="#">0</a></li>
+  <p style="position: fixed;height: 50px;line-height: 50px;background: rgba(33,33,33,0.8);padding: 0 5px 0 15px;color: #26a69a;top: 50px;">{{ logged_user.name }}</p>
+  <li><a href="#" id='log_out_button'>登出</a></li>
+  <li><a href="#fankui">意见反馈</a></li>
+{% else %}
+  <li><a href="#log_modal">登录</a></li>
+  <li><a href="#sign_modal">注册</a></li>  
+{% endif %}
+
+<li><a href="#link_modal">绑定账号</a></li>
+
+
+<li class="divider"></li>
+
+		<!-- 接收到挑战时的提示音 -->
+		<audio id="bullup_background_music" class="bullup_background_music">
+			<source src="media/music/prompt.mp3" type="">
+		</audio>
+
+<script>
+
+
+</script>

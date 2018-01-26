@@ -1,0 +1,98 @@
+<a class="waves-effect waves-light btn" style="position: absolute;margin-top: 10px;right: 50px;" id="back-statistics">返回</a>
+<script>$.getScript('./js/back.js');</script>
+<div class="row">
+    <div class="col m6">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">用户的对战次数已有:<span class="a" style="font-size:30px;color:#EE9A3B"></span></span>
+          <p><span class="card-title">公司目前已收入:<span class="c" style="font-size:30px;color:#EE9A3B">{{ dataSource.data.companyIncome }}</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col m6">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">用户创建的队伍已有:<span class="b" style="font-size:30px;color:#EE9A3B"></span></span>
+            <p><span class="card-title">已为用户创造收入:<span class="c" style="font-size:30px;color:#EE9A3B">{{ dataSource.data.usersIncome }}</span></p>
+          </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col m6">
+        <div class="card large blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">每支队伍的胜场数(无胜绩不显示):</span>
+                <div id="tabDiv" style="height:400px;overflow:auto;">
+                <table class="centered">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>队伍成员</th>
+                            <th>胜场数</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody>
+                        {% for key in dataSource.data.eachTeamWinSum %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ key.team }}</td>
+                            <td>{{ key.winSum }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col m6">
+            <div class="card large blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">每支队伍约战总数:</span>
+                    <div id="tabDiv2" style="height:400px;overflow:auto;">
+                    <table id="tab2" class="centered">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>队伍成员</th>
+                                <th>总数</th>
+                            </tr>
+                        </thead>
+                    
+                        <tbody>
+                            {% for key in dataSource.data.eachTeamBattleSum %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ key.team }}</td>
+                                <td>{{ key.battleSum }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
+        </div>    
+</div>
+
+
+  <script src="./js/animationCounter.js"></script>
+  
+  <script>
+    $('.a').animationCounter({
+        start: 0,
+        end: '{{ dataSource.data.countAllBattle }}',
+        step: 1,
+        delay: 50,
+    });
+    $('.b').animationCounter({
+        start: 0,
+        end: '{{ dataSource.data.countAllTeam }}',
+        step: 1,
+        delay: 100,
+    });
+  
+  </script>

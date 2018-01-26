@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>spa_rank</title>
+    <link href="./css/play.css" rel="stylesheet">
+    <script src="./js/audit.js"></script>
+</head>
+
+<body>
+
+    <table class="bordered centered  style">
+        <thead>
+
+            <tr>
+                <th data-field="id">用户名</th>
+                <th data-field="name">战斗力值</th>
+                <th data-field="price">审核</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            {% if dataResult %} {% for key in dataResult %} {% for i in key.results%}
+            <tr class="getauditId">
+                <td>{{i.user_nickname}}</td>
+                <td>{{i.bullup_strength_score}}</td>
+                 <td style="display:none;" class="matchid">{{i.bullup_competition_id}}</td>
+                <td style="display:none;" class="auditId">{{i.user_id}}</td>
+                <td>
+                   {% if i.bullup_sign_status==0%}
+                    <input type="button" class="waves-effect waves-light btn-large consent"  value="同意" >
+                    <input type="button" class="waves-effect waves-light btn-large turndown"  value="拒绝">
+                    {%endif%}
+                    {% if i.bullup_sign_status==1%}
+                    <input type="button" class="waves-effect waves-light btn-large consent"  value="已通过" >
+                   {%endif%} 
+                   {% if i.bullup_sign_status==2%}
+                    <input type="button" class="waves-effect waves-light btn-large turndown"  value="已拒绝" >
+                   {%endif%} 
+                   
+            </tr>
+
+            {% endfor%} {%endfor%} {%endif%}
+        </tbody>
+        
+    </table>
+
+
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+{% if messages %}
+    {% for message in messages %}
+        {% if message.messageType == 'invitedFromFriend' %}
+            <li>
+                <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>{{ message.messageText }}</div>
+                <div class="collapsible-body">
+                    <span>{{ message.host.name }}邀请您加入一场约战比赛，赌金为{{ message.team.bet }}，比赛胜利条件是{% if message.team.rule = ‘push_crystal’ %}推掉水晶{% endif %},请问您是否加入队伍？</span>
+                    <div class="right">
+                    <a class="waves-effect waves-light btn message_accept_btn" id="message_{{loop.index - 1}}_accept_btn">
+                        <i  class=" fa fa-check" aria-hidden="true"></i>
+                    </a>
+                    <a class="waves-effect waves-light btn message_reject_btn" id="message_{{loop.index - 1}}_reject_btn">
+                        <i  class=" fa fa-times" aria-hidden="true"></i>
+                    </a>
+                    </div>
+                </div>
+            </li>
+            <script>
+                audio_prompt.play();
+            </script>
+        {% endif %}
+        {% if message.messageType == 'inviteBattle' %}
+            <li>
+                <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>{{ message.messageText }}</div>
+                <div class="collapsible-body">
+                    <span>{{ message.name }}的队伍对您的队伍发出挑战，请问您是接受挑战？</span>
+                    <div class="right">
+                    <a class="waves-effect waves-light btn message_accept_btn" id="message_{{loop.index - 1}}_accept_btn">
+                        <i  class=" fa fa-check" aria-hidden="true"></i>
+                    </a>
+                    <a class="waves-effect waves-light btn message_reject_btn" id="message_{{loop.index - 1}}_reject_btn">
+                        <i  class=" fa fa-times" aria-hidden="true"></i>
+                    </a>
+                    </div>
+                </div>
+            </li>
+            <script>
+                audio_prompt.play();
+            </script>
+        {% endif %}
+        {% if message.messageType == 'addFriend' %}
+            <li>
+                <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>{{ message.messageText }}</div>
+                <div class="collapsible-body">
+                    <span>{{ message.userInfo.name }}向您发出了好友请求，请问您是否同意？</span>
+                    <div class="right">
+                    <a class="waves-effect waves-light btn message_accept_btn" id="message_{{loop.index - 1}}_accept_btn">
+                        <i  class=" fa fa-check" aria-hidden="true"></i>
+                    </a>
+                    <a class="waves-effect waves-light btn message_reject_btn " id="message_{{loop.index - 1}}_reject_btn">
+                        <i  class=" fa fa-times" aria-hidden="true"></i>
+                    </a>
+                    </div>
+                </div>
+            </li>
+    {% endif %}
+    {% endfor %}
+{% endif %}

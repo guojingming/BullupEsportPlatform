@@ -1,0 +1,25 @@
+<!-- This file should be rendered into #team-detail-modal's
+	 div#team_detail_container
+	 of swig_battle.html
+   -->
+
+   {% if team %}
+    <p id="hidden" style="display:none">{{ team|json_encode() }}</p>
+    <h4><div id="team_details_team_name">{{ team.roomName }}</div></h4>
+    <label for="team-size">队伍人数</label>
+    <p id="team-size">{{ team.teamParticipantsNum }}</p>
+    
+    <label for="team-desc">队伍描述</label>
+    <p id="team-desc" style="width:100px;height:100px;overflow: hidden;">{{ team.battleDesc }}</p>
+    
+    <label for="game-mode">游戏模式</label>
+    <p id="game-mode">{{ team.gameMode }}</p>
+    
+    <label for="winning-condition">胜利条件</label>
+    <p id="winning-condition">{% if team.winningCondition == 'push-crystal' %}推掉水晶{% endif %}</p>
+    
+    <label for="bet-amount">下注金额</label>
+    <p id="bet-amount">{{ team.rewardAmount }}</p>
+    
+    {% endif %}
+    <script src="./js/team_detail_radar.js"></script>

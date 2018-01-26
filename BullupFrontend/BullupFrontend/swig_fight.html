@@ -1,0 +1,84 @@
+<script src="./js/radar_in_battle.js"></script>
+<div class="row">
+	<div class="col s12 m4">
+		<ul class="collapsible" id="my_collapsible" data-collapsible="expandable">
+			{% if blueSide %}
+				{% for player in blueSide.participants %}
+					<li>
+					<div class="collapsible-header left-align">
+						<img src="./media/user_icon/{{ player.avatarId }}.png" class="candi-img"> {{ player.name }}
+					</div>
+					<div class="collapsible-body" style="padding: 10px 0 10px 10px">
+					<span>
+						 <a style="color:#FFC125;display:inline-block;width:100px;margin-right:20px;" >战力:{{ player.strength.score }}</a>
+						 <a style="color:#E0FFFF;display:inline-block;width:100px;margin-right:20px;" >KDA {{ player.strength.kda }}</a>
+						 <a style="color:#FFC125;display:inline-block;width:100px;margin-right:20px;" >伤害 {{ player.strength.averageDamage }}</a>
+						 <br/>
+						 <a style="color:#E0FFFF;display:inline-block;width:110px;margin-right:10px;" >承受伤害 {{ player.strength.averageDamageTaken }}</a>
+						 <a style="color:#FFC125;display:inline-block;width:100px;margin-right:20px;" >金钱 {{ player.strength.averageGoldEarned }}</a>
+						 <a style="color:#E0FFFF;display:inline-block;width:100px;margin-right:20px;" >推塔 {{ player.strength.averageTurretsKilled }}</a>
+					</span>
+					</div>
+				</li>
+				{% endfor %}
+			{% endif %}
+		</ul>
+	</div>
+
+	<div class="col s12 m4 center-info">
+		<div class="countdown-name"></div>
+		<div class="countdown-clock"></div>
+
+		{% if lolRoom %}
+		<div style="color:#ccc;position:absolute;z-index:100;width:405px;font-size:16px;background:#212121;padding: 17px 0 17px 0;">请 您 在规定的时间之内 
+			{% if lolRoom.creatorId == userId  %}
+			    <b style="color:#3939e4">创建</b>
+			{% else %}
+				{% if lolRoom.team == "red" %}
+				    <b style="color:red"> 加入</b>
+				{% else %}
+			    	<b style="color:#3939e4"> 加入</b>
+				{% endif %}
+			{% endif %}
+			房间
+			<br/>房间名:{{ lolRoom.roomName }} 密码:{{lolRoom.password}}
+			<br/>请在LOL加入
+			{% if lolRoom.team == "red" %}
+		    	<b style="color:red"> 红方 </b>
+			{% else %}
+		    	<b style="color:#3939e4"> 蓝方 </b>
+			{% endif %}
+			 战队
+			 <br/>
+			 <span id="show_game_start" class="show_game_start" > 游戏已开始 </span>			 
+			</div>
+		{% endif %}
+		
+		<canvas id="teams-radar-chart" style="margin-top:125px;"></canvas>
+	</div>
+	
+	<div class="col s12 m4">
+		<ul class="collapsible" id="component_collapsible" data-collapsible="expandable">
+		{% if redSide %}
+			{% for player in redSide.participants %}
+					<li>
+					<div class="collapsible-header left-align">
+						<img src="./media/user_icon/{{ player.avatarId }}.png" class="candi-img"> {{ player.name }}
+					</div>
+					<div class="collapsible-body" style="padding: 10px 0 10px 10px">
+					<span>
+						 <a style="color:#FFC125;display:inline-block;width:100px;margin-right:20px;" >战力:{{ player.strength.score }}</a>
+						 <a style="color:#E0FFFF;display:inline-block;width:100px;margin-right:20px;" >KDA {{ player.strength.kda }}</a>
+						 <a style="color:#FFC125;display:inline-block;width:100px;margin-right:20px;" >伤害 {{ player.strength.averageDamage }}</a>
+						 <br/>
+						 <a style="color:#E0FFFF;display:inline-block;width:110px;margin-right:10px;" >承受伤害 {{ player.strength.averageDamageTaken }}</a>
+						 <a style="color:#FFC125;display:inline-block;width:100px;margin-right:20px;" >金钱 {{ player.strength.averageGoldEarned }}</a>
+						 <a style="color:#E0FFFF;display:inline-block;width:100px;margin-right:20px;" >推塔 {{ player.strength.averageTurretsKilled }}</a>
+					</span>
+					</div>
+				</li>
+				{% endfor %}
+			{% endif %}
+		</ul>
+	</div>
+</div>
