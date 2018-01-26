@@ -13,7 +13,7 @@
 
 				var $bank_country = $('#bank_country').val();
 				var $bank_money = Number($('#bank_money').val());
-				var $bank_firstname = $('#bank_firstname').val();
+				var $bank_firstname = userInfo.name;
 				var $bank_lastname = $('#bank_lastname').val();
 				var $name = $bank_firstname+$bank_lastname;
 				var $bank_areacode = $('#bank_areacode').val();

@@ -2,6 +2,7 @@ var io = require('socket.io-client');
 var socket = io.connect('http://bullesport.com:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
+var pubg_crawler = require('./js/pubg_crawler.js');
 var lolUtil = require('./js/util/lol_util.js');
 var fs =require('fs');
 
@@ -14,6 +15,16 @@ var formedTeams = null;
 var messageInfo = [];
 
 var match_timer = null;
+
+var pubgRoomInfo = [{
+    'na':  [],
+    'eu':  [],
+    'as':  [],
+    'oc':  [],
+    'sa':  [],
+    'sea': [],
+    'krjp':[]
+}];
 
 // 记录本次客户端已登陆用户，以及房间、队伍所在状态
 var prevInfo = [];
@@ -46,6 +57,10 @@ socket.on('feedback', function (feedback) {
 
         case 'ESTABLISHROOMRESULT':
             handleRoomEstablishmentResult(feedback);
+            break;
+        
+        case 'ESTABLISHTEAMMATCHRESULT':
+            handleRoomEstablishmentMatchResult(feedback);
             break;
 
         case 'INVITERESULT':
@@ -209,20 +224,47 @@ socket.on('feedback', function (feedback) {
         case'PUBGBINDRESULT':
             handlePUBGBindResult(feedback);
             break;
+        //绝地求生返回结果
+        case 'PUBGBATTLERESULT':
+            handlePUBGBattleResult(feedback);
+            break;
+        //用户点赞
+        case 'DIANZANRESULT':
+            handleDianZanResult(feedback);
+            break;
         }
 });
 
-    //handlePubgResultHtml();
+//用户点赞
+function handleDianZanResult(feedback){
+    if(feedback.extension.mode == 'favor'){
+        thumb_up('rotate(0deg)');
+        $('#mo_fover').text(feedback.test);
+        $('#mo_fover_box').css({"transform":"rotate(0deg)","top":"423px"});
+    }else{
+        thumb_up('rotate(180deg)');
+        $('#mo_fover').text(feedback.test);
+        $('#mo_fover_box').css({"transform":"rotate(180deg)","top":"350px"});
+    }
+}
 
 
-function handlePubgResultHtml(feedback){
-    var pubgResultHtml = bullup.loadSwigView('swig_pubg_result.html',null);
+
+//pubg结果
+function handlePUBGBattleResult(feedback){
+    console.log(JSON.stringify(feedback.extension.info));
+    var pubgResultHtml = bullup.loadSwigView('swig_pubg_result.html',{
+        data: feedback.extension.info
+    });
+    clickPUBGCount = 1;
     $('#main-view').html(pubgResultHtml);
 }
 
 //pubg页面
-function handlePubgResult(feedback){
-   var PubgHtml = bullup.loadSwigView('swig_pubg.html',null);
+function pubgRoomSurface(server){
+   var PubgHtml = bullup.loadSwigView('swig_pubg.html',{
+       data: pubgRoomInfo[0][server][pubgRoomInfo[0][server].length - 1]
+   });
    $('#main-view').html(PubgHtml);
 }
 
@@ -343,7 +385,6 @@ socket.on('teamInfoUpdate', function (data) {
         });
 
         $("#confirm_create_team_btn").click(function(){
-            //console.log(roomInfo);
             if(roomInfo.gameMode == 'match'){
                 //bullup.alert("匹配中，请等待！");
                 roomInfo.status = "MATCHING";
@@ -370,11 +411,28 @@ socket.on('teamInfoUpdate', function (data) {
 
             socket.emit('establishTeam', roomInfo);
         });
-
+        $("#quit_room_btn").click(function(){
+            console.log('wocaoda:',JSON.stringify(roomInfo));
+            socket.emit('quitRoom',{
+                userId: userInfo.userId,
+                roomName: roomInfo.roomName
+            });
+            roomInfo = null;
+            $('#router_starter').click();
+        });
     }else{
         //普通对员只显示队伍信息，没有好友邀请栏
         $('#invite_friend_btn').css('display', 'none');
         $('#confirm_create_team_btn').css('display', 'none');
+        $("#quit_room_btn").click(function(){
+            console.log('wocaoda:',JSON.stringify(roomInfo));
+            socket.emit('quitRoom',{
+                userId: userInfo.userId,
+                roomName: roomInfo.roomName
+            });
+            roomInfo = null;
+            $('#router_starter').click();
+        });
     }
 
     // 解决被邀请人同意后房主弹出消息中心
@@ -543,6 +601,17 @@ function handleGetFlipClock(feedback){
     var $time = feedback.extension.time;
     battleInfo.flipClock = $time; 
 }
+
+function thumb_up(deg){
+    var index = '<iframe style="background:rgba(0,0,0,0)" frameborder="0" width="1280px" height="800px" src="./swig_mo_index.html" allowtransparency="true"></iframe>';
+    $("#mo-view").show();
+    $("#mo-view").append(index);
+    $("#mo-view").css({'background':"rgba(0,0,0,0)",'transform':deg});
+    setTimeout(function(){
+       $("#mo-view").hide();
+    },3000)
+}
+
 
 function handleGetAfterFlipClock(feedback){
     var $time = feedback.extension.time;
@@ -844,10 +913,28 @@ socket.on('updateRoomMember', function(updatedParticipants){
             roomInfo.teamParticipantsNum = teamParticipantsNum;
             socket.emit('establishTeam', roomInfo);
         });
+        $("#quit_room_btn").click(function(){
+            console.log('wocaoda:',JSON.stringify(roomInfo));
+            socket.emit('quitRoom',{
+                userId: userInfo.userId,
+                roomName: roomInfo.roomName
+            });
+            roomInfo = null;
+            $('#router_starter').click();
+        });
     }else{
         //普通对员只显示队伍信息，没有好友邀请栏
         $('#invite_friend_btn').css('display', 'none');
         $('#confirm_create_team_btn').css('display', 'none');
+        $("#quit_room_btn").click(function(){
+            console.log('wocaoda:',JSON.stringify(roomInfo));
+            socket.emit('quitRoom',{
+                userId: userInfo.userId,
+                roomName: roomInfo.roomName
+            });
+            roomInfo = null;
+            $('#router_starter').click();
+        });
     }
 });
 
@@ -914,10 +1001,28 @@ socket.on('updateTeamMember', function(updatedParticipants){
             roomInfo.teamParticipantsNum = teamParticipantsNum;
             socket.emit('establishTeam', roomInfo);
         });
+        $("#quit_room_btn").click(function(){
+            console.log('wocaoda:',JSON.stringify(roomInfo));
+            socket.emit('quitRoom',{
+                userId: userInfo.userId,
+                roomName: roomInfo.roomName
+            });
+            roomInfo = null;
+            $('#router_starter').click();
+        });
     }else{
         //普通对员只显示队伍信息，没有好友邀请栏
         $('#invite_friend_btn').css('display', 'none');
         $('#confirm_create_team_btn').css('display', 'none');
+        $("#quit_room_btn").click(function(){
+            console.log('wocaoda:',JSON.stringify(roomInfo));
+            socket.emit('quitRoom',{
+                userId: userInfo.userId,
+                roomName: roomInfo.roomName
+            });
+            roomInfo = null;
+            $('#router_starter').click();
+        });
     }
     bullup.alert('有玩家退出了队伍');
 
@@ -1088,7 +1193,6 @@ function handleLOLBindResult(feedback){
         var score =feedback.extension.oriStrengthScore;
         userInfo.strength.score=score;
     }
-    console.log("123456789");
     bullup.alert(feedback.extension.tips);
     $('.modal').modal('close');
 }
@@ -1329,6 +1433,20 @@ function handleRegistResult(feedback){
     return feedback.extension;
 }
 
+function handleRoomEstablishmentMatchResult(feedback){
+            //bullup.alert("匹配中，请等待！");
+        roomInfo.status = "MATCHING";
+        teamInfo = roomInfo;
+        bullup.loadTemplateIntoTarget('swig_fightfor.html', {
+            'participants': roomInfo.participants
+        }, 'main-view');
+        console.log(roomInfo);
+        var data = getRadarData(roomInfo.participants);
+        console.log(data);
+        var labelArray = ['击杀', '死亡', '助攻','治疗', '造成伤害', '承受伤害'];
+        var dataArray1 = data;
+        bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
+}
 function handleRoomEstablishmentResult(feedback){
     if(feedback.errorCode == 0){
         bullup.alert(feedback.text);
@@ -1401,7 +1519,16 @@ function handleRoomEstablishmentResult(feedback){
         roomInfo.teamParticipantsNum = teamParticipantsNum;
 
         socket.emit('establishTeam', roomInfo);
-	});
+    });
+    $("#quit_room_btn").click(function(){
+        console.log('wocaoda:',JSON.stringify(roomInfo));
+        socket.emit('quitRoom',{
+            userId: userInfo.userId,
+            roomName: roomInfo.roomName
+        });
+        roomInfo = null;
+        $('#router_starter').click();
+    });
 
 }
 
@@ -1412,7 +1539,8 @@ function handleTeamEstablishResult(feedback){
         roomInfo.status = "PUBLISHING"; // 更改本地房间状态
         teamInfo = feedback.extension.teamInfo;
         formedTeams = feedback.extension.formedTeams;
-        delete formedTeams[teamInfo.roomName];        
+        delete formedTeams[teamInfo.roomName];
+        console.log(JSON.stringify(formedTeams[teamInfo.roomName]));        
         page(formedTeams,1);//此函数在initial_pagination.js
     }else{
         bullup.alert(feedback.text);
@@ -1517,15 +1645,15 @@ function handleAddFriendResult(feedback){
         newFriend.status = 'idle';
         newFriend.name = newFriendDetails.name;
         if(new_friend_arr.length == 0){
-            new_friend_arr.push(newFriend);
+            new_friend_arr.push(newFriend.name);
             userInfo.friendList.push(newFriend);
         }else{
             for(var i = 0;i<new_friend_arr.length;i++){
-                if(new_friend_arr[i] == newFriend){
+                if(new_friend_arr[i] == newFriend.name){
                     break;
                 }
-                if( i == new_friend_arr.length){
-                    new_friend_arr.push(newFriend);
+                if( i == new_friend_arr.length-1){
+                    new_friend_arr.push(newFriend.name);
                     userInfo.friendList.push(newFriend);
                 } 
             }
@@ -1546,6 +1674,7 @@ function handleAddFriendResult(feedback){
         $('.collapsible').collapsible();
     }
     bullup.alert(feedback.text);
+    $('#message_sheet').modal('close');
 }
 
 //反馈结果
@@ -1597,8 +1726,109 @@ function deleteFriends(feedback){
 function handlePUBGBindResult(feedback){
     if(feedback.errorCode == 1){
         bullup.alert(feedback.text);
+        $("#pubg_waiting_modal").modal("close");
     }else{
         userInfo.pubgAccount = feedback.extension.data;
         bullup.alert('绑定成功！祝您大吉大利，今晚吃鸡');
+        $("#pubg_waiting_modal").modal("close");
+        $("#bind_pubg_modal").modal("close");
+        $('#create_pubg_modall').modal("close");
     }
+}
+
+var pubgObj={};
+function cycleSearch(num,ser){
+    var gameNum = num;
+    function core(){
+        var crawCount = 0;
+        pubgObj['game'+gameNum] = setInterval(()=>{
+            // var user = pubgRoomInfo.nickname;
+            // var area = pubgRoomInfo.area;
+            //找出这是第几局游戏，爬取对应的数据
+            var gameIndex;
+            var gameArrLength = pubgRoomInfo[0][ser].length;
+            var pointIndex;
+            var account;
+            var server;
+            var createRoomTime;
+            var thisRoomInfo;
+            for(var key in pubgRoomInfo[0]){
+                if(key == ser){
+                    for(var index in pubgRoomInfo[0][key]){
+                        var tmpSerLength = ser.length;
+                        if(tmpSerLength == 2){
+                            gameIndex = pubgRoomInfo[0][key][index].symbol.substring(8);
+                        }else if(tmpSerLength == 3){
+                            gameIndex = pubgRoomInfo[0][key][index].symbol.substring(9);
+                        }else if(tmpSerLength == 4){
+                            gameIndex = pubgRoomInfo[0][key][index].symbol.substring(10);
+                        }
+                        if(gameArrLength == gameIndex){
+                            pointIndex = gameArrLength - index;
+                            thisRoomInfo = pubgRoomInfo[0][key][index];
+                            account = pubgRoomInfo[0][key][index].account;
+                            server = pubgRoomInfo[0][key][index].server;
+                            createRoomTime = pubgRoomInfo[0][key][index].createTime;
+                            console.log('这是第几次游戏',gameNum,'这是房间的标识',pubgRoomInfo[0][key][index].symbol,gameIndex,'这是该局游戏在pubgRoomInfo',ser,'的位置',index,'这是要爬取第几个li的数值',pointIndex);
+                            break;
+                        }
+                    }
+                }
+            }
+            crawCount++;
+            //60分钟/轮询间隔时间=次数 60/3 = 20
+            if(crawCount <= 20){
+                pubg_crawler.executeCrawler(account,server,pointIndex,function(res){
+                    res.symbol = server + '-game-' + gameNum + '_craw-' + crawCount;
+                    var tmpSymbol = server.length;
+                    var resSymbol;
+                    if(tmpSymbol == 2){
+                        resSymbol = res.symbol.substring(8,9);
+                    }else if(tmpSymbol == 3){
+                        resSymbol = res.symbol.substring(9,10);
+                    }else if(tmpSymbol == 4){
+                        resSymbol = res.symbol.substring(10,11);
+                    }
+                    if(resSymbol == gameNum){
+                        console.log('房间信息',JSON.stringify(thisRoomInfo));
+                        console.log('爬取结果',JSON.stringify(res));
+                        //数据对比
+                        var nowTime = new Date();//当前时间
+                        var gameStartTime = new Date(res.startTime);//游戏开始时间
+                        var opggAgoTime = Math.round((nowTime - gameStartTime) / 60000,2);
+                        console.log('游戏开始于',opggAgoTime,'分钟前');
+                        var localAgoTime = Math.round((nowTime - createRoomTime) / 60000,2);
+                        console.log('创建房间到现在有',localAgoTime,'分钟前');
+                        var gapTime = Math.abs(opggAgoTime - localAgoTime);
+                        console.log('gapTime',gapTime);
+                        //创建房间和游戏开始时间间隔不能超过3分钟
+                        if(gapTime < 3){
+                            console.log('成功啦！！！');
+                            if(thisRoomInfo.gameMode == res.gameMode){
+                                console.log('thisRoomInfo:',JSON.stringify(thisRoomInfo));
+                                 var pubgResult = {
+                                     userId: userInfo.userId,
+                                     account: thisRoomInfo.account,
+                                     server: thisRoomInfo.server,
+                                     target: thisRoomInfo.target,
+                                     kill: res.kill,
+                                     bet: thisRoomInfo.bet,
+                                     rate: thisRoomInfo.rate,
+                                     start: res.startTime,
+                                     avatarId: thisRoomInfo.avatarId
+                                 }
+                                 socket.emit('pubgResult',pubgResult);
+                                 console.log('game'+gameNum);
+                                 window.clearInterval(pubgObj['game'+gameNum]);
+                            }
+                        }
+                    }
+                });
+            }else{
+                bullup.alert('对战超时');
+                delete pubgObj[gameNum];
+            } 
+        },1000*60*3);
+    }
+    core();
 }
