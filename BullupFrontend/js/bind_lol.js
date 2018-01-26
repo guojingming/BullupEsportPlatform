@@ -3,7 +3,7 @@ $().ready(function () {
         if(userInfo == null || userInfo.userId == undefined){
             bullup.alert("请先登录，再绑定LOL账号！");
         } else{
-            bullup.alert("请登录LOL并稍作等待，系统会自动绑定您登陆的LOL账号");
+            bullup.alert("请登录LOL并稍作等待，系统会 <span class='color:red'> 自动绑定 </span> 您登陆的LOL账号");
             var lol_process = require('./js/auto_program/lol_process.js');
             //发送英雄联盟登录包
             //$("#router_test_page1").click();
