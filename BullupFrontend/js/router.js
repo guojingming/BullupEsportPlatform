@@ -1,3 +1,4 @@
+var lolUtil = require('./js/util/lol_util.js');
 $().ready(function(){
 	loadStarter();
 
@@ -11,8 +12,12 @@ $().ready(function(){
 	});
 
 	$('#router_dataquery').on('click', function(e){
-		e.preventDefault();
+		
+		// alert(111);
+		//var user_lol_nickname=userInfo.lolAccountInfo.user_lol_nickname;
+		//alert(JSON.stringify(lolAccount))
 		socket.emit("LOLKeyRequest");
+
 		
 	});
 
