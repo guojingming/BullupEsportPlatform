@@ -294,25 +294,25 @@
 		<!-- Modal Structure -->
 		<div id="log_modal" class="modal" >
 			<div class="modal-content" >
-				<h3 style="height:50px;padding:0 30px">登录</h3>
+				<h3 style="height:50px;padding:0 19px;font-size:22px;">登录</h3>
 				<div class="row">
 					<div class="col s12">
 						<div class="row">
 							<div class="input-field col s6">
-								<i class="fa fa-user prefix" aria-hidden="true"></i>
+								<i class="fa fa-user prefix" style="padding-top:10px;" aria-hidden="true"></i>
 								<input type="text" class="validate" id="login_username" placeholder="email address">
 								<label for="icon_prefix">邮箱</label>
 							</div>
 							<div class="input-field col s6">
-								<i class="fa fa-key prefix" aria-hidden="true"></i>
+								<i class="fa fa-key prefix" style="padding-top:10px;" aria-hidden="true"></i>
 								<input type="password" class="validate" id="login_password" placeholder="password">
 								<label for="icon_telephone">密码</label>
 							</div>
 						</div>
 
-						<button  onclick="disabled=1;v=this;setTimeout('v.disabled=0',3000);" class="btn waves-effect waves-light right teal lighten-2" id="login_btn">登录
-				<i class="fa fa-paper-plane" aria-hidden="true"></i>
-				</button>
+						<button style="margin-right:8px;" onclick="disabled=1;v=this;setTimeout('v.disabled=0',3000);" class="btn waves-effect waves-light right teal lighten-2" id="login_btn">登录
+						<i class="fa fa-paper-plane" aria-hidden="true"></i>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -321,13 +321,19 @@
 		<!--  sign modal  -->
 		<div id="sign_modal" class="modal" style="top:20%!important;min-height:601px;">
 			<div class="modal-content">
-				<h4>新用户注册</h4>
+				<h4 style="height:30px;padding:0 10px;">新用户注册</h4>
 				<div class="row">
 					<div class="row">
 						<div class="input-field col s6">
 							<i class="fa fa-envelope prefix" aria-hidden="true"></i>
 							<input id="usr_name" type="text" class="validate">
 							<label for="usr_name">邮箱（用户名）</label>
+						</div>
+
+						<div class="input-field col s6">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input id="usr_nick" type="text" class="validate">
+							<label for="usr_nick">用户昵称</label>
 						</div>
 
 						<div class="input-field col s6">
@@ -343,12 +349,6 @@
 						</div>
 
 						<div class="input-field col s6">
-							<i class="fa fa-user prefix" aria-hidden="true"></i>
-							<input id="usr_nick" type="text" class="validate">
-							<label for="usr_nick">用户昵称</label>
-						</div>
-
-						<div class="input-field col s6">
 							<i class="fa fa-phone prefix" aria-hidden="true"></i>
 							<input type="tel" id="usr_tel" class="validate">
 							<label for="usr_tel">手机号</label>
@@ -360,8 +360,8 @@
 							<label for="usr_email">邀请码</label>
 						</div>
 						<div class="destroy" style="width:300px;">
-								<h4>选择城市</h4>
-							<div id="three-level" style="margin-left:55px; ">
+							<h4><i class="fa fa-area-chart" style="font-size:2rem;padding-left:9px;"aria-hidden="true"></i></h4>
+							<div id="three-level" style="margin-left:55px;">
 									<select id="country" class="dept_select "></select>
 									<select id="province" class="dept_select"></select>
 									<select id="city" class="dept_select"></select>
@@ -449,10 +449,10 @@
 		<!-- Modal 充值 -->
 		<div id="recharge" class="modal">
 
-			<div>
-				<input id="money" type="text" class="validate" placeholder="请输入充值金额">
+			<div style="padding-top:20px">
+				<input id="money" style="padding-left:10px;width:98%;height: 55px;" type="text" class="validate" placeholder="请输入充值金额">
 			</div>
-			<div class="qies">
+			<div class="qies" style="padding-top:5px;">
 				<div class="chip credit">19</div>
 				<div class="chip credit">29</div>
 				<div class="chip credit">39</div>
@@ -465,7 +465,7 @@
 
 			</div>
 
-			<div class="row">
+			<div class="row" style="margin-bottom:10px;">
 
 				<form action="" id="payment-form">
 					<div class="form-row">
@@ -477,7 +477,7 @@
 						<div id="card-element">
 							<!-- a Stripe Element will be inserted here. -->
 						</div>
-						<div style="width:100%;height:1px;background:#e4e4e4;margin:80px 0 10px 0;opacity:0.6"></div>
+						<div style="width:100%;height:1px;background:#e4e4e4;margin:65px 0 10px 0;opacity:0.6"></div>
 						<!-- Used to display Element errors -->
 						<div id="card-errors" role="alert"></div>
 					</div>
@@ -495,19 +495,19 @@
 
 		<!-- Modal Structure -->
 		<div id="link_modal" class="modal">
-			<div class="modal-content">
-				<h4>绑定英雄联盟账号</h4>
+			<div class="modal-content" style="padding-bottom:15px;">
+				<h4 style="font-size:18px;padding:0 14px;height:30px;">绑定账号</h4>
 				<div class="row">
 					<form class="col s12">
-						<div class="row">
+						<div class="row" style="margin-bottom:15px;">
 							<div class="input-field col s12">
-								<i class="fa fa-user prefix" aria-hidden="true"></i>
+								<i class="fa fa-user prefix" style="padding-top:10px;" aria-hidden="true"></i>
 								<input disabled value="" id="disabled" type="text" class="validate">
 								<label for="bind_lol_account_text" style="color:#fff;">登录英雄联盟后, 点击 <b style="font-size:18px;color:red;">绑定</b> ,会自动绑定账号</label>
 							</div>
 						</div>
 
-						<a id="bind_lol_btn" class="btn waves-effect right teal lighten-2" name="action">绑定</a>
+						<a id="bind_lol_btn" class="btn waves-effect right teal lighten-2" style="margin-right:8px;" name="action">绑定</a>
 			
 				</button>
 					</form>

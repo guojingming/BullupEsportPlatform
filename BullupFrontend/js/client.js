@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://bullesport.com:3000');
+var socket = io.connect('http://192.168.2.176:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var pubg_crawler = require('./js/pubg_crawler.js');
