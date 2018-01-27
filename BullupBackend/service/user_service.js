@@ -36,7 +36,7 @@ exports.addUser = function (user) {
         //     return;
         // }
         var $temp = JSON.stringify(environment);
-        if($temp == '{}'){
+        if($temp == '{}' || battleService.battles[environment.battle.battleName] == undefined){
             return;
         }
         this.users[user.userId].environment = this.environment[user.userId];
@@ -1028,6 +1028,39 @@ exports.handleFavorOrHate = function(socket){
                         }
                     });
                 }
+            }
+        });
+    });
+}
+
+exports.handleGetNewKDA = function (socket){
+    socket.on('getNewKDA',function(data){
+        strengthInfoDao.findStrengthInfoByUserId(data.userId,function(res){
+            if(res){
+                var userStrength = res;
+                console.log('newKDA1:',JSON.stringify(res));
+                var kda = ((userStrength.bullup_strength_k + userStrength.bullup_strength_a) / (userStrength.bullup_strength_d + 1.2)).toFixed(1);
+                var $strength = {
+                    kda: kda,
+                    k:userStrength.bullup_strength_k ,
+                    d:userStrength.bullup_strength_d,
+                    a:userStrength.bullup_strength_a,
+                    averageGoldEarned: userStrength.bullup_strength_gold,
+                    averageTurretsKilled: userStrength.bullup_strength_tower,
+                    averageDamage: userStrength.bullup_strength_damage,
+                    averageDamageTaken: userStrength.bullup_strength_damage_taken,
+                    averageHeal: userStrength.bullup_strength_heal,
+                    score: userStrength.bullup_strength_score
+                }
+                console.log('newKDA2:',JSON.stringify($strength));
+                socketService.stableSocketEmit(socket,'feedback',{
+                    errorCode:0,
+                    text: '拿到最近一次的KDA',
+                    type:'GETNEWKDARESULT',
+                    extension: {
+                        strength: $strength
+                    }
+                });
             }
         });
     });
