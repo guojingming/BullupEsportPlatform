@@ -56,8 +56,8 @@
 						<!-- <li><a id="router_tournament">吃鸡</a></li> -->
 						<li><a id="router_dataquery">数据查询</a></li>
 						<li><a id="router_rank">排行榜</a></li>
-						<li><a id="router_personal_center">个人中心</a></li>
-						<li><a id="router_chat">组队中心</a></li>
+						<li><a id="router_personal_center">个人账户</a></li>
+						<li><a id="router_chat">组队大厅</a></li>
 						<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
 						<!-- Dropdown Trigger -->
 						<li class="dro-index"><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
@@ -75,6 +75,9 @@
 			<!-- load view in this container -->
 		</div>
 
+		<div id="mo-view" style="background:rgba(0,0,0,0);position:absolute;top:0;width:100%;height:100%;display:none;">
+		<div id="mo_fover_box" style="width:100%;position:absolute;top: 427px;color: #fff;font-size: 20px;text-align:center;"><span id="mo_fover">我觉得你很赞</span> </div>
+		</div>
 		<!-- side nav bar -->
 
 		<ul id="user-slide-out" class="side-nav"></ul>
@@ -200,29 +203,29 @@
 							<div class="col s6">
 								<!-- Battle Declaration -->
 								<div class="input-field col s12">
-									<input id="battle_desc" type="text" class="validate" value="">
-									<label for="battle_desc" style="font-size: .8rem;">房间描述</label>
+									<input id="pubg_desc" type="text" class="validate" value="">
+									<label for="pubg_desc" style="font-size: .8rem;">房间描述</label>
 								</div>
 								<!-- winning condition -->
 								<div class="row">
 									<div class="input-field col s12">
 										<!-- Winning Condition -->
-										<select id="map-selection">												
-											<option class = "map-selection-item" value="map-selection-1"  selected>单排</option>
-											<option class = "map-selection-item" value="map-selection-2" disabled>合作(敬请期待)</option>
+										<select id="pubg-map-selection">												
+											<option class = "map-selection-item" value="pubg-map-selection-1"  selected>单排</option>
+											<option class = "map-selection-item" value="pubg-map-selection-2" disabled>合作(敬请期待)</option>
 										</select>
 										<label>战斗类型</label>
 									</div>
 									<div class="input-field col s12">
-										<select id="reward_amount">
+										<select id="pubg_bet_amount">
 											<option value="1">1</option>
 											<option value="5">5</option>
 											<option value="10">10</option>
 										</select>
-										<label>下注数额</label>
+										<label>约战数额</label>
 									</div>
 									<div class="input-field col s12">
-											<select id="reward_amount">
+											<select id="serverList">
 												<option value="server_1">NA   (北美服务器)</option>
 												<option value="server_2">EU   (欧洲服务器)</option>
 												<option value="server_3">AS   (亚洲服务器)</option>
@@ -243,7 +246,7 @@
 							<div class="col s12">
 								<div class="row">
 									<div class="input-field col s6 odds_click">
-										<select id="reward_amount">
+										<select id="killNum">
 											<option value="num_1">1</option>
 											<option value="num_2">2</option>
 											<option value="num_3">3</option>
@@ -252,15 +255,15 @@
 									</div>
 									
 									<div class="input-field col s6 odds">
-										<select id="reward_amount">
+										<select id="battleRate">
 											<option value="123" disabled>1:0.1</option>
 										</select>
-										<label>赔率</label>
+										<label>击杀奖励</label>
 									</div>
 								</div>
 								<div class="row create_pubg_btn" style="padding-right: 10px;display:none;">
 									<!-- <a id="confirm_create_room_btn" class="waves-effect waves-light btn modal-trigger right">创建</a> -->
-									<a id="confirm_create_room_btn" class="waves-effect right btn">创建</a> 
+									<a id="confirm_create_pubg_room_btn" class="waves-effect right btn">创建</a> 
 									<span class="right" style="padding-right:10px;height:35px;line-height:35px;font-size:16px;">请在进入游戏之后点击创建房间,否则无效</span>									
 								</div>
 								<div class="row bind_pubg_btn" style="padding-right: 10px;display:none;">
@@ -291,25 +294,25 @@
 		<!-- Modal Structure -->
 		<div id="log_modal" class="modal" >
 			<div class="modal-content" >
-				<h4>登录</h4>
+				<h3 style="height:50px;padding:0 19px;font-size:22px;">登录</h3>
 				<div class="row">
 					<div class="col s12">
 						<div class="row">
 							<div class="input-field col s6">
-								<i class="fa fa-user prefix" aria-hidden="true"></i>
+								<i class="fa fa-user prefix" style="padding-top:10px;" aria-hidden="true"></i>
 								<input type="text" class="validate" id="login_username" placeholder="email address">
 								<label for="icon_prefix">邮箱</label>
 							</div>
 							<div class="input-field col s6">
-								<i class="fa fa-key prefix" aria-hidden="true"></i>
+								<i class="fa fa-key prefix" style="padding-top:10px;" aria-hidden="true"></i>
 								<input type="password" class="validate" id="login_password" placeholder="password">
 								<label for="icon_telephone">密码</label>
 							</div>
 						</div>
 
-						<button  onclick="disabled=1;v=this;setTimeout('v.disabled=0',3000);" class="btn waves-effect waves-light right teal lighten-2" id="login_btn">登录
-				<i class="fa fa-paper-plane" aria-hidden="true"></i>
-				</button>
+						<button style="margin-right:8px;" onclick="disabled=1;v=this;setTimeout('v.disabled=0',3000);" class="btn waves-effect waves-light right teal lighten-2" id="login_btn">登录
+						<i class="fa fa-paper-plane" aria-hidden="true"></i>
+						</button>
 					</div>
 				</div>
 			</div>
@@ -318,13 +321,19 @@
 		<!--  sign modal  -->
 		<div id="sign_modal" class="modal" style="top:20%!important;min-height:601px;">
 			<div class="modal-content">
-				<h4>新用户注册</h4>
+				<h4 style="height:30px;padding:0 10px;">新用户注册</h4>
 				<div class="row">
 					<div class="row">
 						<div class="input-field col s6">
 							<i class="fa fa-envelope prefix" aria-hidden="true"></i>
 							<input id="usr_name" type="text" class="validate">
 							<label for="usr_name">邮箱（用户名）</label>
+						</div>
+
+						<div class="input-field col s6">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input id="usr_nick" type="text" class="validate">
+							<label for="usr_nick">用户昵称</label>
 						</div>
 
 						<div class="input-field col s6">
@@ -340,12 +349,6 @@
 						</div>
 
 						<div class="input-field col s6">
-							<i class="fa fa-user prefix" aria-hidden="true"></i>
-							<input id="usr_nick" type="text" class="validate">
-							<label for="usr_nick">用户昵称</label>
-						</div>
-
-						<div class="input-field col s6">
 							<i class="fa fa-phone prefix" aria-hidden="true"></i>
 							<input type="tel" id="usr_tel" class="validate">
 							<label for="usr_tel">手机号</label>
@@ -357,8 +360,8 @@
 							<label for="usr_email">邀请码</label>
 						</div>
 						<div class="destroy" style="width:300px;">
-								<h4>选择城市</h4>
-							<div id="three-level" style="margin-left:55px; ">
+							<h4><i class="fa fa-area-chart" style="font-size:2rem;padding-left:9px;"aria-hidden="true"></i></h4>
+							<div id="three-level" style="margin-left:55px;">
 									<select id="country" class="dept_select "></select>
 									<select id="province" class="dept_select"></select>
 									<select id="city" class="dept_select"></select>
@@ -375,7 +378,7 @@
 						
 					</div>
 
-					<button onclick="disabled=1;v=this;setTimeout('v.disabled=0',3000);" class="btn waves-effect waves-light right orange lighten-1" id="register_btn">注册
+					<button onclick="disabled=1;v=this;setTimeout('v.disabled=0',3000);" class="btn waves-effect waves-light right  lighten-1" id="register_btn">注册
 						<i class="fa fa-paper-plane" aria-hidden="true"></i>
 					</button>
 				</div>
@@ -390,7 +393,7 @@
         <!-- pubg waiting -->
 			<div id="pubg_waiting_modal" class="modal" style="background:#455a64">
 				<div class="modal-content">
-						<h4 style="color:#fff">检测是否进入游戏</h4>
+						<h4 style="color:#fff">请稍等...</h4>
 						<div class="row center">
 							<div class="preloader-wrapper big active">
 								<div class="spinner-layer spinner-blue">
@@ -446,10 +449,10 @@
 		<!-- Modal 充值 -->
 		<div id="recharge" class="modal">
 
-			<div>
-				<input id="money" type="text" class="validate" placeholder="请输入充值金额">
+			<div style="padding-top:20px">
+				<input id="money" style="padding-left:10px;width:98%;height: 55px;" type="text" class="validate" placeholder="请输入充值金额">
 			</div>
-			<div class="qies">
+			<div class="qies" style="padding-top:5px;">
 				<div class="chip credit">19</div>
 				<div class="chip credit">29</div>
 				<div class="chip credit">39</div>
@@ -462,7 +465,7 @@
 
 			</div>
 
-			<div class="row">
+			<div class="row" style="margin-bottom:10px;">
 
 				<form action="" id="payment-form">
 					<div class="form-row">
@@ -474,7 +477,7 @@
 						<div id="card-element">
 							<!-- a Stripe Element will be inserted here. -->
 						</div>
-						<div style="width:100%;height:1px;background:#e4e4e4;margin:80px 0 10px 0;opacity:0.6"></div>
+						<div style="width:100%;height:1px;background:#e4e4e4;margin:65px 0 10px 0;opacity:0.6"></div>
 						<!-- Used to display Element errors -->
 						<div id="card-errors" role="alert"></div>
 					</div>
@@ -492,19 +495,19 @@
 
 		<!-- Modal Structure -->
 		<div id="link_modal" class="modal">
-			<div class="modal-content">
-				<h4>绑定英雄联盟账号</h4>
+			<div class="modal-content" style="padding-bottom:15px;">
+				<h4 style="font-size:18px;padding:0 14px;height:30px;">绑定账号</h4>
 				<div class="row">
 					<form class="col s12">
-						<div class="row">
+						<div class="row" style="margin-bottom:15px;">
 							<div class="input-field col s12">
-								<i class="fa fa-user prefix" aria-hidden="true"></i>
+								<i class="fa fa-user prefix" style="padding-top:10px;" aria-hidden="true"></i>
 								<input disabled value="" id="disabled" type="text" class="validate">
-								<label for="bind_lol_account_text" style="color:#fff;">登录英雄联盟点击绑定自动绑定账号</label>
+								<label for="bind_lol_account_text" style="color:#fff;">登录英雄联盟后, 点击 <b style="font-size:18px;color:red;">绑定</b> ,会自动绑定账号</label>
 							</div>
 						</div>
 
-						<a id="bind_lol_btn" class="btn waves-effect right teal lighten-2" name="action">绑定</a>
+						<a id="bind_lol_btn" class="btn waves-effect right teal lighten-2" style="margin-right:8px;" name="action">绑定</a>
 			
 				</button>
 					</form>
@@ -780,6 +783,7 @@
 
 						</form>
 						<a class="waves-effect waves-light btn" style="margin-left:10px;" id="feedbackInput">提交反馈</a>
+						<a class="waves-effect waves-light btn" style="margin-left:216px;" id="feedback">退出</a>
 					</div>
 
 				</form>

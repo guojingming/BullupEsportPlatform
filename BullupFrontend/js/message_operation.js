@@ -162,6 +162,7 @@ $(".message_reject_btn").on('click', function(e){
             messageInfo.splice(Number.parseInt(messageIndexString), 1);
             //console.log(JSON.stringify(messageInfo[Number.parseInt(messageIndexString)]));
             $('#message_center_nav').click();
+            $('.modal').modal('close');
             break;
         }
 

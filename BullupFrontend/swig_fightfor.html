@@ -21,8 +21,8 @@
         <span>00</span>
         <span>:</span>
         <span>00</span>
-        <span>:</span>
-        <span>00</span>
+        <!-- <span>:</span>
+        <span>00</span> -->
       </div>
       
     </div>
@@ -118,17 +118,21 @@ if (match_timer == null) {
     }
     $('#showtime span:eq(0)').html(minStr);
     $('#showtime span:eq(2)').html(secStr);
-    $('#showtime span:eq(4)').html(msStr);
+    // $('#showtime span:eq(4)').html(msStr);
   }
 });
 //取消匹配
 $('#cancelMatch').on('click',function(){
   //alert(JSON.stringify(roomInfo));
   //清除倒计时函数
-  window.clearInterval(match_timer);
-  match_timer = null;
-  socket.emit('cancelMatch',{
+  if(userInfo.userId == roomInfo.captain.userId){
+    window.clearInterval(match_timer);
+    match_timer = null;
+    socket.emit('cancelMatch',{
     $roomInfo:roomInfo
   });
+  }else{
+    bullup.alert("不是队长,不能取消比赛");
+  }
 });
 </script>

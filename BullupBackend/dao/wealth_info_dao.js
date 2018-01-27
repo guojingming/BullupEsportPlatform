@@ -99,12 +99,20 @@ exports.searchCashFlow = function(data,callback){
             },
             function(tempInfo,callback){
                 //var tempInfo = {};
-                dbUtil.query(connection, 'select bullup_battle_name,bullup_battle_bet,bullup_battle_time,bullup_battle_result,bullup_battle_participants_red,bullup_battle_participants_blue  from bullup_battle_record where bullup_battle_name like ?',['%'+data.userNickname+'%'],function(err,result){
+                dbUtil.query(connection, 'select bullup_battle_name,bullup_battle_bet,bullup_battle_time,bullup_battle_result,bullup_battle_participants_red,bullup_battle_participants_blue  from bullup_battle_record where bullup_battle_participants_red like ? or bullup_battle_participants_blue like ?',['%'+data.userNickname+'%','%'+data.userNickname+'%'],function(err,result){
                     if (err) throw err;
                     tempInfo.battleInfo = result;
                     callback(null,tempInfo);
                 });
             },
+            function(tempInfo,callback){
+                //var tempInfo = {};
+                dbUtil.query(connection, 'select * from pubg_battle_record where user_id=?',[data.userId],function(err,result){
+                    if (err) throw err;
+                    tempInfo.pubgBattleInfo = result;
+                    callback(null,tempInfo);
+                });
+            }
         ],function(err,res){
             if(err) throw err;
             dbUtil.closeConnection(connection);

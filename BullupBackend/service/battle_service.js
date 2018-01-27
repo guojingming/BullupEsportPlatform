@@ -11,6 +11,7 @@ var strengthInfoDao = dependencyUtil.global.dao.strengthInfoDao;
 var matchLevel1MinCount = 2;
 var matchLevel2MinCount = 2;
 var matchLevel3MinCount = 2;
+var matchLevel4MinCount = 2;
 
 
 exports.init = function () {
@@ -85,7 +86,7 @@ exports.handleBattleInviteResult = function (io, socket) {
                 battleName:$battleName,
             });
             var lolRoom = {
-                roomName: challengerTeam.participants[0].lolAccountInfo.user_lol_nickname+"的对局",
+                roomName: creatRoomName(),
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId,
                 time: flipClocks[$battleName].time,
@@ -508,16 +509,19 @@ exports.matchScheduling = function(matchPool){
             matchPool[index].delay = 0;
             continue;
         }
-        if(matchPool[index].delay < 10){
-            //一级调度
-            matchSchedulingLevel1(matchPool, index);
-        }else if(matchPool[index].delay >= 10 && matchPool[index].delay < 30){
-            //二级调度
-            matchSchedulingLevel2(matchPool, index);
-        }else{
-            //三级调度
-            matchSchedulingLevel3(matchPool, index);
-        }
+        //临时方案  直接使用4级调度  全战力范围调度
+        matchSchedulingLevel4(matchPool, index);
+
+        // if(matchPool[index].delay < 10){
+        //     //一级调度
+        //     matchSchedulingLevel1(matchPool, index);
+        // }else if(matchPool[index].delay >= 10 && matchPool[index].delay < 30){
+        //     //二级调度
+        //     matchSchedulingLevel2(matchPool, index);
+        // }else{
+        //     //三级调度
+        //     matchSchedulingLevel3(matchPool, index);
+        // }
         matchPool[index].delay++;
     }
 }
@@ -685,6 +689,56 @@ function matchSchedulingLevel3(matchPool, poolIndex){
     }
 }
 
+function matchSchedulingLevel4(matchPool, poolIndex){
+    var indexes = [];
+    for(var index = 0;index < 90;index++){
+        indexes.push(String(index * 50));
+    }
+    var queues = [];
+    var queuesIndex = [];
+    var count = 0;
+    for(var index in indexes){
+        queues.push(matchPool[indexes[index]].queue);
+        queuesIndex.push(indexes[index]);
+        count += matchPool[indexes[index]].queue.length;
+    }
+    
+    if(count >= matchLevel4MinCount){
+        var matchList = excuteMatch(queues);
+        var queueNum1 = matchList.firstTeam.queueNum;
+        var teamNum1 = matchList.firstTeam.teamNum;
+        var firstTeam = matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+        var queueNum2 = matchList.secondTeam.queueNum;
+        var teamNum2 = matchList.secondTeam.teamNum;
+        var secondTeam = matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+
+        if(firstTeam == undefined || secondTeam == undefined){
+            return;
+        }
+
+        if(queueNum1 == queueNum2){
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            if(teamNum1 < teamNum2){
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2-1];
+            }else{
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2];
+            }
+            matchPool[queuesIndex[queueNum1]].queue.length -= 2;
+        }else{
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            matchPool[queuesIndex[queueNum1]].queue.length -= 1;
+            delete matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+            matchPool[queuesIndex[queueNum2]].queue.length -= 1;
+        }
+        broadCastMatchResult(firstTeam, secondTeam);
+        matchPool[poolIndex].delay -= 2;
+        if(matchPool[poolIndex].delay < 0){
+            matchPool[poolIndex].delay = 0;
+        }
+    }
+}
+
+
 function excuteMatch(queues){
 
     var newQueues = [];
@@ -754,7 +808,7 @@ function broadCastMatchResult(firstTeam, secondTeam){
         battleName:$battleName,
     });
     var lolRoom = {
-        roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
+        roomName: creatRoomName(),
         password: Math.floor(Math.random() * 1000), // 4位随机数
         creatorId: challengerTeam.captain.userId,
         time: flipClocks[$battleName].time,
@@ -1045,6 +1099,35 @@ function afterStartClocks(data){
         }
         //console.log('this is 4:',JSON.stringify(battleFlipClocks));
     }
+}
+
+/*
+*随机生成房间名
+*/
+function creatRoomName(){
+    var punctuation = ".-/\\";
+    var letter = ['abcdefghigklnmopqrstuvwsyz','ABCDEFGHIJKLNMOPQRETUVWSYZ','0123456789'];
+    var num = Math.floor((Math.random()*3));
+    var pun_length = punctuation.length;
+    var str = 'BULLUP-';
+    if(num == 0){
+        var pun = punctuation[Math.floor((Math.random()*pun_length))];
+        for(var i = 0;i<8;i++){
+            str += letter[0][Math.floor((Math.random()*26))] + pun;
+        }
+        str += letter[0][Math.floor((Math.random()*26))];
+    }else if(num == 1){
+        var pun = punctuation[Math.floor((Math.random()*pun_length))];
+        for(var i = 0;i<8;i++){
+            str += letter[1][Math.floor((Math.random()*26))] + pun;
+        }
+    }else{
+        var pun = punctuation[Math.floor((Math.random()*pun_length))];
+        for(var i = 0;i<8;i++){
+            str += letter[2][Math.floor((Math.random()*10))] + pun;
+        }
+    }  
+    return str;
 }
 
 exports.getAfterStartClock = function(socket){

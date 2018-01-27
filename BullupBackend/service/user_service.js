@@ -871,7 +871,7 @@ exports.handleDisconnect = function(socket){
             //该用户没有登录，什么都不需要做
         }else{
             if(exports.users[userId]==undefined){
-                console.log("这里出错了 exports.users[userId] 是 undefond");
+                // console.log("这里出错了 exports.users[userId] 是 undefond");
                 return;
             }
             var userStatus = exports.users[userId].status;
@@ -922,28 +922,28 @@ exports.friendStatus = function(userId,online,status){
     var baseData;
     baseInfoDao.findUserById(userId,function(res){
         baseData = res;
-    });
-    baseInfoDao.findFriendListByUserId(userId,function(res){
-        if(!res){
-            console.log('查找出错或好友为空!');
-        }else{
-            //找出目前在线的好友
-            for(var key in res){
-                if(exports.users[res[key].userId]!=undefined){
-                    var socket = socketService.mapUserIdToSocket(res[key].userId);
-                    var package = {
-                        "type": "UPDATEFRIENDSTATUS",
-                        "name": baseData.user_nickname,
-                        "userId": userId,
-                        "avatarId": baseData.icon_id,
-                        "online": online,
-                        "status": status
+        baseInfoDao.findFriendListByUserId(userId,function(res2){
+            if(!res2){
+                console.log('查找出错或好友为空!');
+            }else{
+                //找出目前在线的好友
+                for(var key in res2){
+                    if(exports.users[res2[key].userId]!=undefined){
+                        var socket = socketService.mapUserIdToSocket(res2[key].userId);
+                        var package = {
+                            "type": "UPDATEFRIENDSTATUS",
+                            "name": baseData.user_nickname,
+                            "userId": userId,
+                            "avatarId": baseData.icon_id,
+                            "online": online,
+                            "status": status
+                        }
+                        socketService.stableSocketEmit(socket,'feedback',package);
                     }
-                    socketService.stableSocketEmit(socket,'feedback',package);
                 }
+                // console.log(JSON.stringify(arr));
             }
-            // console.log(JSON.stringify(arr));
-        }
+        });
     });
 }
 //删除好友
@@ -983,4 +983,52 @@ socket.on('delete_friends',function(ID){
 
 })
 
+}
+
+//退出房间按钮
+exports.handleQuitRoom = function(socket){
+    socket.on('quitRoom',function(data){
+        var userId = data.userId;
+        var roomName = data.roomName;
+        teamService.handleUserQuitRoom(userId, roomName);
+        console.log(userId,roomName);
+    });
+}
+
+//点赞
+exports.handleFavorOrHate = function(socket){
+    socket.on('dianzan',function(data){
+        var userId = data.userId;
+        var myName = data.myName;
+        var theyName = data.theyName;
+        console.log('111',userId,myName,theyName);
+        var theyId;
+        baseInfoDao.findUserByNickname(theyName,function(res){
+            theyId = res.user_id;
+            console.log('222',res);
+            var theySocket = socketService.mapUserIdToSocket(theyId);
+            console.log('333',theyId,theySocket);
+            if(theySocket){
+                if(data.type == 'favor'){
+                    socketService.stableSocketEmit(theySocket,'feedback',{
+                        errorCode:0,
+                        text: myName+'觉得你很赞.',
+                        type:'DIANZANRESULT',
+                        extension: {
+                            mode:"favor"
+                        }
+                    });
+                }else{
+                    socketService.stableSocketEmit(theySocket,'feedback',{
+                        errorCode:0,
+                        text: myName+'认为你很菜.',
+                        type:'DIANZANRESULT',
+                        extension: {
+                            mode:'hate'
+                        }
+                    });
+                }
+            }
+        });
+    });
 }

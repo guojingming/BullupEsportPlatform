@@ -41,7 +41,7 @@
         </div>
     </nav>
 <div class="col s6 m2" style="width:20%;">
-    <label class="personal-title">战斗力</label>
+    <label class="personal-title">战力</label>
     <div class="personal-value">
         {{player.strength}}
     </div>
@@ -72,7 +72,7 @@
   </div>
 <!-- 排行 -->
 <div class="col s6 m2" style="width:20%;">
-    <label class="personal-title"> 战斗力排行</label>
+    <label class="personal-title"> 战力排行</label>
     <div class="personal-value">
         {{ player.cap }}
     </div>
@@ -288,7 +288,7 @@ window.myRadar = new Chart(radar, config3);
 var config4 = {
     type: 'line',
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
         datasets: [{
             label: '涨幅',
             data: [343, 131,323, 1, 2, 3],
