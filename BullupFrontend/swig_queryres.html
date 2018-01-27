@@ -12,7 +12,7 @@
 	  <!-- Left Panel for user matches list -->
 	  
 		<!-- Right Panel -->
-	  <div class="col s12 m12">
+	  <div class="col s12 m12" style="display:none;">
 		<!--  -->		
 			<div class="collection data-titles" style="margin:10px 0 0 0;">
 				<div class="col s12 m3" style="font-size:30px;padding:0px;">
@@ -60,17 +60,24 @@
 			</div>		
 		
 		</div>
-		<div class="col s12 m3">
-			<ul class="collection" id="user-matches">					
+		<div class="col s12 m10 offset-m1">
+			<!-- <ul class="collection" data-collapsible="expandable" id="user-matches">
+									
+			</ul> -->
+
+
+			<ul class="collapsible k_matches" data-collapsible="accordion" id="user-matches" style="border:none">
 			</ul>
+
+
 		</div>
-		<div class="col s12 m9">		
+		<!-- <div class="col s12 m9">		
 			<div class="match-wrapper" id="match_wrapper">
-				<!-- team wrapper -->	
+				team wrapper	
 			
 			</div>
-			<!-- Match wrapper ends here -->
-		</div>		
+			Match wrapper ends here
+		</div>		 -->
 	</div>
 
 

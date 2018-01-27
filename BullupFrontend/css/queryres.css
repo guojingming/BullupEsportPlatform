@@ -83,7 +83,7 @@
 
 #user-matches {
 	height: 100%;
-	overflow-y: scroll;
+	/* overflow-y: scroll; */
 }
 .collection-item:nth-child(5){
 	border-bottom: 1px solid #fff!important;
