@@ -922,28 +922,28 @@ exports.friendStatus = function(userId,online,status){
     var baseData;
     baseInfoDao.findUserById(userId,function(res){
         baseData = res;
-    });
-    baseInfoDao.findFriendListByUserId(userId,function(res){
-        if(!res){
-            console.log('查找出错或好友为空!');
-        }else{
-            //找出目前在线的好友
-            for(var key in res){
-                if(exports.users[res[key].userId]!=undefined){
-                    var socket = socketService.mapUserIdToSocket(res[key].userId);
-                    var package = {
-                        "type": "UPDATEFRIENDSTATUS",
-                        "name": baseData.user_nickname,
-                        "userId": userId,
-                        "avatarId": baseData.icon_id,
-                        "online": online,
-                        "status": status
+        baseInfoDao.findFriendListByUserId(userId,function(res2){
+            if(!res2){
+                console.log('查找出错或好友为空!');
+            }else{
+                //找出目前在线的好友
+                for(var key in res2){
+                    if(exports.users[res2[key].userId]!=undefined){
+                        var socket = socketService.mapUserIdToSocket(res2[key].userId);
+                        var package = {
+                            "type": "UPDATEFRIENDSTATUS",
+                            "name": baseData.user_nickname,
+                            "userId": userId,
+                            "avatarId": baseData.icon_id,
+                            "online": online,
+                            "status": status
+                        }
+                        socketService.stableSocketEmit(socket,'feedback',package);
                     }
-                    socketService.stableSocketEmit(socket,'feedback',package);
                 }
+                // console.log(JSON.stringify(arr));
             }
-            // console.log(JSON.stringify(arr));
-        }
+        });
     });
 }
 //删除好友
