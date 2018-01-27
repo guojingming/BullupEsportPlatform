@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://bullesport.com:3000');
+var socket = io.connect('http://192.168.2.176:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var pubg_crawler = require('./js/pubg_crawler.js');
@@ -232,8 +232,18 @@ socket.on('feedback', function (feedback) {
         case 'DIANZANRESULT':
             handleDianZanResult(feedback);
             break;
+        //更新KDA
+        case 'GETNEWKDARESULT':
+            handleGetNewKDA(feedback);
+            break;
         }
 });
+
+//更新KDA
+function handleGetNewKDA(feedback){
+    userInfo.strength = feedback.extension.strength;
+    console.log('laalal:',JSON.stringify(userInfo));
+}
 
 //用户点赞
 function handleDianZanResult(feedback){
@@ -244,7 +254,7 @@ function handleDianZanResult(feedback){
     }else{
         thumb_up('rotate(180deg)');
         $('#mo_fover').text(feedback.text);
-        $('#mo_fover_box').css({"transform":"rotate(180deg)","top":"350px"});
+        $('#mo_fover_box').css({"transform":"rotate(180deg)","top":"335px"});
     }
 }
 
@@ -608,7 +618,7 @@ function thumb_up(deg){
     $("#mo-view").append(index);
     $("#mo-view").css({'background':"rgba(0,0,0,0)",'transform':deg});
     setTimeout(function(){
-       $("#mo-view").hide();
+    $("#mo-view").hide();
     },3000)
 }
 
@@ -723,7 +733,7 @@ function handleTimeout2(num){
 socket.on('battleResult', function(resultPacket){
     socket.emit('tokenData', resultPacket.token);
     clearTimeout(timeControl2);
-    console.log('nmb',lol_process.gameStartCount);
+    //console.log('nmb',lol_process.gameStartCount);
     lol_process.gameStartCount = 0;
     //读取数据
     var winTeam = resultPacket.winTeam;
@@ -787,7 +797,7 @@ socket.on('battleResult', function(resultPacket){
         nickname:userInfo.name,
         result:battleResultData  
     });
-
+    getNewKDA();
     var battleResHtml = bullup.loadSwigView('./swig_battleres.html', {
         battle_res: battleResultData
     });
@@ -804,6 +814,14 @@ socket.on('battleResult', function(resultPacket){
         $('#router_starter').click();
 	});
 });
+
+function getNewKDA(){
+    setTimeout(function(){
+        socket.emit('getNewKDA',{
+            userId: userInfo.userId
+        });
+    },1000*5);
+}
 
 socket.on('rechargeResult', function(text){
     socket.emit('tokenData', text.token);  
@@ -1092,6 +1110,15 @@ function handleLoginResult(feedback) {
             roomInfo = null;
             teamInfo = null;
         }
+        console.log(userInfo);
+        //引导页控制
+        if(userInfo.lastLoginTime == null || userInfo.lastLoginTime.length == 0){
+            $('body').pagewalkthrough('show');
+        }
+        socket.emit('loginTime',{
+			date: new Date(),
+			userId: userInfo.userId
+        });
         // console.log("User info");
         // console.log(userInfo);
         //bullup.alert(userInfo.userRole);

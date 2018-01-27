@@ -60,7 +60,8 @@ io.on('connection', function(socket) {
     userService.handlelastLoginTime(socket);
     //更改信息
     userService.handleUserUpdateInfo(socket);
-
+    //get new kda
+    userService.handleGetNewKDA(socket);
     userService.handlePersonalCenterRequest(socket);
   
     teamService.handleRoomEstablish(socket);

@@ -1147,7 +1147,10 @@ div#graph1,div#graph4,div#graph5,div#graph6,div#graph7,div#graph8,div#graph9 {
 	}
 .progress-striped .yellow{
 	background:#f0ad4e;
-} 
+}
+.thumb_yellow{
+    color: yellow !important;
+}
 .progress-striped .green{
 	background:#5cb85c;
 } 
