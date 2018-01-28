@@ -1,9 +1,11 @@
 $().ready(function(){
     if(userInfo==null){
       bullup.alert("您没有登录，请登录");
+    }else if(userInfo.lolAccountInfo==null){
+        bullup.alert("请绑定LOL账号");
     }else{
-      var summonerName=userInfo.lolAccountInfo.user_lol_nickname;
-    //var summonerName="Who is 55Kai";
+        var summonerName=userInfo.lolAccountInfo.user_lol_nickname;
+        //var summonerName="Who is 55Kai";
       if(summonerName!=null && summonerName!=undefined){
             lolUtil.getMatchDetailsBySummonerName(summonerName,function(matchDetails){
               var frame = bullup.loadSwigView("swig_queryres.html", {});
