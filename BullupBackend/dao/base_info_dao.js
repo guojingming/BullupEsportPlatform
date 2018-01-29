@@ -446,6 +446,32 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                     userPersonalInfo.icon_id=results[0].icon_id;
                     callback(null,userPersonalInfo);
                 });
+            },function(userPersonalInfo,callback){
+                dbUtil.query(connection, 'SELECT YEAR(bullup_battle_time) AS year , MONTH(bullup_battle_time) AS month ,DAY(bullup_battle_time) AS day, COUNT(*) AS count FROM `bullup_battle_record` WHERE bullup_battle_participants_red like ? or bullup_battle_participants_blue like ? GROUP BY YEAR (bullup_battle_time) DESC, MONTH(bullup_battle_time) DESC ,DAY(bullup_battle_time) DESC limit 10;',['%'+userPersonalInfo.nickname+'%','%'+userPersonalInfo.nickname+'%'],function(err,results,fields){
+                    if (err) throw err;
+                    console.log(results);
+                    var arr = new Array(10);
+                    for(var i = 0;i<arr.length;i++){
+                        if(results[i]){
+                            arr[i] = {
+                                year: results[i].year,
+                                month: results[i].month,
+                                day: results[i].day,
+                                count: results[i].count
+                            };
+                        }else{
+                            arr[i] = {
+                                year: '无记录',
+                                month: '',
+                                day: '',
+                                count: ''
+                            };
+                        }
+                    }
+                    console.log(arr);
+                    userPersonalInfo.raveLineData = arr;
+                    callback(null,userPersonalInfo);
+                });
             }
         ],function(err,res){
             dbUtil.closeConnection(connection);
@@ -507,5 +533,16 @@ exports.deletefriendsByUserIdAndFriendsId=function(userId,friend_userId,callback
             dbUtil.closeConnection(connection);
             callback(results);
     });
+    });
+}
+
+//查询封号
+exports.findUserSuspensionState = function(userId, callback){
+    dbUtil.createConnection(function(connection){
+        dbUtil.query(connection, 'select user_suspension_state from `bullup_suspension_state` where user_id=?', [userId], function (err, results) {
+            if (err) throw err;
+            dbUtil.closeConnection(connection);
+            callback(results[0]);
+        });
     });
 }

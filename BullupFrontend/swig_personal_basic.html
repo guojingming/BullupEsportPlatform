@@ -117,7 +117,7 @@
     <div class="nav-wrapper" style="background: #4db6ac;height: 65%;">
       
       <ul id="nav-mobile" class="left hide-on-med-and-down" style="padding-left:50px;">
-        <a href="#!" class="brand-logo" style="font-size:1rem; line-height: 40px;" >涨幅</a>
+        <a href="#!" class="brand-logo" style="font-size:1rem; line-height: 40px;" >游戏频率(有游戏记录的最近十天)</a>
      
       </ul>
     </div>
@@ -288,10 +288,32 @@ window.myRadar = new Chart(radar, config3);
 var config4 = {
     type: 'line',
     data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        labels: [
+            "{{ player.raveLine[9].year }}"+"{{ player.raveLine[9].month }}"+"{{ player.raveLine[9].day }}", 
+            "{{ player.raveLine[8].year }}"+"{{ player.raveLine[8].month }}"+"{{ player.raveLine[8].day }}", 
+            "{{ player.raveLine[7].year }}"+"{{ player.raveLine[7].month }}"+"{{ player.raveLine[7].day }}", 
+            "{{ player.raveLine[6].year }}"+"{{ player.raveLine[6].month }}"+"{{ player.raveLine[6].day }}",
+            "{{ player.raveLine[5].year }}"+"{{ player.raveLine[5].month }}"+"{{ player.raveLine[5].day }}", 
+            "{{ player.raveLine[4].year }}"+"{{ player.raveLine[4].month }}"+"{{ player.raveLine[4].day }}",
+            "{{ player.raveLine[3].year }}"+"{{ player.raveLine[3].month }}"+"{{ player.raveLine[3].day }}",
+            "{{ player.raveLine[2].year }}"+"{{ player.raveLine[2].month }}"+"{{ player.raveLine[2].day }}",
+            "{{ player.raveLine[1].year }}"+"{{ player.raveLine[1].month }}"+"{{ player.raveLine[1].day }}",
+            "{{ player.raveLine[0].year }}"+"{{ player.raveLine[0].month }}"+"{{ player.raveLine[0].day }}"
+        ],
         datasets: [{
-            label: '涨幅',
-            data: [343, 131,323, 1, 2, 3],
+            label: '当天游戏次数',
+            data: [
+                "{{ player.raveLine[9].count }}",
+                "{{ player.raveLine[8].count }}",
+                "{{ player.raveLine[7].count }}",
+                "{{ player.raveLine[6].count }}",
+                "{{ player.raveLine[5].count }}",
+                "{{ player.raveLine[4].count }}",
+                "{{ player.raveLine[3].count }}",
+                "{{ player.raveLine[2].count }}",
+                "{{ player.raveLine[1].count }}",
+                "{{ player.raveLine[0].count }}"
+            ],
             backgroundColor: "rgba(255,255,255,0)",
             borderColor:"#4db6ac",
             borderWidth: 2
