@@ -174,6 +174,17 @@ exports.handleLogin = function (socket) {
                             }
                             callback(null,userInfo);
                         });
+                    },
+                    //查询是否被封号
+                    function(userInfo,callback){
+                        baseInfoDao.findUserSuspensionState(userInfo.userId,function(res){
+                            if(res){
+                                userInfo.suspension = res.user_suspension_state;
+                            }else{
+                                userInfo.suspension = null;
+                            }
+                            callback(null,userInfo);
+                        });
                     }
 
                 ], function(err, userInfo){
@@ -191,6 +202,7 @@ exports.handleLogin = function (socket) {
                             lastLoginTime:userInfo.lastLoginTime,
                             battleCount:userInfo.battleCount,
                             pubgAccount: userInfo.pubgAccount,
+                            suspension: userInfo.suspension,
                             //----------------------
                             avatarId: userInfo.userIconId,
                             wealth: userInfo.wealth,
@@ -697,6 +709,7 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserWealth=queryResult.wealth;
                 data.UserStrength=queryResult.lolInfo_strength_score;
                 data.competition_wins=queryResult.competition_wins;
+                data.raveLineData = queryResult.raveLineData;
                 feedback.extension = data;
               //  console.log('feedback:'+JSON.stringify(data));
             }else{
