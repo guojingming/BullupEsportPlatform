@@ -1618,7 +1618,8 @@ function handlePersonalCenterResult(feedback){
                wealth:data.UserWealth,
                strength:data.UserStrength,
                winning_rate:data.competition_wins,
-               avatarId:data.User_icon_id
+               avatarId:data.User_icon_id,
+               raveLine:data.raveLineData
             }
         });
         $('#main-view').html(personalCenterHtml);
