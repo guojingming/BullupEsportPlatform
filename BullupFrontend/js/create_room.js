@@ -38,7 +38,11 @@ $(document).ready(function(){
 				bullup.alert("您的余额不足！请充值后再继续游戏！");
 				return;
 			}
-
+			if(userInfo.suspension == 'TRUE'){
+				bullup.alert("您的账号处于封号状态，不能进行约战");
+				return;
+			}
+			
 			socket.emit('roomEstablish', {
 				roomName: userInfo.name + (new Date).valueOf(),
 				captain: {
