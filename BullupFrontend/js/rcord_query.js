@@ -1,7 +1,7 @@
 $().ready(function(){
     if(userInfo==null){
       bullup.alert("您没有登录，请登录");
-    }else if(userInfo.lolAccountInf==null){
+    }else if(userInfo.lolAccountInfo==null){
         bullup.alert("请绑定LOL账号");
     }else{
         var summonerName=userInfo.lolAccountInfo.user_lol_nickname;
