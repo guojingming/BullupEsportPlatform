@@ -42,17 +42,7 @@ MARGIN-LEFT: auto;width: 80%;;height: 240px;background: #FFFFFF;z-index:9999999;
 #dateFooter{width:100%;background: #fff;height: 50px;bottom: 0px;position: absolute;}
 .demo{width:300px;margin:40px auto 0 auto;}
 .demo .lie{margin:0 0 20px 0;}
-.ulIcon li{
-    position:relative;
-}
-.ulIcon .icbefore{
-    display: none;
-    position: absolute;
-    left:-31px;
-    font-size: 16px;
-    top: 7px;
-    color:red;
-}
-.ulIcon li:hover .icbefore{
-    display: block;
-}
+.ulIcon li{position:relative;}
+.ulIcon .icbefore{display: none;position: absolute;left:-31px;font-size: 16px;top: 7px;color:red;}
+.ulIcon li:hover .icbefore{display: block;}
+.tab_box p.filter-table{position: absolute;top: 65px;}
