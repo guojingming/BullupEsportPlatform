@@ -1154,13 +1154,13 @@ function handleLoginResult(feedback) {
     } else if (feedback.errorCode == 1) {
         // 登录失败
        // bullup.alert(feedback.text);
-       bullup.alert("登陆失败!");
+       bullup.alert("登录失败!");
     
     } else if (feedback.errorCode == 2){
         //账号同时登陆,前一个会被挤下线
         if( userInfo != null){
             if(userInfo.userId == feedback.user_id){
-                bullup.alert('账号在其他地方登陆!');
+                bullup.alert('账号在其他地方登录!');
                 $('#log_modal').modal('close');
                 userInfo = null;
                 var temp = bullup.loadSwigView("./swig_menu.html", null);

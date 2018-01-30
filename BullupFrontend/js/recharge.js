@@ -19,7 +19,7 @@ $(document).ready(function(){
                 var fs = require('fs');
                 fs.writeFileSync('C:/Users/Public/Bullup/temp.html', body);
                
-                var htmlStr = '<iframe frameborder="0" width="500px" height="800px" src="C:/Users/Public/Bullup/temp.html"></iframe>';
+                var htmlStr = '<iframe frameborder="0" width="800px" height="800px" src="C:/Users/Public/Bullup/temp.html"></iframe>';
                 $('#main-view').html(htmlStr);
                 $('#recharge').modal('close');
                 fs.unlinkSync('C:/Users/Public/Bullup/temp.html');
