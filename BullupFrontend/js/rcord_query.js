@@ -9,6 +9,9 @@ $().ready(function(){
       if(summonerName!=null && summonerName!=undefined){
             lolUtil.getMatchDetailsBySummonerName(summonerName,function(matchDetails){
               var frame = bullup.loadSwigView("swig_queryres.html", {});
+              if(matchDetails.matches){
+                matchDetails.matches.reverse();
+              }
               var leftTemplate = bullup.loadSwigView("swig_matches.html",matchDetails);
               globalMatchDetails = matchDetails;
               $('.asd').html(frame);
