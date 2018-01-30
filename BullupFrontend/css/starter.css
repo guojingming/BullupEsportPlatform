@@ -285,3 +285,18 @@
 .odds_click{
 	padding-right: 20px;
 }
+.panel-hover:hover{
+	position: relative;
+	cursor: pointer;
+	box-shadow: 0px 1px 1px 2px #d3e0d5; 
+}
+.panel_down{
+	position: absolute;
+    top: 43px;
+    left: 549px;
+    width: 10px;
+    height: 10px;
+    transform: rotate(-48deg);
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
+}

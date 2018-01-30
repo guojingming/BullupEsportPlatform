@@ -17,7 +17,16 @@ function page(formedTeams,curPage){
 	}else{
        new_teams = teams;
 	}
-
+	
+	//根据地图类型,刷选队伍
+	var map_type = $('#bullup_seek_map').val() ? $('#bullup_seek_map').val() : "all_map";
+	if(map_type != "all_map"){
+        for(key in new_teams){
+			if(map_type != new_teams[key].mapSelection){
+				delete new_teams[key];
+			}
+		}		
+	}
 	//根据参战人数,筛选队伍
 	var team_participants_num = $('#search_participants_num').val() ? $('#search_participants_num').val() : "team_participants_num";	
 	if(team_participants_num != "team_participants_num"){
@@ -46,7 +55,7 @@ function page(formedTeams,curPage){
 	}
 	//console.log(JSON.stringify(sliceArray));
 	var battle_teams = bullup.loadSwigView('swig_battle.html', {
-		teams: sliceArray,participant:team_participants_num,amount:reward_amount,sort:ascend_time,
+		teams: sliceArray,participant:team_participants_num,amount:reward_amount,sort:ascend_time,type:map_type
 	});
 	//页面跳转到对战大厅
 	$('.content').html(battle_teams);
@@ -59,11 +68,20 @@ function page(formedTeams,curPage){
 	$(game_amount_node).attr("selected","selected");
 	var game_sort_node = "[value='" + $('#search_time').data('sort');
 	$(game_sort_node).attr("selected","selected");
+	var map_node = "[value='" + $('#bullup_seek_map').data("seek") + "']";
+	$(map_node).attr("selected","selected");
 
 	//根据时间,对比赛队伍的排序
 	$("#search_time").change(function(){
 		var game_sort_node = "[value='" + $('#search_time').data('sort');
 		$(game_sort_node).attr("selected","selected");
+		socket.emit('refreshFormedBattleRoom');
+	});
+
+	//根据地图,对队伍的筛选
+	$("#bullup_seek_map").change(function(){
+		var map_node = "[value='" + $('#bullup_seek_map').data('seek');
+		$(map_node).attr("selected","selected");
 		socket.emit('refreshFormedBattleRoom');
 	});
 	
