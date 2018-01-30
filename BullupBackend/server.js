@@ -142,7 +142,8 @@ io.on('connection', function(socket) {
     testService.handleTest(socket);
     //删除好友
     userService.deleteFriends(socket)
-
+    //删除好友刷新被删除好友列表
+    userService.deletetoFriends(socket)
     //绝地求生绑定
     pubgService.handlePUBGBind(socket);
     pubgService.handlePUBGResult(socket);

@@ -967,12 +967,14 @@ socket.on('delete_friends',function(ID){
                         // console.log(i++,JSON.stringify(res[key]));
                         arr.push(res[key]);
                     }
+                    var friend_userId=ID.friend_userId;
                     socketService.stableSocketEmit(socket,'feedback',{
                          errorCode:0,
                          text:'删除好友成功',
                          type:'DELETEFRIENDS',
                          extension:{
-                             data: arr
+                             data: arr,
+                             Fid:friend_userId
                          }
                      });
                 }
@@ -984,6 +986,30 @@ socket.on('delete_friends',function(ID){
 })
 
 }
+
+exports.deletetoFriends=function(socket){
+socket.on('two-waydeleteFriend',function(fid){
+    baseInfoDao.findFriendListByUserId(fid,function(res){
+        if(res){
+            var arr = [];
+            for(var key in res){
+                // console.log(i++,JSON.stringify(res[key]));
+                arr.push(res[key]);
+            }
+            socketService.stableSocketEmit(socket,'feedback',{
+                errorCode:0,
+                type:'DELETETOFRIENDS',
+                extension:{
+                    data: arr,
+                }
+            });
+        }
+    })
+})
+}
+
+
+
 
 //退出房间按钮
 exports.handleQuitRoom = function(socket){
