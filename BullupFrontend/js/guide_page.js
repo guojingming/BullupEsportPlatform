@@ -26,6 +26,16 @@ $(function() {
 
                 }
             }, {
+                wrapper: '#starter-chatroom-btn',
+                popup: {
+                    content: '#walkthrough-7',
+                    type: 'tooltip',
+                    position: 'bottom',
+                    top: '505px',
+                    left: '368.406'
+
+                }
+            }, {
                 wrapper: '#router_personal_center',
                 popup: {
                     content: '#walkthrough-4',

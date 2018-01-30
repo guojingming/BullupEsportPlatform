@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://192.168.2.176:3000');
+var socket = io.connect('http://bullesport.com:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var pubg_crawler = require('./js/pubg_crawler.js');
@@ -1112,9 +1112,9 @@ function handleLoginResult(feedback) {
         }
         console.log(userInfo);
         //引导页控制
-        if(userInfo.lastLoginTime == null || userInfo.lastLoginTime.length == 0){
-            $('body').pagewalkthrough('show');
-        }
+        // if(userInfo.lastLoginTime == null || userInfo.lastLoginTime.length == 0){
+        //     $('body').pagewalkthrough('show');
+        // }
         socket.emit('loginTime',{
 			date: new Date(),
 			userId: userInfo.userId
@@ -1171,6 +1171,17 @@ function handleLoginResult(feedback) {
         }
     }
 }
+
+//引导页展示
+function  pageWalkThroughShow(){    
+    if(localStorage.pageWalk == undefined){
+        $('body').pagewalkthrough('show');
+        localStorage.pageWalk = true;
+    }    
+};
+setTimeout(()=>{
+    pageWalkThroughShow();
+},300);
 
 function handleFeedback(feedback) {
     if (feedback.errorCode == 0) {
@@ -1618,7 +1629,8 @@ function handlePersonalCenterResult(feedback){
                wealth:data.UserWealth,
                strength:data.UserStrength,
                winning_rate:data.competition_wins,
-               avatarId:data.User_icon_id
+               avatarId:data.User_icon_id,
+               raveLine:data.raveLineData
             }
         });
         $('#main-view').html(personalCenterHtml);
@@ -1701,7 +1713,9 @@ function handleAddFriendResult(feedback){
         $('.collapsible').collapsible();
     }
     bullup.alert(feedback.text);
-    $('#message_sheet').modal('close');
+    if(messageInfo.length == 0){
+        $('#message_sheet').modal('close');
+    }    
 }
 
 //反馈结果
