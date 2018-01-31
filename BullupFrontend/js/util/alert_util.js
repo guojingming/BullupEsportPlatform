@@ -7,7 +7,7 @@ bullup.alert = function(text, title = "提示") {
     $('#modalpopo .ceneter_w').html(text);
     //$('#modalpopo').modal('open'); 
     bullup_modal('open');
-    if(text=="登陆失败!"){
+    if(text=="登录失败!"){
         $('#modalpopo').css("z-index","1010");
     }
 };

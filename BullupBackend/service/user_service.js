@@ -1011,7 +1011,7 @@ socket.on('two_waydeleteFriend',function(ID){
                     // console.log(i++,JSON.stringify(res[key]));
                     arr.push(res[key]);
                 }
-                console.log(arr);  
+              //  console.log(arr);  
                 socketService.stableSocketEmit(socket2,'feedback',{
                     errorCode:0,
                     type:'DELETETOFRIENDS',

@@ -123,7 +123,7 @@
 								}
 							}
 						else{
-							bullup.alert("请输入正确的邮箱号");
+							bullup.alert("请输入正确的PayPal号");
 						}
 					}else{
 						bullup.alert('请填写提现金额');
