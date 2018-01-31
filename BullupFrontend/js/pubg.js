@@ -26,28 +26,29 @@ $().ready(function(){
   }
   //判断用户是否登陆 是否绑定  
   $(document).on("click",".starter-match-btn_no",function(event){
-    if(clickPUBGCount == 1){
-      $("#starter-match-btn_no").click();
-      if(userInfo == null ){
-        $('.login_pubg_btn').show();
-        $('.bind_pubg_btn').hide();
-        $('.create_pubg_btn').hide();
-      }else{
-        //userInfo.pubg = {a:"a"};
-        if(userInfo.pubgAccount == undefined || userInfo.pubgAccount == null){
-          $('.login_pubg_btn').hide();
-          $('.bind_pubg_btn').show();
-          $('.create_pubg_btn').hide();
-        }else{
-          $('.login_pubg_btn').hide();
-          $('.bind_pubg_btn').hide();
-          $('.create_pubg_btn').show();
-          $('#pubgAccount').html(userInfo.pubgAccount);
-        }
-      }
-    }else{
-      bullup.alert('上局游戏未出结果，请耐心等待,不要关闭客户端');
-    }
+    // if(clickPUBGCount == 1){
+    //   $("#starter-match-btn_no").click();
+    //   if(userInfo == null ){
+    //     $('.login_pubg_btn').show();
+    //     $('.bind_pubg_btn').hide();
+    //     $('.create_pubg_btn').hide();
+    //   }else{
+    //     //userInfo.pubg = {a:"a"};
+    //     if(userInfo.pubgAccount == undefined || userInfo.pubgAccount == null){
+    //       $('.login_pubg_btn').hide();
+    //       $('.bind_pubg_btn').show();
+    //       $('.create_pubg_btn').hide();
+    //     }else{
+    //       $('.login_pubg_btn').hide();
+    //       $('.bind_pubg_btn').hide();
+    //       $('.create_pubg_btn').show();
+    //       $('#pubgAccount').html(userInfo.pubgAccount);
+    //     }
+    //   }
+    // }else{
+    //   bullup.alert('上局游戏未出结果，请耐心等待,不要关闭客户端');
+    // }
+    bullup.alert('玩命开发中，敬请期待ε≡٩(๑>₃<)۶ ');
   });
   //点击弹出登录框
   $('#login_pubg').on("click",(event)=>{
