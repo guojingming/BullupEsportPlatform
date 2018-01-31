@@ -1766,8 +1766,9 @@ function deleteFriends(feedback){
         'friendListLength': friendCount
     },'user-slide-out');
     $('.collapsible').collapsible();
-    var fid=feedback.extension.Fid
-    socket.emit("two-waydeleteFriend",fid);
+    var fid=feedback.extension.Fid;
+    socket.emit("two_waydeleteFriend",fid);
+    
 }
 
 function deleteTofriends(feedback){
