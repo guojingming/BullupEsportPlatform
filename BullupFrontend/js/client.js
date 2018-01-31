@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://192.168.2.176:3000');
+var socket = io.connect('http://127.0.0.1:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var pubg_crawler = require('./js/pubg_crawler.js');
@@ -220,10 +220,14 @@ socket.on('feedback', function (feedback) {
         case'DELETEFRIENDS':
             deleteFriends(feedback)
             break;
+            case "DELETETOFRIENDS":
+            deleteTofriends(feedback);
+            break;
         //绝地求生账号绑定
         case'PUBGBINDRESULT':
             handlePUBGBindResult(feedback);
             break;
+        
         //绝地求生返回结果
         case 'PUBGBATTLERESULT':
             handlePUBGBattleResult(feedback);
@@ -1238,7 +1242,7 @@ function handleLOLBindResult(feedback){
 //用户修改信息
 function handleUpdateInfoResult(feedback){
     if(feedback.text=='密码修改成功'){
-        alert('密码修改成功，请重新登录');
+        bullup.alert('密码修改成功，请重新登录');
         userInfo = null;
         var temp = bullup.loadSwigView("./swig_menu.html", null);
         // 打开
@@ -1246,7 +1250,7 @@ function handleUpdateInfoResult(feedback){
         $('#system_menu').html(temp);
         $('#router_starter').click();
     }else{
-        alert(feedback.text);
+        bullup.alert(feedback.text);
     }
 }
 
@@ -1762,7 +1766,27 @@ function deleteFriends(feedback){
         'friendListLength': friendCount
     },'user-slide-out');
     $('.collapsible').collapsible();
+    var fid=feedback.extension.Fid;
+    socket.emit("two_waydeleteFriend",fid);
+    
 }
+
+function deleteTofriends(feedback){
+    var temp = feedback.extension.data;
+    userInfo.friendList=temp;
+    var friendCount = 0; 
+    for(var index in  userInfo.friendList){
+        friendCount++
+    }
+    bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
+        'userInfo': userInfo,
+        'friendListLength': friendCount
+    },'user-slide-out');
+    $('.collapsible').collapsible();
+}
+
+
+
 
 function handlePUBGBindResult(feedback){
     if(feedback.errorCode == 1){

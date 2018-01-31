@@ -963,7 +963,7 @@ exports.friendStatus = function(userId,online,status){
 exports.deleteFriends=function(socket){
 socket.on('delete_friends',function(ID){
      console.log(ID)
-    baseInfoDao.deletefriendsByUserIdAndFriendsId(ID.userId,ID.friend_userId,function(res){
+    baseInfoDao.deletefriendsByUserIdAndFriendsId(ID,function(res){
         if(!res){
             socketService.stableSocketEmit(socket,'feedback',{
                 errorCode:1,
@@ -980,12 +980,14 @@ socket.on('delete_friends',function(ID){
                         // console.log(i++,JSON.stringify(res[key]));
                         arr.push(res[key]);
                     }
+                    var friend_userId=ID.friend_userId;
                     socketService.stableSocketEmit(socket,'feedback',{
                          errorCode:0,
                          text:'删除好友成功',
                          type:'DELETEFRIENDS',
                          extension:{
-                             data: arr
+                             data: arr,
+                             Fid:friend_userId
                          }
                      });
                 }
@@ -997,6 +999,36 @@ socket.on('delete_friends',function(ID){
 })
 
 }
+
+exports.deletetoFriends=function(socket){
+socket.on('two_waydeleteFriend',function(ID){
+    var socket2=socketService.mapUserIdToSocket(ID);
+    if(socket2){
+        baseInfoDao.findFriendListByUserId(ID,function(res){
+            if(res){
+                var arr = [];
+                for(var key in res){
+                    // console.log(i++,JSON.stringify(res[key]));
+                    arr.push(res[key]);
+                }
+              //  console.log(arr);  
+                socketService.stableSocketEmit(socket2,'feedback',{
+                    errorCode:0,
+                    type:'DELETETOFRIENDS',
+                    extension:{
+                        data: arr,
+                    }
+                });
+            }
+        })
+    }
+    return;
+
+})
+}
+
+
+
 
 //退出房间按钮
 exports.handleQuitRoom = function(socket){

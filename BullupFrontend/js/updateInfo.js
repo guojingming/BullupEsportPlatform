@@ -10,7 +10,7 @@ $('#nickname_btn').on('click',function(){
 			type:"nickname"
 		});
 	}else{
-		alert('请输入昵称且字数不能超过10位');
+		bullup.alert('请输入昵称且字数不能超过10位');
 		$('#update_nickname').val('');
 	}
 
@@ -44,7 +44,7 @@ $('#phone_btn').on('click',function(){
 			type:"phone"
 		});
 	}else{
-		alert('请填写正确的手机号');
+		bullup.alert('请填写正确的手机号');
 		$('#update_phone').val('');
 	}
 
@@ -72,12 +72,12 @@ $('#pwd_btn').on('click',function(){
 				type:"password"
 			});
 		}else{
-			alert('两次输入的密码不同');
+			bullup.alert('两次输入的密码不同');
 			$('#update_pwd').val('');
 			$('#update_pwd2').val('');
 		}
 	}else{
-		alert('请输入6到16位的字母或者数字的密码');
+		bullup.alert('请输入6到16位的字母或者数字的密码');
 		$('#update_pwd').val('');
 		$('#update_pwd2').val('');
 	}

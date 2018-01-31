@@ -19,7 +19,7 @@ var socketService = dependencyUtil.global.service.socketService;
 var pool = mysql.createPool({  
     host:'127.0.0.1',
     user: 'root',
-    password: 'DNYjx123Gjm456Cxj789Syl123Lyp456',
+    password: 'Caoxijiang',
     database: 'bullup',
     port: 3306  
 });  
