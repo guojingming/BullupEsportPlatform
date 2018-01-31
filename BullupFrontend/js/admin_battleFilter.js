@@ -7,13 +7,13 @@ $("#all_battle_type").click(
 );
 $("#freedom_battle").click(
     function(){
-        $("#tab .visible").hide().filter(":contains('自主约战')").show();
+        $("#tab .visible").hide().filter(":contains('battle')").show();
         $('#battleType').text('自主约战');
     }
 );
 $("#system_match").click(
     function(){
-        $("#tab .visible").hide().filter(":contains('系统匹配')").show();
+        $("#tab .visible").hide().filter(":contains('match')").show();
         $('#battleType').text('系统匹配');
     }
 );
