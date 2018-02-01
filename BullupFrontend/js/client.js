@@ -483,14 +483,20 @@ function swig_fight(lolRoom){
     $('#waiting-modal').css('display', 'none');    
     $('#team-detail-modal').css('display', 'none');    
     $('.modal-overlay').remove();
+    if(match_timer != null){
+        //清除自由匹配中的计时函数
+        window.clearInterval(match_timer);
+        match_timer = null;     
+     }
 }
 
-match_timer = null;
+var match_timer = null;
 var roomCount = 0;
 socket.on('lolRoomEstablish', function (lolRoom) {
     if(match_timer != null){
        //清除自由匹配中的计时函数
-       window.clearInterval(match_timer);       
+       window.clearInterval(match_timer);
+       match_timer = null;       
     }
     socket.emit('tokenData', lolRoom.token);
     //userInfo.liseningResult = true; 
