@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://127.0.0.1:3000');
+var socket = io.connect('http://bullesport.com:3000');
 //var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var pubg_crawler = require('./js/pubg_crawler.js');
@@ -31,6 +31,7 @@ var prevInfo = [];
 
 var lastSocketStatus = null;
 var lastSocketId = null;
+var new_friend_arr=[];
 
 
 socket.on('success', function (data) {
@@ -1107,6 +1108,10 @@ function handleLoginResult(feedback) {
             bullup.alert("登录成功!");      
         },300);
         userInfo = feedback.extension;
+        new_friend_arr=[];
+        for(var i = 0;i<userInfo.friendList.length;i++){
+           new_friend_arr.push(userInfo.friendList[i].name);
+        }
         if (prevInfo[userInfo.userId] != undefined) {
             roomInfo = prevInfo[userInfo.userId][0];
             teamInfo = prevInfo[userInfo.userId][1];
@@ -1676,7 +1681,7 @@ function handleLOLKeyRequestResult(feedback){
     });
     $.getScript('./js/game_history_query.js');
 }
-var new_friend_arr = [];
+
 function handleAddFriendResult(feedback){
     if(feedback.errorCode == 0){
         //更新本地好友列表
@@ -1756,6 +1761,10 @@ process.on('uncaughtException', function(err) {
 function deleteFriends(feedback){
     bullup.alert(feedback.text);
     var temp = feedback.extension.data;
+    new_friend_arr = [];
+    for(var i = 0;i< temp.length ;i++){
+         new_friend_arr.push(temp[i].name);
+    }
     userInfo.friendList=temp;
     var friendCount = 0; 
     for(var index in  userInfo.friendList){
@@ -1774,6 +1783,10 @@ function deleteFriends(feedback){
 function deleteTofriends(feedback){
     var temp = feedback.extension.data;
     userInfo.friendList=temp;
+    new_friend_arr = [];
+    for(var i = 0;i< temp.length ;i++){
+         new_friend_arr.push(temp[i].name);
+    }
     var friendCount = 0; 
     for(var index in  userInfo.friendList){
         friendCount++
