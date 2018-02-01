@@ -1,3 +1,4 @@
+var process = require('child_process');
 var lolUtil = require('./js/util/lol_util.js');
 $().ready(function(){
 	loadStarter();
@@ -82,11 +83,26 @@ function loadStarter(){
 		],
 		news:[
 			{
-				title: 'New champion coming soon'
+				title: '< Bullup ● 平台 >',
+				href: 'https://mp.weixin.qq.com/s/IDTudYjnpseUKDRjwthxkQ',
 			},
 			{
-				title: 'Arcade 2017 Overview'
-			}
+				title: 'NACG北美电竞联赛|荣耀之名,王者之战,等你点燃事',
+				href:'https://mp.weixin.qq.com/s/B_HZTmYuIat2ZNZ-IR3_ZQ',
+			},
+			{
+				title: '- Hello·女神 - 让你与网红主播零距离对话',
+				href: 'https://mp.weixin.qq.com/s/BVGhID5pv1oJZGM5fJ2vTQ',
+			},
+			{
+				title: '约吗？',
+				href: 'https://mp.weixin.qq.com/s/HxU5lahzhaU-etoOrMiXEg',
+
+			},
+			{
+				title: '"晚点睡没事儿，反正又不会死"',
+				href: 'https://mp.weixin.qq.com/s/2KhZ5W1Kc_4MwumQeVBZzg',
+			},
 		]
 	};
 	//加载html
@@ -94,7 +110,14 @@ function loadStarter(){
 	$('#main-view').html(starterHtml);
 	var starterShufflingViewHtml = bullup.loadSwigView('swig_starter_shuffling_view.html', null);
 	$('#starter_shuffling_view').html(starterShufflingViewHtml);
-
+	$('.news-item').on('click',function(e){
+		var href = $(this).data('href');
+		//console.log(href);
+		process.exec("start "+ href);
+	 });
+	 $('.bullup_more').on('click',(e)=>{
+		 process.exec('start http://bullesport.com');
+	 });
 	//加载主页的动效js
 	$.getScript('./js/starter.js');
 }

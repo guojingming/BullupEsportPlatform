@@ -1,6 +1,10 @@
 $().ready(function () {
     $('#feedbackInput').on('click', function (e) {
           e.preventDefault();
+          if(userInfo == undefined || userInfo ==null){
+              bullup.alert("未登录不能提交报告");
+              return;
+          }
           var $name = $('#last_named').val();
           var $email=$('#emails').val();
           var $textarea1=$('#textarea1').val();

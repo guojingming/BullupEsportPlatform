@@ -4,8 +4,8 @@
 </div>
 
 <div class="row center-align starter-btns-holder" style="position:relative">
-	<div class="starter-match-btn_no" style="background:rgba(0,0,0,0); position:absolute;width:221px;height:83px;top:0px;left:49px;z-index:2;"></div>
-	<a style="background-size:100%;" class="starter-btn waves-effect " id="starter-match-btn_no" href="#create_pubg_modall">		
+	<!-- <div class="starter-match-btn_no" style="background:rgba(0,0,0,0); position:absolute;width:221px;height:83px;top:0px;left:49px;z-index:2;"></div> -->
+	<a style="background-size:100%;" class="starter-btn waves-effect " id="starter-match-btn_no" href="#create_pubg_modall_off">		
 		<span class="line line-top"></span>
 		<span class="line line-right"></span>
 		<span class="line line-bottom"></span>
@@ -77,27 +77,27 @@
 			  <p>{{ tournament.description }}</p>
 			</div>
 			<div class="card-action">
-			  <a href="#">待开放</a>
+			  <a href="#" style="color:#fff">待开放</a>
 			</div>
 		  </div>
 		</div>
 	  {% endfor %}
 	{% endif %}
 	<div class="more">
-	  <a href="#">more>></a>
+	  <a href="#" class="bullup_more">more>></a>
 	</div>
   </div>
   
   <div class="col s4 starter-collection-holder">
-		<div class="collection news-collection theme-color">
+		<div class="collection news-collection theme-color" style="border:none;">
 			{% if news %}
 			{% for n in news %}
-				<a class="collection-item theme-color">{{ n.title }}</a>
+				<a class="collection-item theme-color news-item" data-href="{{ n.href }}">{{ n.title }}</a>
 			{% endfor %}
 			{% endif %}
 		</div>
 		<div class="more">
-			<a href="#">more>></a>
+			<a href="#" class="bullup_more">more>></a>
 		</div>
   </div>
 </div>

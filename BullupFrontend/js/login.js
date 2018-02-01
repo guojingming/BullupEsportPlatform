@@ -92,6 +92,7 @@ $().ready(function () {
 		}
 
 		//alert(specialCheck("$zyz"));
+		if(agreeRules){
 		if(verifyemail($userAccount)==true){
 			if(verifyHandset($tel)==true||telephoneCheck($tel)==true){
 				if(verifyPassword($userPassword)==true){
@@ -116,34 +117,37 @@ $().ready(function () {
 														userProvince:$province
 													});
 												}else{
-													alert("昵称不允许包含特殊字符！");
+													bullup.alert("昵称不允许包含特殊字符！");
 												}
 									}else{
-										alert("请选择省会！");
+										bullup.alert("请选择省会！");
 									}	
 								}else{
-									alert("请选择城市！");
+									bullup.alert("请选择城市！");
 								}
 							}else{
-								alert("请选择国家！");
+								bullup.alert("请选择国家！");
 							}
 						}else{
-							alert("昵称不能为空且小于15字");
+							bullup.alert("昵称不能为空且小于15字");
 						}
 					}else{
-						alert("请仔细阅读并同意用户协议！");
+						bullup.alert("请仔细阅读并同意用户协议！");
 					}
 				} else {
-					alert("两次密码输入不一致!");
+					bullup.alert("两次密码输入不一致!");
 				}
 			}else{
-				alert('请输入6到16位的字母或者数字的密码');
+				bullup.alert('请输入6到16位的字母或者数字的密码');
 			}
 		}else{
-			alert('请输入正确的手机号码')
+			bullup.alert('请输入正确的手机号码')
 		}
 	}else{
-		alert('请输入正确的邮箱格式');
-	}	
+		bullup.alert('请输入正确的邮箱格式');
+	}
+}else{
+	bullup.alert("请同意协议");
+}
   });
 });

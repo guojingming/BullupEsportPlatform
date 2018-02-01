@@ -43,16 +43,17 @@
 <body>
 <!-- 约战管理 -->
 <script src="./js/admin_handleFeedback.js"></script>
-<a class="waves-effect waves-light btn" style="position: absolute;margin-top: 10px;right: 50px;"id="back-feedbackmsg">返回</a>
+<a class="waves-effect waves-light btn" style="position: absolute;margin-top: 10px;right: 50px;top: 61px;"id="back-feedbackmsg">返回</a>
 <script>$.getScript('./js/back.js');</script>
 <div>
+<div class="tab_box" style="margin-top: 50px;overflow: hidden;height: 690px;">
 <table id="tab" class="responsive-table centered">
     <thead>
         <tr style="background:#26a69a">
             <th>申述ID</th>
             <th>userID</th>
             <th>用户账号</th>
-            <th>对战ID</th>
+            <th>用户邮箱</th>
             <th>申诉原因</th>
             <th>申诉日期</th>
             <th>处理日期</th>
@@ -67,7 +68,7 @@
             <td class="feedbackId">{{ key.user_feedback_id }}</td>
             <td>{{ key.user_id }}</td>
             <td>{{ key.user_account }}</td>
-            <td>{{ key.bullup_battle_id }}</td>
+            <td>{{ key.user_feedback_email }}</td>
             <td>{{ key.user_feedback_content }}</td>
             <!-- 时间格式 -->
             <td>{{ key.user_feedback_create_time|date('Y-m-d h:m') }}</td>
@@ -86,6 +87,7 @@
     
     </tbody>
 </table>
+</div>
 </div>
 <script>
         //表头固定

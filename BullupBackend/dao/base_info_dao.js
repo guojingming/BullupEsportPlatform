@@ -377,11 +377,11 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 //消费记录
             },function(userPersonalInfo,callback){
                 dbUtil.query(connection, 'select * from bullup_payment_history where user_id=?',[userId],function(err, results, fields){
-                    console.log("userId"+userPersonalInfo.userId);
+                    //console.log("userId"+userPersonalInfo.userId);
                     if(err) throw err;
                     //payment_history.userId=results[0].user_id;
                     userPersonalInfo.paymentHistory = results;
-                    console.log(JSON.stringify(userPersonalInfo.paymentHistory));
+                    //console.log(JSON.stringify(userPersonalInfo.paymentHistory));
                     callback(null,userPersonalInfo);
                 });
                 //个人能力数据
@@ -403,20 +403,26 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                     callback(null,userPersonalInfo); 
                 });
             }, function(userPersonalInfo,callback){
-                dbUtil.query(connection, 'select count(*) as num  from bullup_battle_record where bullup_battle_participants_red like ?',["%"+userPersonalInfo.nickname+"%"],function(err, results, fields){
+                dbUtil.query(connection, 'select count(*) as num  from bullup_battle_record where bullup_battle_participants_red like ? or bullup_battle_participants_blue like ?',["%"+userPersonalInfo.nickname+"%","%"+userPersonalInfo.nickname+"%"],function(err, results, fields){
                     if(err) throw err;
                     userPersonalInfo.bullup_competitionResult=results[0].num;
-                    userPersonalInfo.bullup_competition_wins=results[0].bullup_competition_wins;
-                    userPersonalInfo.competition_wins=((userPersonalInfo.lolInfo_wins)/(userPersonalInfo.bullup_competitionResult))*100+'%';
+                    console.log('aaa:',userPersonalInfo.bullup_competitionResult);
+
+                    userPersonalInfo.bullup_competition_wins=userPersonalInfo.lolInfo_wins;
+                    console.log('bbb:',userPersonalInfo.bullup_competition_wins);
+
+                    userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))*100+'%';
+                    console.log('ccc:',userPersonalInfo.competition_wins);
+
                     callback(null,userPersonalInfo);
                 });
             }, function(userPersonalInfo,callback){
                 var lolInfoId={};
                 dbUtil.query(connection, 'select lol_info_id from lol_bind where user_id=?',[userId],function(err, results, fields){
                     if(err) throw err;
-                    console.log('id:'+userId);
+                    //console.log('id:'+userId);
                     userPersonalInfo.Id=results[0].lol_info_id;
-                    console.log('pid'+userPersonalInfo.Id);
+                    //console.log('pid'+userPersonalInfo.Id);
                     callback(null,userPersonalInfo);
                 });
             },function(userPersonalInfo,callback){       
@@ -424,12 +430,12 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 dbUtil.query(connection, 'select * from lol_info where lol_info_id=?',[userPersonalInfo.Id],function(err, results, fields){
                     if(err) throw err;
                     userPersonalInfo.info=results;
-                console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
-                callback(null,userPersonalInfo); 
+                    console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
+                    callback(null,userPersonalInfo); 
                 });
             },function(userPersonalInfo,callback){
                 dbUtil.query(connection, 'select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
+                    if(err) throw err;
                     userPersonalInfo.wealth=results[0].bullup_currency_amount;
                     callback(null,userPersonalInfo);
                 });
@@ -444,6 +450,32 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 dbUtil.query(connection, 'select icon_id from bullup_profile  where user_id=?',[userId],function(err,results,fields){
                     if (err) throw err;
                     userPersonalInfo.icon_id=results[0].icon_id;
+                    callback(null,userPersonalInfo);
+                });
+            },function(userPersonalInfo,callback){
+                dbUtil.query(connection, 'SELECT YEAR(bullup_battle_time) AS year , MONTH(bullup_battle_time) AS month ,DAY(bullup_battle_time) AS day, COUNT(*) AS count FROM `bullup_battle_record` WHERE bullup_battle_participants_red like ? or bullup_battle_participants_blue like ? GROUP BY YEAR (bullup_battle_time) DESC, MONTH(bullup_battle_time) DESC ,DAY(bullup_battle_time) DESC limit 10;',['%'+userPersonalInfo.nickname+'%','%'+userPersonalInfo.nickname+'%'],function(err,results,fields){
+                    if (err) throw err;
+                    console.log(results);
+                    var arr = new Array(10);
+                    for(var i = 0;i<arr.length;i++){
+                        if(results[i]){
+                            arr[i] = {
+                                year: results[i].year,
+                                month: results[i].month,
+                                day: results[i].day,
+                                count: results[i].count
+                            };
+                        }else{
+                            arr[i] = {
+                                year: '无记录',
+                                month: '',
+                                day: '',
+                                count: ''
+                            };
+                        }
+                    }
+                    console.log(arr);
+                    userPersonalInfo.raveLineData = arr;
                     callback(null,userPersonalInfo);
                 });
             }
@@ -500,12 +532,39 @@ exports.insertFeedback=function(result,callback){
     });
 }
 //删除好友
-exports.deletefriendsByUserIdAndFriendsId=function(userId,friend_userId,callback){
+exports.deletefriendsByUserIdAndFriendsId=function(ID,callback){
     dbUtil.createConnection(function(connection){
-         dbUtil.query(connection,'delete from bullup_friend where user_id=? and friend_user_id=?',[userId,friend_userId],function(err,results){
+        async.waterfall([
+            function(callback){
+                var msg={};
+                dbUtil.query(connection,'delete from bullup_friend where user_id=? and friend_user_id=?',[ID.userId,ID.friend_userId],function(err,results,fields){
+                    if (err) throw err;
+                    msg.userid=ID.userId;
+                    msg.fid=ID.friend_userId;
+                    callback(null,msg);
+                });
+             },
+            function(msg,callback){
+                dbUtil.query(connection,'delete from bullup_friend where user_id=? and friend_user_id=?',[msg.fid,msg.userid],function(err,results,fields){
+                    if (err) throw err;
+                    callback(null,results);
+                });
+            }
+        ],function(err,res){
+            dbUtil.closeConnection(connection);
+            callback(res)
+        })
+    
+    });
+}
+
+//查询封号
+exports.findUserSuspensionState = function(userId, callback){
+    dbUtil.createConnection(function(connection){
+        dbUtil.query(connection, 'select user_suspension_state from `bullup_suspension_state` where user_id=?', [userId], function (err, results) {
             if (err) throw err;
             dbUtil.closeConnection(connection);
-            callback(results);
-    });
+            callback(results[0]);
+        });
     });
 }

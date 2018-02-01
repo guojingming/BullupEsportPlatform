@@ -193,7 +193,8 @@ exports.getMatchDetailsBySummonerName = function(name,callback){
             result.matches[count].gameMode = match.gameMode;
             result.matches[count].gameType = match.gameType;
             var date = new Date(match.gameCreation);
-            result.matches[count].time = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay();
+            var Month = date.getMonth()+1;
+            result.matches[count].time = date.getFullYear() + '/' + Month + '/' + date.getDate();
             result.matches[count].paticipants = [];
 
             var paticipantCount = 0;
@@ -301,7 +302,8 @@ exports.getMatchDetailsBySummonerNameAndTime = function(name,startTime,endTime,c
             result.matches[count].gameMode = match.gameMode;
             result.matches[count].gameType = match.gameType;
             var date = new Date(match.gameCreation);
-            result.matches[count].time = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay();
+            var Month = date.getMonth()+1;
+            result.matches[count].time = date.getFullYear() + '/' + Month + '/' + date.getDate();
             result.matches[count].paticipants = [];
 
             var paticipantCount = 0;

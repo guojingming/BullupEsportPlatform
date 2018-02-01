@@ -404,6 +404,7 @@ exports.exitTeam = function(userId, roomName){
         }
     }
     delete exports.formedTeams[roomName];
+    delete exports.broadcastTeamInfos[roomName];
 }
 
 exports.exitTeamAndMatch = function(userId, room){
@@ -440,6 +441,8 @@ exports.exitTeamAndMatch = function(userId, room){
                 delete participants[participantIndex];
                 room.participants.length -= 1;
                 room.status = 'ESTABLISHING';
+                //更新好友状态
+                userService.friendStatus(participants[participantIndex].userId,'false','false');
                 break;
             }
         }
@@ -469,6 +472,8 @@ exports.exitTeamAndMatch = function(userId, room){
             socketService.stableSocketEmit(socket, "teamCanceled", {});
             //更新每个人的状态
             userService.changeUserStatus(participantUserId, "idle");
+            //更新好友状态
+            userService.friendStatus(participantUserId,'true','true');
             delete userService.users[participantUserId].environment.room;
             delete userService.users[participantUserId].environment.team;
             //更新socket room

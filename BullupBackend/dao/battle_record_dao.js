@@ -32,16 +32,16 @@ exports.aboutBattleRecord = function(data,callback){
                 });
             },
             function(tempInfo,callback){//---------------获取user_id
-                dbUtil.query(connection, 'select user_id,user_account from user_base', [], function(err,res2){
+                dbUtil.query(connection, 'select user_id,user_nickname from user_base', [], function(err,res2){
                     if (err) throw err;
                     for(var i=0;i<res2.length;i++){
                         for(var j=0;j<blueUserArr.length;j++){
-                            if(blueUserArr[j]==res2[i].user_account){
+                            if(blueUserArr[j]==res2[i].user_nickname){
                                 tempInfo[0].push(res2[i].user_id); 
                             }
                         }
                         for(var k=0;k<redUserArr.length;k++){
-                            if(redUserArr[k]==res2[i].user_account){
+                            if(redUserArr[k]==res2[i].user_nickname){
                                 tempInfo[1].push(res2[i].user_id);
                             }
                         }
@@ -51,23 +51,23 @@ exports.aboutBattleRecord = function(data,callback){
             },function(tempInfo,callback){//--------------更改财富表的金额
                 if(data.result=='蓝方赢'){
                     for(var x=0;x<tempInfo[0].length;x++){
-                        dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount=bullup_currency_amount+? where user_id=?',[(data.bet)*2,tempInfo[0][x]],function(err,res3){
+                        dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount=bullup_currency_amount+? where user_id=?',[(data.bet)*2*0.9,tempInfo[0][x]],function(err,res3){
                             if (err) throw err;
                         });
                     }
                     for(var y=0;y<tempInfo[1].length;y++){
-                        dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount=bullup_currency_amount-? where user_id=?',[(data.bet)*2,tempInfo[1][y]],function(err,res4){
+                        dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount=bullup_currency_amount-? where user_id=?',[(data.bet)*2*0.9,tempInfo[1][y]],function(err,res4){
                             if (err) throw err;
                         });
                     }
                 }else{
                     for(var x=0;x<tempInfo[1].length;x++){
-                        dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount=bullup_currency_amount+? where user_id=?',[(data.bet)*2,tempInfo[1][x]],function(err,res3){
+                        dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount=bullup_currency_amount+? where user_id=?',[(data.bet)*2*0.9,tempInfo[1][x]],function(err,res3){
                             if (err) throw err;
                         });
                     }
                     for(var y=0;y<tempInfo[0].length;y++){
-                        dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount=bullup_currency_amount-? where user_id=?',[(data.bet)*2,tempInfo[0][y]],function(err,res4){
+                        dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount=bullup_currency_amount-? where user_id=?',[(data.bet)*2*0.9,tempInfo[0][y]],function(err,res4){
                             if (err) throw err;
                         });
                     }

@@ -174,6 +174,17 @@ exports.handleLogin = function (socket) {
                             }
                             callback(null,userInfo);
                         });
+                    },
+                    //查询是否被封号
+                    function(userInfo,callback){
+                        baseInfoDao.findUserSuspensionState(userInfo.userId,function(res){
+                            if(res){
+                                userInfo.suspension = res.user_suspension_state;
+                            }else{
+                                userInfo.suspension = null;
+                            }
+                            callback(null,userInfo);
+                        });
                     }
 
                 ], function(err, userInfo){
@@ -191,6 +202,7 @@ exports.handleLogin = function (socket) {
                             lastLoginTime:userInfo.lastLoginTime,
                             battleCount:userInfo.battleCount,
                             pubgAccount: userInfo.pubgAccount,
+                            suspension: userInfo.suspension,
                             //----------------------
                             avatarId: userInfo.userIconId,
                             wealth: userInfo.wealth,
@@ -697,6 +709,7 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserWealth=queryResult.wealth;
                 data.UserStrength=queryResult.lolInfo_strength_score;
                 data.competition_wins=queryResult.competition_wins;
+                data.raveLineData = queryResult.raveLineData;
                 feedback.extension = data;
               //  console.log('feedback:'+JSON.stringify(data));
             }else{
@@ -950,7 +963,7 @@ exports.friendStatus = function(userId,online,status){
 exports.deleteFriends=function(socket){
 socket.on('delete_friends',function(ID){
      console.log(ID)
-    baseInfoDao.deletefriendsByUserIdAndFriendsId(ID.userId,ID.friend_userId,function(res){
+    baseInfoDao.deletefriendsByUserIdAndFriendsId(ID,function(res){
         if(!res){
             socketService.stableSocketEmit(socket,'feedback',{
                 errorCode:1,
@@ -967,12 +980,14 @@ socket.on('delete_friends',function(ID){
                         // console.log(i++,JSON.stringify(res[key]));
                         arr.push(res[key]);
                     }
+                    var friend_userId=ID.friend_userId;
                     socketService.stableSocketEmit(socket,'feedback',{
                          errorCode:0,
                          text:'删除好友成功',
                          type:'DELETEFRIENDS',
                          extension:{
-                             data: arr
+                             data: arr,
+                             Fid:friend_userId
                          }
                      });
                 }
@@ -984,6 +999,36 @@ socket.on('delete_friends',function(ID){
 })
 
 }
+
+exports.deletetoFriends=function(socket){
+socket.on('two_waydeleteFriend',function(ID){
+    var socket2=socketService.mapUserIdToSocket(ID);
+    if(socket2){
+        baseInfoDao.findFriendListByUserId(ID,function(res){
+            if(res){
+                var arr = [];
+                for(var key in res){
+                    // console.log(i++,JSON.stringify(res[key]));
+                    arr.push(res[key]);
+                }
+              //  console.log(arr);  
+                socketService.stableSocketEmit(socket2,'feedback',{
+                    errorCode:0,
+                    type:'DELETETOFRIENDS',
+                    extension:{
+                        data: arr,
+                    }
+                });
+            }
+        })
+    }
+    return;
+
+})
+}
+
+
+
 
 //退出房间按钮
 exports.handleQuitRoom = function(socket){
