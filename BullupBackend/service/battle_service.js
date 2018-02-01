@@ -715,7 +715,11 @@ function matchSchedulingLevel4(matchPool, poolIndex){
         if(firstTeam == undefined || secondTeam == undefined){
             return;
         }
-
+        // console.log('firstTeam',firstTeam);
+        // console.log('secondTeam',secondTeam);
+        if(firstTeam.mapSelection != secondTeam.mapSelection || firstTeam.rewardAmount != secondTeam.rewardAmount || firstTeam.teamParticipantsNum != secondTeam.teamParticipantsNum){
+            return;
+        }
         if(queueNum1 == queueNum2){
             delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
             if(teamNum1 < teamNum2){
@@ -762,7 +766,7 @@ function excuteMatch(queues){
         }
     }
 
-
+        
     var teamNum1 = (parseInt(Math.random() * 10 * newQueues[queueNum1].length)) % newQueues[queueNum1].length;
     var teamNum2 = (parseInt(Math.random() * 10 * newQueues[queueNum2].length)) % newQueues[queueNum2].length;
     if(queueNum1 == queueNum2 && teamNum1 == teamNum2){
@@ -794,7 +798,7 @@ function excuteMatch(queues){
             'teamNum': teamNum2
         }
     }
-    return matchList;
+    return matchList;  
 }
 
 function broadCastMatchResult(firstTeam, secondTeam){
@@ -844,7 +848,7 @@ function broadCastMatchResult(firstTeam, secondTeam){
         userService.friendStatus(hostTeam.participants[i].userId,'inbattle','true');
     }
 
-    console.log(JSON.stringify(userService.users));
+    //console.log(JSON.stringify(userService.users));
     //teamService.printfAllTeamsInfo();
     // 向该对局中所有的用户广播对局信息
     socketService.stableSocketsEmit(battle.battleName, 'battleInfo', battle);
