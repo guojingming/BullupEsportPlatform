@@ -453,7 +453,7 @@ exports.exitTeamAndMatch = function(userId, room){
             //更新socket room
         }
         //重新加入创建中的房间
-    exports.unformedTeams[room.roomName] = room;
+        exports.unformedTeams[room.roomName] = room;
     }else{
         //是队长 房间删除  通知所有成员
         var participants = room.participants;
