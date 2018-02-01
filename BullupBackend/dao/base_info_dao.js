@@ -377,11 +377,11 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 //消费记录
             },function(userPersonalInfo,callback){
                 dbUtil.query(connection, 'select * from bullup_payment_history where user_id=?',[userId],function(err, results, fields){
-                    console.log("userId"+userPersonalInfo.userId);
+                    //console.log("userId"+userPersonalInfo.userId);
                     if(err) throw err;
                     //payment_history.userId=results[0].user_id;
                     userPersonalInfo.paymentHistory = results;
-                    console.log(JSON.stringify(userPersonalInfo.paymentHistory));
+                    //console.log(JSON.stringify(userPersonalInfo.paymentHistory));
                     callback(null,userPersonalInfo);
                 });
                 //个人能力数据
@@ -403,20 +403,26 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                     callback(null,userPersonalInfo); 
                 });
             }, function(userPersonalInfo,callback){
-                dbUtil.query(connection, 'select count(*) as num  from bullup_battle_record where bullup_battle_participants_red like ?',["%"+userPersonalInfo.nickname+"%"],function(err, results, fields){
+                dbUtil.query(connection, 'select count(*) as num  from bullup_battle_record where bullup_battle_participants_red like ? or bullup_battle_participants_blue like ?',["%"+userPersonalInfo.nickname+"%","%"+userPersonalInfo.nickname+"%"],function(err, results, fields){
                     if(err) throw err;
                     userPersonalInfo.bullup_competitionResult=results[0].num;
-                    userPersonalInfo.bullup_competition_wins=results[0].bullup_competition_wins;
-                    userPersonalInfo.competition_wins=((userPersonalInfo.lolInfo_wins)/(userPersonalInfo.bullup_competitionResult))*100+'%';
+                    console.log('aaa:',userPersonalInfo.bullup_competitionResult);
+
+                    userPersonalInfo.bullup_competition_wins=userPersonalInfo.lolInfo_wins;
+                    console.log('bbb:',userPersonalInfo.bullup_competition_wins);
+
+                    userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))*100+'%';
+                    console.log('ccc:',userPersonalInfo.competition_wins);
+
                     callback(null,userPersonalInfo);
                 });
             }, function(userPersonalInfo,callback){
                 var lolInfoId={};
                 dbUtil.query(connection, 'select lol_info_id from lol_bind where user_id=?',[userId],function(err, results, fields){
                     if(err) throw err;
-                    console.log('id:'+userId);
+                    //console.log('id:'+userId);
                     userPersonalInfo.Id=results[0].lol_info_id;
-                    console.log('pid'+userPersonalInfo.Id);
+                    //console.log('pid'+userPersonalInfo.Id);
                     callback(null,userPersonalInfo);
                 });
             },function(userPersonalInfo,callback){       
@@ -424,12 +430,12 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 dbUtil.query(connection, 'select * from lol_info where lol_info_id=?',[userPersonalInfo.Id],function(err, results, fields){
                     if(err) throw err;
                     userPersonalInfo.info=results;
-                console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
-                callback(null,userPersonalInfo); 
+                    console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
+                    callback(null,userPersonalInfo); 
                 });
             },function(userPersonalInfo,callback){
                 dbUtil.query(connection, 'select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
+                    if(err) throw err;
                     userPersonalInfo.wealth=results[0].bullup_currency_amount;
                     callback(null,userPersonalInfo);
                 });
