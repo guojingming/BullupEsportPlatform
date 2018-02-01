@@ -31,6 +31,7 @@ var prevInfo = [];
 
 var lastSocketStatus = null;
 var lastSocketId = null;
+var new_friend_arr=[];
 
 
 socket.on('success', function (data) {
@@ -220,10 +221,14 @@ socket.on('feedback', function (feedback) {
         case'DELETEFRIENDS':
             deleteFriends(feedback)
             break;
+            case "DELETETOFRIENDS":
+            deleteTofriends(feedback);
+            break;
         //绝地求生账号绑定
         case'PUBGBINDRESULT':
             handlePUBGBindResult(feedback);
             break;
+        
         //绝地求生返回结果
         case 'PUBGBATTLERESULT':
             handlePUBGBattleResult(feedback);
@@ -1103,6 +1108,10 @@ function handleLoginResult(feedback) {
             bullup.alert("登录成功!");      
         },300);
         userInfo = feedback.extension;
+        new_friend_arr=[];
+        for(var i = 0;i<userInfo.friendList.length;i++){
+           new_friend_arr.push(userInfo.friendList[i].name);
+        }
         if (prevInfo[userInfo.userId] != undefined) {
             roomInfo = prevInfo[userInfo.userId][0];
             teamInfo = prevInfo[userInfo.userId][1];
@@ -1238,7 +1247,7 @@ function handleLOLBindResult(feedback){
 //用户修改信息
 function handleUpdateInfoResult(feedback){
     if(feedback.text=='密码修改成功'){
-        alert('密码修改成功，请重新登录');
+        bullup.alert('密码修改成功，请重新登录');
         userInfo = null;
         var temp = bullup.loadSwigView("./swig_menu.html", null);
         // 打开
@@ -1246,7 +1255,7 @@ function handleUpdateInfoResult(feedback){
         $('#system_menu').html(temp);
         $('#router_starter').click();
     }else{
-        alert(feedback.text);
+        bullup.alert(feedback.text);
     }
 }
 
@@ -1672,7 +1681,7 @@ function handleLOLKeyRequestResult(feedback){
     });
     $.getScript('./js/game_history_query.js');
 }
-var new_friend_arr = [];
+
 function handleAddFriendResult(feedback){
     if(feedback.errorCode == 0){
         //更新本地好友列表
@@ -1752,6 +1761,10 @@ process.on('uncaughtException', function(err) {
 function deleteFriends(feedback){
     bullup.alert(feedback.text);
     var temp = feedback.extension.data;
+    new_friend_arr = [];
+    for(var i = 0;i< temp.length ;i++){
+         new_friend_arr.push(temp[i].name);
+    }
     userInfo.friendList=temp;
     var friendCount = 0; 
     for(var index in  userInfo.friendList){
@@ -1762,7 +1775,31 @@ function deleteFriends(feedback){
         'friendListLength': friendCount
     },'user-slide-out');
     $('.collapsible').collapsible();
+    var fid=feedback.extension.Fid;
+    socket.emit("two_waydeleteFriend",fid);
+    
 }
+
+function deleteTofriends(feedback){
+    var temp = feedback.extension.data;
+    userInfo.friendList=temp;
+    new_friend_arr = [];
+    for(var i = 0;i< temp.length ;i++){
+         new_friend_arr.push(temp[i].name);
+    }
+    var friendCount = 0; 
+    for(var index in  userInfo.friendList){
+        friendCount++
+    }
+    bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
+        'userInfo': userInfo,
+        'friendListLength': friendCount
+    },'user-slide-out');
+    $('.collapsible').collapsible();
+}
+
+
+
 
 function handlePUBGBindResult(feedback){
     if(feedback.errorCode == 1){

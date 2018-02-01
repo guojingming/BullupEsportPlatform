@@ -110,9 +110,9 @@ function loadStarter(){
 	$('#main-view').html(starterHtml);
 	var starterShufflingViewHtml = bullup.loadSwigView('swig_starter_shuffling_view.html', null);
 	$('#starter_shuffling_view').html(starterShufflingViewHtml);
-	$('.news-item').on('click',(e)=>{
-		var href = $('.news-item').data('href');
-		console.log(href);
+	$('.news-item').on('click',function(e){
+		var href = $(this).data('href');
+		//console.log(href);
 		process.exec("start "+ href);
 	 });
 	 $('.bullup_more').on('click',(e)=>{

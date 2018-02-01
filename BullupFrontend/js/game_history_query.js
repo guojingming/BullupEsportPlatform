@@ -93,6 +93,7 @@ $().ready(function () {
                 globalMatchDetails = matchDetails;
                 $('.content').html(frame);
                 $('#user-matches').html(leftTemplate);
+                $('.k_matches').collapsible();
                 $('.match-item').on('click', function(e){
                     var htmlId = $(this).attr('id');
                     var index = String(htmlId).substring(0, 1);

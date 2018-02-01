@@ -25,7 +25,7 @@ $().ready(function(){
     clickPUBGCount = 1;
   }
   //判断用户是否登陆 是否绑定  
-  $(document).on("click",".starter-match-btn_no",function(event){
+  $(document).on("click","#starter-match-btn_no",function(event){
     // if(clickPUBGCount == 1){
     //   $("#starter-match-btn_no").click();
     //   if(userInfo == null ){
@@ -48,6 +48,7 @@ $().ready(function(){
     // }else{
     //   bullup.alert('上局游戏未出结果，请耐心等待,不要关闭客户端');
     // }
+    event.preventDefault();
     bullup.alert('玩命开发中，敬请期待ε≡٩(๑>₃<)۶ ');
   });
   //点击弹出登录框

@@ -300,3 +300,6 @@
     border-bottom: 1px solid gray;
     border-left: 1px solid gray;
 }
+.feenback_client label::before{
+    border: #4CAF50;
+}

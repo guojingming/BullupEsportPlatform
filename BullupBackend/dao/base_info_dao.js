@@ -532,13 +532,29 @@ exports.insertFeedback=function(result,callback){
     });
 }
 //删除好友
-exports.deletefriendsByUserIdAndFriendsId=function(userId,friend_userId,callback){
+exports.deletefriendsByUserIdAndFriendsId=function(ID,callback){
     dbUtil.createConnection(function(connection){
-         dbUtil.query(connection,'delete from bullup_friend where user_id=? and friend_user_id=?',[userId,friend_userId],function(err,results){
-            if (err) throw err;
+        async.waterfall([
+            function(callback){
+                var msg={};
+                dbUtil.query(connection,'delete from bullup_friend where user_id=? and friend_user_id=?',[ID.userId,ID.friend_userId],function(err,results,fields){
+                    if (err) throw err;
+                    msg.userid=ID.userId;
+                    msg.fid=ID.friend_userId;
+                    callback(null,msg);
+                });
+             },
+            function(msg,callback){
+                dbUtil.query(connection,'delete from bullup_friend where user_id=? and friend_user_id=?',[msg.fid,msg.userid],function(err,results,fields){
+                    if (err) throw err;
+                    callback(null,results);
+                });
+            }
+        ],function(err,res){
             dbUtil.closeConnection(connection);
-            callback(results);
-    });
+            callback(res)
+        })
+    
     });
 }
 
