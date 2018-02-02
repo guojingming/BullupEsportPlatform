@@ -145,7 +145,7 @@ exports.findPhoneNumber = function(phone, callback) {
 
 exports.findUserByCode  = function(code, callback) {
     dbUtil.createConnection(function(connection){
-        dbUtil.query(connection, 'select * from `user_base` where user_account=?', [code], function (err, results){
+        dbUtil.query(connection, 'select count(*) as num from `user_info` where user_mail=?', [code], function (err, results){
             if (err) throw err;
             dbUtil.closeConnection(connection);
             callback(results[0]);

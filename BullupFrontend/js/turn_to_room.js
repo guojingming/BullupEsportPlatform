@@ -129,7 +129,11 @@ $(document).ready(function(){
                 $('#teamates_info').html(teamatesHtml);
                 $('#create_room_modall').modal('close');
                 $.getScript('/js/invite_friend.js');
-            
+                
+                if(roomInfo.captain.userId != userInfo.userId){
+                    $('#invite_friend_btn').css('display','none');
+                    $('#confirm_create_team_btn').css('display','none');
+                }
                 $('#invite_friend_btn').sideNav({
                     menuWidth: 400, // Default is 300
                     edge: 'right', // Choose the horizontal origin

@@ -17,7 +17,7 @@ var socketService = dependencyUtil.global.service.socketService;
 // };
 
 var pool = mysql.createPool({  
-    host:'bullesport',
+    host:'127.0.0.1',
     user: 'root',
     password: 'DNYjx123Gjm456Cxj789Syl123Lyp456',
     database: 'bullup',

@@ -106,16 +106,20 @@ $().ready(function () {
 											//对选择省会的校验
 											if($province != ""){
 												if(specialCheck($userNickname)==true){
-													socket.emit('register', {
-														userAccount: $userAccount,
-														userPassword: $userPassword,
-														userNickname: $userNickname,
-														userPhoneNumber: $tel,
-														userEmail: $email,
-														userCountry:$country,
-														userCity:$city,
-														userProvince:$province
-													});
+													if($email.length == 0 || $email.length == 6){
+														socket.emit('register', {
+															userAccount: $userAccount,
+															userPassword: $userPassword,
+															userNickname: $userNickname,
+															userPhoneNumber: $tel,
+															userEmail: $email,
+															userCountry:$country,
+															userCity:$city,
+															userProvince:$province
+														});
+													}else{
+														bullup.alert("邀请码格式为6位");
+													}
 												}else{
 													bullup.alert("昵称不允许包含特殊字符！");
 												}
