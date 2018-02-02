@@ -174,7 +174,7 @@ exports.writeBattleRecord = function(battle){
     });
 }
 
-exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue){
+exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue,resCode){
     if(newStrengthScore < 0){
         newStrengthScore = 0;
     }
@@ -188,7 +188,7 @@ exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChang
         });
     });
     dbUtil.createConnection(function(connection2){
-        dbUtil.query(connection2, 'update bullup_strength set bullup_strength_score = ? where user_id = ?', [newStrengthScore, userId], (err, res) => {
+        dbUtil.query(connection2, 'update bullup_strength set bullup_strength_score = ?,bullup_strength_wins=bullup_strength_wins+? where user_id = ?', [newStrengthScore, resCode ,userId], (err, res) => {
             if(err)throw err;
             dbUtil.closeConnection(connection2);
         });

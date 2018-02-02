@@ -283,7 +283,7 @@ exports.handleRegister = function (socket) {
                                     if(userInfo.userEmail == 'DNDJCB'){
                                         baseInfoDao.findUserByCode(userInfo.userEmail, function (res) {
                                             var count = res.num - 1;
-                                            if(count <= 20){
+                                            if(count <= 30){
                                                 baseInfoDao.findUserByAccount(userInfo.userAccount,function(res2){
                                                     if(res){
                                                         wealthInfoDao.chargeForInviteCode(res2.user_id,function(res3){
@@ -402,7 +402,9 @@ exports.handleUserUpdateInfo = function(socket){
                                     errorCode: 0,
                                     text: '昵称修改成功',
                                     type: 'UPDATEINFORESULT',
-                                    extension: null
+                                    extension: {
+                                        name: data.nickname
+                                    }
                                 });
                             } 
                         });

@@ -827,7 +827,9 @@ socket.on('battleResult', function(resultPacket){
     //添加确认按钮单击事件
     $('#confirm_battle_result').on('click', function(e){
         $('#router_starter').click();
-	});
+    });
+    //杀进程
+    lol_process.grabLOLData('killProcess', null);
 });
 
 function getNewKDA(){
@@ -1264,6 +1266,11 @@ function handleUpdateInfoResult(feedback){
         $("#log_modal").css("display", "block");
         $('#system_menu').html(temp);
         $('#router_starter').click();
+    }else if(feedback.text=='昵称修改成功'){
+        $('#menu_name').html(feedback.extension.name);
+        console.log(userInfo);
+        userInfo.name = feedback.extension.name;
+        bullup.alert(feedback.text);
     }else{
         bullup.alert(feedback.text);
     }

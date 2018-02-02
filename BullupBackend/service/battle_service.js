@@ -350,11 +350,11 @@ exports.handleBattleResult = function (io, socket){
                 //扣钱
                 for(var index in winTeam){
                     var player = winTeam[index];
-                    battleRecordDao.updateStrengthAndWealth(player.userId, player.strength.score + winScoreUpdateValue, 0.8 * resultPacket.rewardAmount);
+                    battleRecordDao.updateStrengthAndWealth(player.userId, player.strength.score + winScoreUpdateValue, 0.8 * resultPacket.rewardAmount,1);
                 }
                 for(var index in loseTeam){
                     var player = loseTeam[index];
-                    battleRecordDao.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount);
+                    battleRecordDao.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount,0);
                 }
                 //写记录
                 battleRecordDao.writeBattleRecord(finishedBattle);
@@ -462,11 +462,11 @@ exports.handleBattleResult = function (io, socket){
                 //扣钱
                 for(var index in winTeam){
                     var player = winTeam[index];
-                    battleRecordDao.updateStrengthAndWealth(player.userId, player.strength.score + winScoreUpdateValue, 0.8 * resultPacket.rewardAmount);
+                    battleRecordDao.updateStrengthAndWealth(player.userId, player.strength.score + winScoreUpdateValue, 0.8 * resultPacket.rewardAmount,1);
                 }
                 for(var index in loseTeam){
                     var player = loseTeam[index];
-                    battleRecordDao.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount);
+                    battleRecordDao.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount,0);
                 }
                 //写记录
                 battleRecordDao.writeBattleRecord(finishedBattle);
@@ -999,7 +999,6 @@ function processResultPacket(stdout){
 
 exports.updateKDA = function(socket){
     socket.on('updateKDA',function(data){
-        console.log('this is updateKDA:',JSON.stringify(data));
         var ownTeam = data.result.own_team;
         var pointData;
         for(var key in ownTeam){
@@ -1008,14 +1007,8 @@ exports.updateKDA = function(socket){
                 break;
             }
         }
-        if(data.result.win==1){
-            pointData.win = 1;
-        }else{
-            pointData.win = 0;
-        }
         var $gameLength = data.result.gameLength;
         var $goldPerminiute = Math.ceil(pointData.stats.goldEarned / $gameLength);
-        console.log('this is gamelength:',$gameLength,pointData.stats.goldEarned,$goldPerminiute);
         pointData.goldPerminiute = $goldPerminiute;
         strengthInfoDao.updateKDA(pointData);
     });
