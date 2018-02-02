@@ -701,6 +701,10 @@ function isGameStart(){
 function handleCancelMatch(feedback){
     $('#router_starter').click();
     bullup.alert(feedback.text);
+    if(match_timer != null){
+        window.clearInterval(match_timer);
+        match_timer = null;
+    }
     roomInfo = feedback.extension;
     teamInfo = null;
     battleInfo = null;
