@@ -24,9 +24,9 @@ exports.findStrengthInfoByUserId = function(userId, callback) {
 }
 
 exports.updateKDA =  function(data){
-    console.log('this is pointData:',JSON.stringify(data));
-    dbUtil.createConnection(function(connection1){
-        dbUtil.query(connection1, 'update bullup_strength set bullup_strength_k=?,bullup_strength_d=?,bullup_strength_a=?,bullup_strength_minion=?,bullup_strength_gold=?,bullup_strength_tower=?,bullup_strength_damage=?,bullup_strength_damage_taken=?,bullup_strength_heal=?,bullup_strength_gold_perminiute=? where user_id=?',
+    //console.log('this is pointData:',JSON.stringify(data));
+    dbUtil.createConnection(function(connection){
+        dbUtil.query(connection, 'update bullup_strength set bullup_strength_k=?,bullup_strength_d=?,bullup_strength_a=?,bullup_strength_minion=?,bullup_strength_gold=?,bullup_strength_tower=?,bullup_strength_damage=?,bullup_strength_damage_taken=?,bullup_strength_heal=?,bullup_strength_gold_perminiute=? where user_id=?',
             [
                 data.stats.kill,
                 data.stats.death,
@@ -38,17 +38,12 @@ exports.updateKDA =  function(data){
                 data.stats.damageTaken,
                 data.stats.heal,
                 data.goldPerminiute,
+                
                 data.userId
             ],
             function(err,res){
                 if (err) throw err;
-                dbUtil.closeConnection(connection1);
-            });
-        });
-    dbUtil.createConnection(function(connection2){
-        dbUtil.query(connection2, 'update bullup_strength set bullup_strength_wins=bullup_strength_wins+? where user_id=?',[data.win,data.userId],function(err,res){
-            if (err) throw err;
-            dbUtil.closeConnection(connection2);
+                dbUtil.closeConnection(connection); 
         });
     });
 }
