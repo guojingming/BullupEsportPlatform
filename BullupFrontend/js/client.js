@@ -490,7 +490,7 @@ function swig_fight(lolRoom){
      }
 }
 
-var match_timer = null;
+
 var roomCount = 0;
 socket.on('lolRoomEstablish', function (lolRoom) {
     if(match_timer != null){

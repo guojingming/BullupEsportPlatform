@@ -87,8 +87,8 @@ function loadStarter(){
 				href: 'https://mp.weixin.qq.com/s/IDTudYjnpseUKDRjwthxkQ',
 			},
 			{
-				title: 'NACG北美电竞联赛|荣耀之名,王者之战,等你点燃事',
-				href:'https://mp.weixin.qq.com/s/B_HZTmYuIat2ZNZ-IR3_ZQ',
+				title: '英雄联盟ALL STAR in LA，谁才是你心中的Solo King？',
+				href:'https://mp.weixin.qq.com/s/fRBngMUeIFAjO6bq5UUHRA',
 			},
 			{
 				title: '- Hello·女神 - 让你与网红主播零距离对话',
