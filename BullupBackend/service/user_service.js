@@ -279,31 +279,40 @@ exports.handleRegister = function (socket) {
                                     extension: null
                                 });
                             }else{
-                                //baseInfoDao.findUserByCode(userInfo.userEmail, function (user) {
-                                    // if(user){
-                                    //     socketService.stableSocketEmit(socket, 'feedback', {
-                                    //         errorCode: 1,
-                                    //         text: '该邀请码已被使用',
-                                    //         type: 'REGISTERRESULT',
-                                    //         extension: null
-                                    //     });
-                                    // }else{
-                                        baseInfoDao.addUser(userInfo, function (userAddRes) {
-                                            socketService.stableSocketEmit(socket, 'feedback', {
-                                                errorCode: 0,
-                                                text: '注册成功',
-                                                type: 'REGISTERRESULT',
-                                                extension: {
-                                                    userAccount: userInfo.userAccount,
-                                                    userNickname: userInfo.userNickname,
-                                                    userId: userAddRes.userId,
-                                                    userIconId: 1,
-                                                }
-                                            });
+                                baseInfoDao.addUser(userInfo, function (userAddRes) {
+                                    if(userInfo.userEmail == 'DNDJCB'){
+                                        baseInfoDao.findUserByCode(userInfo.userEmail, function (res) {
+                                            var count = res.num - 1;
+                                            if(count <= 20){
+                                                baseInfoDao.findUserByAccount(userInfo.userAccount,function(res2){
+                                                    if(res){
+                                                        wealthInfoDao.chargeForInviteCode(res2.user_id,function(res3){
+                                                            console.log('邀请码已被用掉',count,'个','这是第',count+1,'个内测码用户');
+                                                        });
+                                                    }
+                                                });
+                                            }else{
+                                                socketService.stableSocketEmit(socket, 'feedback', {
+                                                    errorCode: 1,
+                                                    text: '注册成功,但您填写的邀请码已失效',
+                                                    type: 'REGISTERRESULT',
+                                                    extension: null
+                                                });
+                                            }
                                         });
-                                    //}
-                                //});
-                                
+                                    }
+                                    socketService.stableSocketEmit(socket, 'feedback', {
+                                        errorCode: 0,
+                                        text: '注册成功',
+                                        type: 'REGISTERRESULT',
+                                        extension: {
+                                            userAccount: userInfo.userAccount,
+                                            userNickname: userInfo.userNickname,
+                                            userId: userAddRes.userId,
+                                            userIconId: 1,
+                                        }
+                                    });
+                                });
                             }
                         });
                     }
