@@ -438,11 +438,11 @@ exports.exitTeamAndMatch = function(userId, room){
         var participants = room.participants;
         for(var participantIndex in participants){
             if(participants[participantIndex].userId == userId){
+                //更新好友状态
+                userService.friendStatus(participants[participantIndex].userId,'false','false');
                 delete participants[participantIndex];
                 room.participants.length -= 1;
                 room.status = 'ESTABLISHING';
-                //更新好友状态
-                userService.friendStatus(participants[participantIndex].userId,'false','false');
                 break;
             }
         }
@@ -492,8 +492,15 @@ exports.handleUserQuitRoom = function(userId, roomName){
                 //更新好友状态
                 userService.friendStatus(participants[participantIndex].userId,'true','true');
                 userService.changeUserStatus(participants[participantIndex].userId, "idle");
-                delete participants[participantIndex];
+                delete participants[participantIndex];               
                 delete exports.unformedTeams[roomName].participants[participantIndex];
+                var socketId = socketService.userSocketMap[userId].id;
+                for(var i = 0;i<socketService.roomSocketMap[roomName].length;i++){
+                     if(socketId == socketService.roomSocketMap[roomName][i].id){
+                        delete socketService.roomSocketMap[roomName][i];
+                        break;
+                     }
+                }
                 exports.unformedTeams[roomName].participants.length -= 1;
                 break;
             }
