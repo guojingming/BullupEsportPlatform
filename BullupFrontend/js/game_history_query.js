@@ -88,6 +88,7 @@ $().ready(function () {
                 bullup.alert(" 该段时间内无游戏记录！ ");
                 return;
             }else{
+                bullup.alert(" 查询成功! ");
                 var frame = bullup.loadSwigView("swig_queryres.html", {});
                 var leftTemplate = bullup.loadSwigView("swig_matches.html",matchDetails);
                 globalMatchDetails = matchDetails;
