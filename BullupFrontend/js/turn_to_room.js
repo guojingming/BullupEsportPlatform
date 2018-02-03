@@ -177,11 +177,13 @@ $(document).ready(function(){
                     
             });
             $("#quit_room_btn").click(function(){
-                console.log('wocaoda:',JSON.stringify(roomInfo));
-                // socket.emit('quitRoom',{
-                //     userId: userInfo.userId,
-                //     roomName: roomInfo.r
-                // })
+                //console.log('wocaoda:',JSON.stringify(roomInfo));
+                socket.emit('quitRoom',{
+                    userId: userInfo.userId,
+                    roomName: roomInfo.roomName
+                });
+                roomInfo = null;
+                $('#router_starter').click();
             });
     
             }

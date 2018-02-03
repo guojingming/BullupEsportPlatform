@@ -31,7 +31,7 @@
 			建房中
 		</label>
 		<p class="invitebox right" style="position:relative;top:16px;">
-			<input type="checkbox" id="friend_{{ loop.index }}_check_box" class="filled-in"  value="{{ friend.name }}">
+			<input type="checkbox" id="friend_{{ loop.index }}_check_box" class="filled-in" disabled="disabled"  value="{{ friend.name }}">
             <label for="friend_{{ loop.index }}_check_box"></label>					  
 		</p>
 		{% elseif friend.online=='inteam' %}

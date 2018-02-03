@@ -85,7 +85,7 @@ $().ready(function () {
                 bullup.alert(" 召唤师不存在或设置的时间段超过一周！");
                 return;
             }else if(matchDetails.errorTitle == 'no data'){
-                bullup.alert(" 该段时间内无游戏记录！ ");
+                bullup.alert("该段时间内无游戏记录！");
                 return;
             }else{
                 bullup.alert(" 查询成功! ");
