@@ -192,7 +192,7 @@ exports.insertBankInfo = function(bankInfo, callback) {
     });
 }
 
-//DNDJCB邀请码30人赠送20$
+//DNDJCB邀请码100人赠送20$
 exports.chargeForInviteCode = function(userId,callback){
     dbUtil.createConnection(function(connection){
         dbUtil.query(connection, 'update bullup_wealth set bullup_currency_amount = bullup_currency_amount+20 where user_id=?',[userId],function(err,result){

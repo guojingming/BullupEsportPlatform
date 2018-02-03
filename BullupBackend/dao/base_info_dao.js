@@ -321,7 +321,7 @@ exports.addUser = function(userInfo, callback) {
                 });
             },
             function(userInfo, callback){
-                dbUtil.query(connection, 'insert into `bullup_wealth` (user_id, bullup_currency_type, bullup_currency_amount) values (?, ?, ?)', [userInfo.userId, 'score', '300'], function(err, row){
+                dbUtil.query(connection, 'insert into `bullup_wealth` (user_id, bullup_currency_type, bullup_currency_amount) values (?, ?, ?)', [userInfo.userId, 'score', '0'], function(err, row){
                     userInfo.wealth = 10;
                     callback(null, userInfo);
                 });
@@ -406,14 +406,13 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 dbUtil.query(connection, 'select count(*) as num  from bullup_battle_record where bullup_battle_participants_red like ? or bullup_battle_participants_blue like ?',["%"+userPersonalInfo.nickname+"%","%"+userPersonalInfo.nickname+"%"],function(err, results, fields){
                     if(err) throw err;
                     userPersonalInfo.bullup_competitionResult=results[0].num;
-                    console.log('aaa:',userPersonalInfo.bullup_competitionResult);
-
                     userPersonalInfo.bullup_competition_wins=userPersonalInfo.lolInfo_wins;
-                    console.log('bbb:',userPersonalInfo.bullup_competition_wins);
-
-                    userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))*100+'%';
-                    console.log('ccc:',userPersonalInfo.competition_wins);
-
+                    userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))*100;
+                    if(userPersonalInfo.competition_wins != 'NaN'){
+                        userPersonalInfo.competition_wins = Number(userPersonalInfo.competition_wins).toFixed(2)+'%';
+                    }else{
+                        userPersonalInfo.competition_wins = '0.00%';
+                    }
                     callback(null,userPersonalInfo);
                 });
             }, function(userPersonalInfo,callback){
