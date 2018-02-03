@@ -34,13 +34,13 @@ $().ready(function () {
                       });
                       $('#fankui').modal('close');
                   }else{
-                      alert('请填写信息且字数小于140字');
+                    bullup.alert('请填写信息且字数小于140字');
                   }
               }else{
-                  alert('请填写正确的姓名');
+                bullup.alert('请填写正确的姓名');
               } 
           }else{
-              alert('请填写正确的邮箱');
+              bullup.alert('请填写正确的邮箱');
           }
       });
       $('#feedback').on('click', function () {

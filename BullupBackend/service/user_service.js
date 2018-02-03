@@ -279,40 +279,62 @@ exports.handleRegister = function (socket) {
                                     extension: null
                                 });
                             }else{
-                                baseInfoDao.addUser(userInfo, function (userAddRes) {
-                                    if(userInfo.userEmail == 'DNDJCB'){
-                                        baseInfoDao.findUserByCode(userInfo.userEmail, function (res) {
-                                            var count = res.num - 1;
-                                            if(count <= 30){
+                                if(userInfo.userEmail == 'DNDJCB'){
+                                    baseInfoDao.findUserByCode(userInfo.userEmail, function (res) {
+                                        var count = res.num;
+                                        if(count < 100){
+                                            baseInfoDao.addUser(userInfo, function (userAddRes) {
                                                 baseInfoDao.findUserByAccount(userInfo.userAccount,function(res2){
-                                                    if(res){
+                                                    if(res2){
                                                         wealthInfoDao.chargeForInviteCode(res2.user_id,function(res3){
                                                             console.log('邀请码已被用掉',count,'个','这是第',count+1,'个内测码用户');
+                                                            socketService.stableSocketEmit(socket, 'feedback', {
+                                                                errorCode: 0,
+                                                                text: '注册成功,请登录查看奖金是否到账,祝您游戏愉快!',
+                                                                type: 'REGISTERRESULT',
+                                                                extension: {
+                                                                    userAccount: userInfo.userAccount,
+                                                                    userNickname: userInfo.userNickname,
+                                                                    userId: userAddRes.userId,
+                                                                    userIconId: 1,
+                                                                }
+                                                            });
                                                         });
                                                     }
                                                 });
-                                            }else{
+                                            });
+                                        }else{
+                                            userInfo.userEmail = '';
+                                            baseInfoDao.addUser(userInfo, function (userAddRes) {
                                                 socketService.stableSocketEmit(socket, 'feedback', {
                                                     errorCode: 1,
                                                     text: '注册成功,但您填写的邀请码已失效',
                                                     type: 'REGISTERRESULT',
-                                                    extension: null
+                                                    extension: {
+                                                        userAccount: userInfo.userAccount,
+                                                        userNickname: userInfo.userNickname,
+                                                        userId: userAddRes.userId,
+                                                        userIconId: 1,
+                                                    }
                                                 });
-                                            }
-                                        });
-                                    }
-                                    socketService.stableSocketEmit(socket, 'feedback', {
-                                        errorCode: 0,
-                                        text: '注册成功',
-                                        type: 'REGISTERRESULT',
-                                        extension: {
-                                            userAccount: userInfo.userAccount,
-                                            userNickname: userInfo.userNickname,
-                                            userId: userAddRes.userId,
-                                            userIconId: 1,
+                                            });
                                         }
                                     });
-                                });
+                                }else{
+                                    baseInfoDao.addUser(userInfo, function (userAddRes) {
+                                        socketService.stableSocketEmit(socket, 'feedback', {
+                                            errorCode: 0,
+                                            text: '注册成功',
+                                            type: 'REGISTERRESULT',
+                                            extension: {
+                                                userAccount: userInfo.userAccount,
+                                                userNickname: userInfo.userNickname,
+                                                userId: userAddRes.userId,
+                                                userIconId: 1,
+                                            }
+                                        });
+                                    });
+                                }
                             }
                         });
                     }
