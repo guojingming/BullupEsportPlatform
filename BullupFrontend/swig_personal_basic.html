@@ -54,6 +54,8 @@
 </label>
     <div class="personal-value">
         {% if player.winning_rate=='NaN%' %}
+        {{0}}
+        {% elseif player.winning_rate=='infinity%' %}
 		{{0}}
 		{% else %}
 		{{player.winning_rate}}
