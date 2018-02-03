@@ -241,8 +241,18 @@ socket.on('feedback', function (feedback) {
         case 'GETNEWKDARESULT':
             handleGetNewKDA(feedback);
             break;
+        //刷新余额
+        case 'GETLASTESTWEALTHRESULT':
+            handleGetLastestWealthResult(feedback);
+            break; 
         }
 });
+
+//刷新余额
+function handleGetLastestWealthResult(feedback){
+    var newMoney = feedback.extension.money;
+    userInfo.wealth = newMoney;
+}
 
 //更新KDA
 function handleGetNewKDA(feedback){
@@ -812,6 +822,10 @@ socket.on('battleResult', function(resultPacket){
         nickname:userInfo.name,
         result:battleResultData  
     });
+    //获取最新余额
+    socket.emit('getLastestWealth',{
+        userId: userInfo.userId
+    });
     getNewKDA();
     var battleResHtml = bullup.loadSwigView('./swig_battleres.html', {
         battle_res: battleResultData
@@ -843,6 +857,9 @@ function getNewKDA(){
 socket.on('rechargeResult', function(text){
     socket.emit('tokenData', text.token);  
     bullup.alert(text.text);//阻塞 弹出充值成功页面
+    socket.emit('getLastestWealth',{
+        userId: userInfo.userId
+    });
     $('#router_starter').click();
 });
 

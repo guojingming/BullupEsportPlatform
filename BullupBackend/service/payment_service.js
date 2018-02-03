@@ -125,3 +125,22 @@ exports.handleSearchCashFlow = function (socket) {
         });
     });
 }
+
+//获取最新余额
+exports.handleGetLastestWealth = function(socket){
+    socket.on('getLastestWealth',function(data){
+        wealthInfoDao.getBalance(data,function(res){
+            console.log(res);
+            if(res){
+                socketService.stableSocketEmit(socket, 'feedback', {
+                    errorCode: 1,
+                    text: '获取成功',
+                    type: 'GETLASTESTWEALTHRESULT',
+                    extension: {
+                        money: res.bullup_currency_amount
+                    }
+                });
+            }
+        });
+    });
+}

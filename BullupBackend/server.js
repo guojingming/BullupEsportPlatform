@@ -98,7 +98,8 @@ io.on('connection', function(socket) {
     paymentService.handleBankInfo(socket);
     //资金流动
     paymentService.handleSearchCashFlow(socket);
-
+    //获取余额
+    paymentService.handleGetLastestWealth(socket);
     //广播
     adminService.handleBoradcast(io, socket);
     adminService.handleCloseServer(io, socket);
