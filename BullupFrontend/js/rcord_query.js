@@ -8,6 +8,9 @@ $().ready(function(){
         //var summonerName="Who is 55Kai";
       if(summonerName!=null && summonerName!=undefined){
             lolUtil.getMatchDetailsBySummonerName(summonerName,function(matchDetails){
+              if(!matchDetails){
+                 return;
+              }
               var frame = bullup.loadSwigView("swig_queryres.html", {});
               if(matchDetails.matches){
                 matchDetails.matches.reverse();
