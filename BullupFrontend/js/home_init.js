@@ -34,6 +34,9 @@ $('.waves-light').click(function () {
     $('#modalpopo').css("display","none");
     $('#modalpopo').modal('close');
     $(".bullup_overlay").remove();
+    if($("#modalpopo").find("p").text()=="该段时间内无游戏记录！"){
+        $('#router_dataquery').click();
+    }
 });
 $(function () {
     $('#beginTime').date();

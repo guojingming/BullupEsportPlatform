@@ -46,6 +46,9 @@ function bullup_modal(options){
               "background": "#000"
         });
         $('.bullup_overlay').click(function(event){
+            if($("#modalpopo").find("p").text()=="该段时间内无游戏记录！"){
+                $('#router_dataquery').click();
+            }
             close();
             $(".bullup_overlay").remove();
         });
