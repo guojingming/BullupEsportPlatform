@@ -3,7 +3,7 @@
 {% if logged_user %}
   <li><a href="#">系统菜单</a></li>
   <li><a href="#">0</a></li>
-  <p style="position: fixed;height: 50px;line-height: 50px;background: rgba(33,33,33,0.8);padding: 0 5px 0 15px;color: #26a69a;top: 50px;">{{ logged_user.name }}</p>
+  <p id="menu_name" style="position: fixed;height: 50px;line-height: 50px;background: rgba(33,33,33,0.8);padding: 0 5px 0 15px;color: #26a69a;top: 50px;">{{ logged_user.name }}</p>
   <li><a href="#" id='log_out_button'>登出</a></li>
   <li><a href="#link_modal">绑定账号</a></li>
 {% else %}

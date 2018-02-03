@@ -107,18 +107,22 @@ $().ready(function () {
 											if($province != ""){
 												if(specialCheck($userNickname)==true){
 													if($email.length == 0 || $email.length == 6){
-														socket.emit('register', {
-															userAccount: $userAccount,
-															userPassword: $userPassword,
-															userNickname: $userNickname,
-															userPhoneNumber: $tel,
-															userEmail: $email,
-															userCountry:$country,
-															userCity:$city,
-															userProvince:$province
-														});
+														if($email.length == 0 || specialCheck($email)==true){
+															socket.emit('register', {
+																userAccount: $userAccount,
+																userPassword: $userPassword,
+																userNickname: $userNickname,
+																userPhoneNumber: $tel,
+																userEmail: $email,
+																userCountry:$country,
+																userCity:$city,
+																userProvince:$province
+															});
+														}else{
+															bullup.alert("邀请码不包含特殊符号");
+														}	
 													}else{
-														bullup.alert("邀请码格式为6位");
+														bullup.alert("邀请码格式为6位字母或数字组合");
 													}
 												}else{
 													bullup.alert("昵称不允许包含特殊字符！");
