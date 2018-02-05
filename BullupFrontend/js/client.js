@@ -6,6 +6,8 @@ var pubg_crawler = require('./js/pubg_crawler.js');
 var lolUtil = require('./js/util/lol_util.js');
 var fs =require('fs');
 
+//ling test
+
 var userInfo = null;
 var teamInfo = null;
 var roomInfo = null;
