@@ -4,3 +4,4 @@ $(document).ready(function(){
         socket.emit('adminBroadcast', text);
     });
 });
+//lalallalalla
